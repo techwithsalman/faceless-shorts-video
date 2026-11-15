@@ -1,0 +1,85 @@
+{
+ "duration": 37.603,
+ "voice": "am_michael",
+ "speed": 1.05,
+ "lines": [
+  {
+   "i": 0,
+   "text": "In 1995, a man bought an entire two-hundred-year-old bank",
+   "start": 0.35,
+   "end": 5.228
+  },
+  {
+   "i": 1,
+   "text": "for exactly one dollar.",
+   "start": 5.228,
+   "end": 6.65
+  },
+  {
+   "i": 2,
+   "text": "Barings was Queen Elizabeth's personal bank,",
+   "start": 6.87,
+   "end": 9.35
+  },
+  {
+   "i": 3,
+   "text": "and had funded world empires for centuries.",
+   "start": 9.9,
+   "end": 12.45
+  },
+  {
+   "i": 4,
+   "text": "Until a twenty-eight-year-old trader in Singapore",
+   "start": 12.67,
+   "end": 15.59
+  },
+  {
+   "i": 5,
+   "text": "secretly gambled on the Japanese stock market,",
+   "start": 15.91,
+   "end": 18.64
+  },
+  {
+   "i": 6,
+   "text": "and lost over a billion dollars.",
+   "start": 19.15,
+   "end": 21.202
+  },
+  {
+   "i": 7,
+   "text": "The oldest bank in Britain collapsed overnight.",
+   "start": 21.422,
+   "end": 23.846
+  },
+  {
+   "i": 8,
+   "text": "Panicked regulators scrambled for a buyer,",
+   "start": 24.066,
+   "end": 26.386
+  },
+  {
+   "i": 9,
+   "text": "until a Dutch banker offered to take everything,",
+   "start": 26.866,
+   "end": 29.376
+  },
+  {
+   "i": 10,
+   "text": "for the price of a single chocolate bar.",
+   "start": 29.896,
+   "end": 32.419
+  },
+  {
+   "i": 11,
+   "text": "He walked away owning the royal bank",
+   "start": 32.639,
+   "end": 34.694
+  },
+  {
+   "i": 12,
+   "text": "for just one single buck.",
+   "start": 34.694,
+   "end": 36.203
+  }
+ ]
+}

@@ -1,0 +1,110 @@
+# ==============================================================================
+# Beyond History / Faceless Shorts Engine - Safe .gitignore
+# ==============================================================================
+
+# 1. Generated Video Renders (strictly excluded to keep repo lightweight)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.m4v
+renders/
+*/renders/
+*/*/renders/
+*/*/*/renders/
+
+# 2. Large Generated Narration & Mix Wave Audio Files
+# (Narration and mixes are generated deterministically via Kokoro and mix.py)
+*.wav
+data/*.wav
+*/data/*.wav
+*/*/data/*.wav
+
+# 3. Model Weights, AI Checkpoints & Caches (100% separate from Git)
+cache/
+.cache/
+kokoro/
+*.onnx
+*.bin
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+*.model
+*.weights
+*.h5
+
+# 4. Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+.faceless-shorts/
+
+# 5. Python Bytecode & Build Artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 6. Node.js & WebGL Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# 7. Secrets, Credentials & Local Environment Files
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.token
+*.credential
+*credentials*
+auth.json
+secrets.json
+
+# 8. Temporary Test Outputs & Logs
+*.log
+*.tmp
+scratch/
+test_opt_terracotta.jpg
+test_sd_turbo.jpg
+
+# 9. Operating System & IDE Specific Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*~

@@ -1,0 +1,42 @@
+{
+  "title": "Mary Celeste: Ghost Ship of the Atlantic (1872)",
+  "voice": "bm_george",
+  "speed": 1.11,
+  "lead": 0.25,
+  "outro": 0.35,
+  "gap": 0.12,
+  "music": "mary_celeste_mystery",
+  "character": "19th-century merchant sailor in wool pea coat and captain's cap looking through brass telescope",
+  "sources": [
+    "Gibraltar Vice-Admiralty Court Records (1872-1873)",
+    "Dei Gratia Ship Logbook (Captain Morehouse)",
+    "Official Mary Celeste Cargo Manifest (1,701 barrels of alcohol)"
+  ],
+  "lines": [
+    {
+      "text": "In December 1872, sailors spotted a merchant brigantine drifting aimlessly across the Atlantic under full canvas.",
+      "visual": "moody wide shot of the two-masted merchant brigantine Mary Celeste sailing erratically on choppy grey Atlantic swells under overcast stormy skies, tattered sails billowing, no crew visible on deck, mysterious cinematic maritime photography, 35mm film"
+    },
+    {
+      "text": "Boarding the vessel, rescuers found the ship completely seaworthy, but every single soul had vanished without a trace.",
+      "visual": "atmospheric first-person perspective stepping onto the wet, deserted wooden deck of Mary Celeste, uncoiled ropes trailing into sea, spinning ship wheel unmanned against grey horizon, photorealistic maritime drama, 35mm film"
+    },
+    {
+      "text": "Inside the captain's cabin, personal belongings lay untouched, yet the ship's navigation instruments and single lifeboat were gone.",
+      "visual": "eerie cinematic view inside Captain Briggs's wood-paneled cabin, child's harmonium organ and toys on floor, open sea chart with brass dividers on desk, shaft of pale ocean light illuminating dust motes, 35mm film"
+    },
+    {
+      "text": "In the dark hold sat seventeen hundred barrels of raw industrial alcohol—nine of them mysteriously empty.",
+      "visual": "dark cavernous ship cargo hold, hundreds of stacked wooden oak barrels strapped with iron hoops, faint visible alcohol vapor mist hovering in lantern light, wet bilge water reflecting lantern gleam, intense tension"
+    },
+    {
+      "text": "Did escaping alcohol fumes spark fear of an imminent explosion, forcing the crew into a doomed open lifeboat?",
+      "visual": "dramatic wide oceanic storm shot of a tiny wooden lifeboat with terrified silhouettes fighting towering black Atlantic ocean waves in torrential rain, distant silhouette of Mary Celeste drifting away, tragic historical drama, 35mm film"
+    },
+    {
+      "text": "A century and a half later, the fate of her ten passengers remains the sea's greatest unsolved riddle. Subscribe to Beyond History for more.",
+      "visual": "cinematic pull back from the wooden bow of Mary Celeste gliding through ethereal morning sea fog, sun rays cutting through misty ocean spray, haunting beautiful maritime mystery finale, 35mm film",
+      "gap": 0.3
+    }
+  ]
+}

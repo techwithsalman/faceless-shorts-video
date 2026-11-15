@@ -1,0 +1,40 @@
+{
+ "duration": 12.806,
+ "cues": [
+  {
+   "t": 0.05,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 2.58,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 2.73,
+   "type": "thud",
+   "gain": 0.6
+  },
+  {
+   "t": 6.808,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 6.958,
+   "type": "slam",
+   "gain": 0.5
+  },
+  {
+   "t": 10.308,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 10.458,
+   "type": "thud",
+   "gain": 0.6
+  }
+ ]
+}

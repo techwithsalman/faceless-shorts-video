@@ -1,0 +1,59 @@
+{
+  "topic": "The Black Death — When Half of Europe Vanished (1347–1351)",
+  "channel": "@Beyond_History_0",
+  "historical_validation": {
+    "primary_sources": [
+      "Giovanni Boccaccio, The Decameron (introduction describing Florence 1348)",
+      "Michele da Piazza, Chronica (arrival of Genoese galleys at Messina, October 1347)",
+      "Contemporary parish mortality records and modern paleogenetic Yersinia pestis sequencing"
+    ],
+    "factual_corrections": [
+      "The iconic beaked plague doctor mask with aromatic herbs was formalized later by Charles de Lorme in 1619, but visual symbolism serves historical Shorts education if noted; 14th century physicians wore hooded waxed robes and linen masks.",
+      "Transmission was driven by rat fleas (Xenopsylla cheopis) and pneumonic human-to-human transmission in winter."
+    ]
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "name": "ghost_ships_hook",
+      "text": "In October 1347, twelve Genoese ghost galleys drifted into Sicily carrying dead sailors and an invisible nightmare.",
+      "visual_prompt": "moody dark medieval harbor of Messina at twilight, fog rolling across water, dark wooden Genoese merchant galleys with ragged sails drifting silently into port, silhouettes of petrified harbor guards holding lanterns on the stone docks, cinematic 35mm film photograph, historical drama",
+      "sound_cues": ["creaking_galley_hull", "distant_foghorn", "ominous_cello_drone"]
+    },
+    {
+      "id": 2,
+      "name": "spreading_pestilence",
+      "text": "Within weeks, the Black Death swept across Europe, striking with agonizing swellings and high fever.",
+      "visual_prompt": "candlelit 14th-century European stone infirmary, sick citizens resting on straw pallets, hooded medieval monks whispering prayers, dramatic chiaroscuro lighting, deep shadows, authentic medieval wool garments, photorealistic historical documentary, 35mm film",
+      "sound_cues": ["sombre_church_chimes", "whispered_latin_chants", "flickering_candle_flame"]
+    },
+    {
+      "id": 3,
+      "name": "beaked_doctor",
+      "text": "Physicians roamed desolate cobblestone alleys in hooded robes and aromatic beaked masks, powerless against the plague.",
+      "visual_prompt": "dramatic medium shot of a plague doctor wearing a dark wax-treated coat, wide-brimmed leather hat, and iconic curved beak mask with glass eye-openings, holding a wooden pointer cane in a deserted rainy cobblestone medieval street, photorealistic, 35mm film",
+      "sound_cues": ["wooden_cane_taps", "rain_on_cobblestones", "wind_howl"]
+    },
+    {
+      "id": 4,
+      "name": "empty_cities",
+      "text": "Between thirty and sixty percent of Europe's entire population perished, leaving whole villages completely silent.",
+      "visual_prompt": "haunting wide shot of an abandoned medieval village at dawn, overgrown paths, empty timber-framed houses with hanging open shutters, church bell tower standing solitary against misty grey sky, mournful cinematic mood",
+      "sound_cues": ["solitary_death_bell", "distant_crow_call", "low_bass_rumble"]
+    },
+    {
+      "id": 5,
+      "name": "social_upheaval",
+      "text": "Yet from this catastrophic collapse of feudalism arose higher wages, peasant autonomy, and the dawn of the Renaissance.",
+      "visual_prompt": "medieval stone guildhall at golden morning light, skilled master masons and carpenters rebuilding a stone cathedral facade, new iron tools and vibrant Renaissance dawn light breaking through dark clouds, cinematic historical recovery",
+      "sound_cues": ["stonemason_chisel_strikes", "optimistic_brass_swell", "morning_birds"]
+    },
+    {
+      "id": 6,
+      "name": "legacy_cta",
+      "text": "Humanity's darkest hour reshaped the Western world forever. Subscribe to Beyond History for more.",
+      "visual_prompt": "cinematic pull-back over an ancient medieval manuscript illuminated with gold leaf depicting the wheel of fortune, resting on a dark oak desk beside an hourglass with flowing sand, glowing warm candlelight, epic documentary finale",
+      "sound_cues": ["triumphant_sombre_coda", "clock_ticking_echo", "final_sub_drop"]
+    }
+  ]
+}

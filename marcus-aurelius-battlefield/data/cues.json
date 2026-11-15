@@ -1,0 +1,85 @@
+{
+ "duration": 43.425,
+ "cues": [
+  {
+   "t": 0,
+   "type": "cinematic_impact",
+   "gain": 0.95
+  },
+  {
+   "t": 0.05,
+   "type": "foley_winter_wind",
+   "dur": 6.2,
+   "gain": 0.55
+  },
+  {
+   "t": 6.5,
+   "type": "foley_war_horn",
+   "dur": 3.5,
+   "gain": 0.7
+  },
+  {
+   "t": 6.6,
+   "type": "foley_snow_march",
+   "dur": 6.2,
+   "gain": 0.65
+  },
+  {
+   "t": 13.024,
+   "type": "sub_drop",
+   "gain": 0.6
+  },
+  {
+   "t": 13.124,
+   "type": "foley_winter_wind",
+   "dur": 4.8,
+   "gain": 0.5
+  },
+  {
+   "t": 17.948,
+   "type": "foley_fire_crackle",
+   "dur": 5,
+   "gain": 0.6
+  },
+  {
+   "t": 18.198,
+   "type": "foley_quill_scratch",
+   "dur": 4.5,
+   "gain": 0.55
+  },
+  {
+   "t": 23.018,
+   "type": "cinematic_impact",
+   "gain": 0.85
+  },
+  {
+   "t": 23.118,
+   "type": "foley_fire_crackle",
+   "dur": 5.5,
+   "gain": 0.5
+  },
+  {
+   "t": 29.007,
+   "type": "war_drum",
+   "gain": 0.75
+  },
+  {
+   "t": 29.107,
+   "type": "foley_winter_wind",
+   "dur": 4.2,
+   "gain": 0.45
+  },
+  {
+   "t": 33.463,
+   "type": "triumph_brass",
+   "dur": 4,
+   "gain": 0.7
+  },
+  {
+   "t": 33.663,
+   "type": "bell_toll",
+   "dur": 5.5,
+   "gain": 0.55
+  }
+ ]
+}

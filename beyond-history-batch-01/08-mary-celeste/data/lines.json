@@ -1,0 +1,43 @@
+{
+ "duration": 49.189,
+ "voice": "bm_george",
+ "speed": 1.11,
+ "lines": [
+  {
+   "i": 0,
+   "text": "In December 1872, sailors spotted a merchant brigantine drifting aimlessly across the Atlantic under full canvas.",
+   "start": 0.25,
+   "end": 9.734
+  },
+  {
+   "i": 1,
+   "text": "Boarding the vessel, rescuers found the ship completely seaworthy, but every single soul had vanished without a trace.",
+   "start": 9.854,
+   "end": 16.446
+  },
+  {
+   "i": 2,
+   "text": "Inside the captain's cabin, personal belongings lay untouched, yet the ship's navigation instruments and single lifeboat were gone.",
+   "start": 16.566,
+   "end": 24.364
+  },
+  {
+   "i": 3,
+   "text": "In the dark hold sat seventeen hundred barrels of raw industrial alcohol\u00e2\u20ac\u201dnine of them mysteriously empty.",
+   "start": 24.484,
+   "end": 32.108
+  },
+  {
+   "i": 4,
+   "text": "Did escaping alcohol fumes spark fear of an imminent explosion, forcing the crew into a doomed open lifeboat?",
+   "start": 32.228,
+   "end": 39.456
+  },
+  {
+   "i": 5,
+   "text": "A century and a half later, the fate of her ten passengers remains the sea's greatest unsolved riddle. Subscribe to Beyond History for more.",
+   "start": 39.576,
+   "end": 48.539
+  }
+ ]
+}

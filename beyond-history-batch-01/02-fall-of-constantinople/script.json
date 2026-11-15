@@ -1,0 +1,43 @@
+{
+  "title": "The Fall of Constantinople: The Siege that Ended an Empire",
+  "voice": "bm_george",
+  "speed": 1.04,
+  "lead": 0.25,
+  "outro": 0.8,
+  "gap": 0.2,
+  "music": "constantinople_epic",
+  "character": "weathered 49-year-old Byzantine Emperor Constantine XI Palaiologos with dark greying beard, wearing gilded Roman lamellar cuirass and imperial purple paludamentum cloak",
+  "sources": [
+    "Sphrantzes, Georgios, The Fall of the Byzantine Empire",
+    "Critobulus of Imbros, History of Mehmed the Conqueror",
+    "Niccolo Barbaro, Diary of the Siege of Constantinople (1453)",
+    "Steven Runciman, The Fall of Constantinople 1453 (1965)"
+  ],
+  "lines": [
+    {
+      "text": "For over one thousand years, these colossal stone walls were invincible—until one morning in 1453.",
+      "visual": "colossal triple Theodosian Walls of Constantinople at night, towering stone bastions and deep moats, Ottoman siege trenches and burning fires stretching to the horizon, dark misty dusk, 35mm film"
+    },
+    {
+      "text": "Sultan Mehmed the Second unleashed the greatest super-weapon of the Middle Ages: a bronze cannon firing twelve-hundred-pound boulders.",
+      "visual": "massive Ottoman bronze super-cannon the Basilisk firing on the battlefield, enormous flash of orange fire and black gunpowder smoke, stone masonry crumbling from the ramparts"
+    },
+    {
+      "text": "When Roman chains blocked the harbor, seventy Ottoman warships were dragged entirely overland on greased logs.",
+      "visual": "hundreds of Ottoman soldiers and oxen dragging large wooden war galleys over steep wooded hills on greased timber rollers under torchlight, naval fleet moving across land"
+    },
+    {
+      "text": "On May twenty-ninth, thousands of elite Janissaries stormed the fractured Saint Romanus gate.",
+      "visual": "chaotic breach in the stone walls, waves of Janissaries in white felt caps charging with curved kilij swords and polearms through choking smoke and boiling Greek fire"
+    },
+    {
+      "text": "Refusing to flee, Emperor Constantine the Eleventh tore off his imperial insignia and charged into the breach.",
+      "visual": "dramatic close-up of Emperor Constantine XI in battle-scarred gilded Roman lamellar armor, drawing his sword with intense determination, smoke swirling around his face"
+    },
+    {
+      "text": "The Roman Empire finally fell where its last emperor stood. Subscribe to Beyond History for more epic battles.",
+      "visual": "majestic cinematic dawn shot of Hagia Sophia cathedral rising above the misty Golden Horn as dawn sunlight breaks through clouds, epic documentary pull-back",
+      "gap": 0.3
+    }
+  ]
+}

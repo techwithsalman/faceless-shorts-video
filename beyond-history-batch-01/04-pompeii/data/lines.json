@@ -1,0 +1,43 @@
+{
+ "duration": 48.916,
+ "voice": "bm_george",
+ "speed": 1.09,
+ "lines": [
+  {
+   "i": 0,
+   "text": "In seventy-nine AD, Mount Vesuvius unleashed a fury one hundred thousand times greater than an atomic blast.",
+   "start": 0.25,
+   "end": 7.649
+  },
+  {
+   "i": 1,
+   "text": "For hours, Pompeii was buried beneath falling pumice stone, turning mid-day into pitch-black night.",
+   "start": 7.799,
+   "end": 13.533
+  },
+  {
+   "i": 2,
+   "text": "Then, at dawn, a superheated pyroclastic avalanche roared down the mountain at hurricane speed, freezing an entire city at five hundred degrees.",
+   "start": 13.683,
+   "end": 23.341
+  },
+  {
+   "i": 3,
+   "text": "Under meters of hardened volcanic debris, Pompeii remained silent and forgotten for nearly two thousand years.",
+   "start": 23.491,
+   "end": 30.388
+  },
+  {
+   "i": 4,
+   "text": "Centuries later, archaeologists poured plaster into hollow voids in the ash, revealing the harrowing final moments of Roman citizens frozen mid-breath.",
+   "start": 30.538,
+   "end": 40.5
+  },
+  {
+   "i": 5,
+   "text": "A bustling metropolis vanished in hours, perfectly preserved in eternal stone. Subscribe to Beyond History for more.",
+   "start": 40.65,
+   "end": 48.216
+  }
+ ]
+}

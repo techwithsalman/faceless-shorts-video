@@ -1,0 +1,42 @@
+{
+  "title": "The Great Fire of London (1666)",
+  "voice": "bm_george",
+  "speed": 1.08,
+  "lead": 0.25,
+  "outro": 0.4,
+  "gap": 0.15,
+  "music": "london_firestorm",
+  "character": "17th-century Londoner fleeing the fire clutching a brass telescope and leather documents",
+  "sources": [
+    "Samuel Pepys, Diary (September 1666)",
+    "John Evelyn, Diary (September 1666)",
+    "Parliamentary Survey of the City of London (1667)"
+  ],
+  "lines": [
+    {
+      "text": "A single spark in a midnight bakery ignited an inferno so ferocious, it melted the lead roof of Saint Paul's Cathedral.",
+      "visual": "intense macro shot of an ember spark flying from an oven onto dry wooden shavings inside a dark 17th-century London bakery, erupting into fierce orange flames, dramatic lighting, high contrast cinematic photography, 35mm film"
+    },
+    {
+      "text": "Fueled by fierce eastern winds, the firestorm tore through London's overcrowded timber-framed streets, turning entire neighborhoods to ash.",
+      "visual": "terrifying wide shot of timber-and-pitch Tudor buildings engulfed in a raging wall of fire along narrow cobblestone streets, dense black smoke billowing into the night sky, fiery embers showering the ground, photorealistic historical drama, 35mm film"
+    },
+    {
+      "text": "Panic-stricken citizens crowded the River Thames in rowboats, watching four hundred streets vanish into a glowing wall of fire.",
+      "visual": "dramatic view from the River Thames crowded with wooden rowboats filled with fleeing Londoners clutching chests and belongings, the dark water reflecting the blazing orange skyline of London on fire, 17th-century costumes, 35mm film"
+    },
+    {
+      "text": "Old Saint Paul's Cathedral collapsed as six acres of lead roof melted into molten streams cascading down the city hills.",
+      "visual": "spectacular devastating shot of Old Saint Paul's gothic cathedral burning fiercely from within, liquid molten lead streaming like a glowing silver-orange river down the stone steps and cobblestones, thick black smoke, cinematic historical masterpiece"
+    },
+    {
+      "text": "Only by detonating gunpowder charges to blow up entire rows of houses was the devastating inferno finally halted.",
+      "visual": "dramatic shot of royal engineers detonating gunpowder barrels, building exploding in a cloud of dust and masonry to create a firebreak barrier, soldiers holding back the flames against a smoky dawn horizon, 35mm film"
+    },
+    {
+      "text": "From London's smoking ashes rose Sir Christopher Wren's stone masterpiece. Subscribe to Beyond History for more.",
+      "visual": "cinematic pull back from the newly built iconic stone dome of St Paul's Cathedral gleaming in clean morning sunlight above rebuilt brick London, birds soaring in blue sky, inspiring historical recovery, 35mm film",
+      "gap": 0.3
+    }
+  ]
+}

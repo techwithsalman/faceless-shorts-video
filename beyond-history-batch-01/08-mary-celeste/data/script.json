@@ -1,0 +1,59 @@
+{
+  "topic": "Mary Celeste — The Ghost Ship of the Atlantic (1872)",
+  "channel": "@Beyond_History_0",
+  "historical_validation": {
+    "primary_sources": [
+      "Gibraltar Vice-Admiralty Court Inquiry Records (December 1872 – March 1873)",
+      "Logbook of the Dei Gratia (Captain David Morehouse)",
+      "Mary Celeste Official Cargo Manifest (1,701 barrels of denatured industrial alcohol)"
+    ],
+    "factual_corrections": [
+      "Debunking Arthur Conan Doyle's fictional story: There were NO warm cups of tea, half-eaten breakfasts, or steaming bowls of soup on the tables. The ship's single lifeboat was missing, along with the chronometer, sextant, and ship's register.",
+      "The ship was found fully seaworthy with about 3.5 feet of water in the hold (manageable for a brig of her size), and 9 empty alcohol barrels with vapor leakage possibly provoking panic of an explosion."
+    ]
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "name": "ghost_ship_hook",
+      "text": "In December 1872, sailors spotted a merchant brigantine drifting aimlessly across the Atlantic under full canvas.",
+      "visual_prompt": "moody wide shot of the two-masted merchant brigantine Mary Celeste sailing erratically on choppy grey Atlantic swells under overcast stormy skies, tattered sails billowing, no crew visible on deck, mysterious cinematic maritime photography, 35mm film",
+      "sound_cues": ["creaking_ship_timbers", "ocean_swell_splash", "lonely_foghorn_drone"]
+    },
+    {
+      "id": 2,
+      "name": "boarding_deserted_deck",
+      "text": "Boarding the vessel, rescuers found the ship completely seaworthy, but every single soul had vanished without a trace.",
+      "visual_prompt": "atmospheric first-person perspective stepping onto the wet, deserted wooden deck of Mary Celeste, uncoiled ropes trailing into sea, spinning ship wheel unmanned against grey horizon, photorealistic maritime drama, 35mm film",
+      "sound_cues": ["wooden_deck_footsteps", "flapping_canvas_sail", "wind_whistle_rigging"]
+    },
+    {
+      "id": 3,
+      "name": "untouched_cabin",
+      "text": "Inside the captain's cabin, personal belongings lay untouched, yet the ship's navigation instruments and single lifeboat were gone.",
+      "visual_prompt": "eerie cinematic view inside Captain Briggs's wood-paneled cabin, child's harmonium organ and toys on floor, open sea chart with brass dividers on desk, shaft of pale ocean light illuminating dust motes, 35mm film",
+      "sound_cues": ["ticking_brass_clock", "creaking_cabin_bulkhead", "eerie_high_string_chime"]
+    },
+    {
+      "id": 4,
+      "name": "alcohol_cargo_mystery",
+      "text": "In the dark hold sat seventeen hundred barrels of raw industrial alcohol—nine of them mysteriously empty.",
+      "visual_prompt": "dark cavernous ship cargo hold, hundreds of stacked wooden oak barrels strapped with iron hoops, faint visible alcohol vapor mist hovering in lantern light, wet bilge water reflecting lantern gleam, intense tension",
+      "sound_cues": ["sloshing_liquid_bilge", "deep_sub_rumble", "creaking_iron_bands"]
+    },
+    {
+      "id": 5,
+      "name": "vapor_panic_theory",
+      "text": "Did escaping alcohol fumes spark fear of an imminent explosion, forcing the crew into a doomed open lifeboat?",
+      "visual_prompt": "dramatic wide oceanic storm shot of a tiny wooden lifeboat with terrified silhouettes fighting towering black Atlantic ocean waves in torrential rain, distant silhouette of Mary Celeste drifting away, tragic historical drama, 35mm film",
+      "sound_cues": ["thunderclap_distant", "roaring_ocean_wave", "haunting_cellos"]
+    },
+    {
+      "id": 6,
+      "name": "unsolved_legacy",
+      "text": "A century and a half later, the fate of her ten passengers remains the sea's greatest unsolved riddle. Subscribe to Beyond History for more.",
+      "visual_prompt": "cinematic pull back from the wooden bow of Mary Celeste gliding through ethereal morning sea fog, sun rays cutting through misty ocean spray, haunting beautiful maritime mystery finale, 35mm film",
+      "sound_cues": ["mournful_orchestral_coda", "seagull_cry_distant", "final_sub_drop"]
+    }
+  ]
+}

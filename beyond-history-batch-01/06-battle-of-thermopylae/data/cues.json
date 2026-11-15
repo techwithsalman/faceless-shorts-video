@@ -1,0 +1,75 @@
+{
+ "duration": 49.47,
+ "cues": [
+  {
+   "t": 0,
+   "type": "cinematic_impact",
+   "gain": 1
+  },
+  {
+   "t": 0.05,
+   "type": "slam",
+   "gain": 0.9
+  },
+  {
+   "t": 0.2,
+   "type": "foley_war_horn",
+   "dur": 4.5,
+   "gain": 0.7
+  },
+  {
+   "t": 9.151,
+   "type": "thud",
+   "gain": 0.8
+  },
+  {
+   "t": 9.251,
+   "type": "war_drum",
+   "gain": 0.75
+  },
+  {
+   "t": 17.187,
+   "type": "slam",
+   "gain": 0.95
+  },
+  {
+   "t": 17.287,
+   "type": "whoosh",
+   "gain": 0.7
+  },
+  {
+   "t": 25.37,
+   "type": "foley_winter_wind",
+   "dur": 5.5,
+   "gain": 0.5
+  },
+  {
+   "t": 25.57,
+   "type": "sub_drop",
+   "gain": 0.65
+  },
+  {
+   "t": 33.195,
+   "type": "foley_war_horn",
+   "dur": 5,
+   "gain": 0.85
+  },
+  {
+   "t": 33.345,
+   "type": "war_drum",
+   "gain": 0.8
+  },
+  {
+   "t": 41.008,
+   "type": "triumph_brass",
+   "dur": 5.5,
+   "gain": 0.85
+  },
+  {
+   "t": 41.258,
+   "type": "bell_toll",
+   "dur": 6,
+   "gain": 0.55
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+{
+  "title": "The Library of Alexandria: The Truth Behind History's Greatest Loss",
+  "voice": "bm_george",
+  "speed": 1.04,
+  "lead": 0.25,
+  "outro": 0.8,
+  "gap": 0.2,
+  "music": "alexandria_mystery",
+  "character": "weathered 55-year-old Greek scholar with trimmed grey beard in white linen himation, studying papyrus scrolls in the colonnaded Great Library of Alexandria",
+  "sources": [
+    "Plutarch, Life of Caesar",
+    "Strabo, Geography (Book XVII, Alexandria and the Museion)",
+    "Ammianus Marcellinus, Roman History (Book XXII)",
+    "Luciano Canfora, The Vanished Library (1989)"
+  ],
+  "lines": [
+    {
+      "text": "Over four hundred thousand ancient books vanished from history, but not the way you were told.",
+      "visual": "magnificent colonnaded grand hall of the Library of Alexandria at dawn, towering marble pillars, wooden cubbies holding thousands of papyrus scrolls, sunlight streaming through high clerestory windows, cinematic 35mm film"
+    },
+    {
+      "text": "By royal decree, every ship docking in Alexandria was searched, and all scrolls were confiscated to be copied.",
+      "visual": "bustling ancient harbor of Alexandria with Ptolemaic scribes and royal guards inspecting wooden merchant galleys, inspecting crates of papyrus scrolls, warm Mediterranean morning light"
+    },
+    {
+      "text": "Popular legend blames a single catastrophic fire set by Julius Caesar in forty-eight BC.",
+      "visual": "dramatic wide shot of the harbor of Alexandria at night, Roman wooden galleys ablaze with roaring fire, dark smoke billowing across the water, orange flames casting reflections on stone quays"
+    },
+    {
+      "text": "Yet historical records reveal the truth was far more tragic: centuries of civil war, neglect, and budget cuts.",
+      "visual": "decaying marble colonnade of the ancient library during late Roman civil strife, cracked stone arches, dust motes floating in abandoned quiet corridors, shadows encroaching"
+    },
+    {
+      "text": "The greatest library on Earth wasn't destroyed in one afternoon—it was slowly starved of care and quietly forgotten.",
+      "visual": "close-up of weathered scholar hands gently touching a crumbling Greek papyrus scroll under flickering bronze oil lamp, detailed skin pores, dust particles in the warm amber glow"
+    },
+    {
+      "text": "Human knowledge wasn't conquered by fire, but by indifference. Subscribe to Beyond History for more lost stories.",
+      "visual": "majestic cinematic view of the Pharos Lighthouse of Alexandria towering over the sparkling Mediterranean sea at golden hour, epic cinematic documentary pull-back",
+      "gap": 0.3
+    }
+  ]
+}

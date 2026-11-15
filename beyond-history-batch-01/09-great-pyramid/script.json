@@ -1,0 +1,42 @@
+{
+  "title": "The Great Pyramid of Giza (2560 BC)",
+  "voice": "bm_george",
+  "speed": 1.20,
+  "lead": 0.25,
+  "outro": 0.35,
+  "gap": 0.10,
+  "music": "egypt_eternity",
+  "character": "Ancient Egyptian royal architect holding papyrus blueprints and copper measuring cord",
+  "sources": [
+    "The Diary of Merer (Papyrus Jarf, 2013)",
+    "Mark Lehner & Zahi Hawass Giza Worker's Village excavations",
+    "Petrie, Pyramids and Temples of Gizeh"
+  ],
+  "lines": [
+    {
+      "text": "Forty-five centuries ago, ancient Egyptians aligned two million stone blocks to true north with near-zero error—without pulleys, iron, or wheels.",
+      "visual": "epic low angle shot of the Great Pyramid of Giza rising majestically into golden morning desert sky, gleaming white polished casing stones reflecting brilliant sunlight, cinematic scale, high contrast, photorealistic documentary, 35mm film"
+    },
+    {
+      "text": "Over twenty thousand skilled workers cut massive limestone blocks with copper chisels and dragged them across wet desert sands.",
+      "visual": "cinematic action shot of ancient Egyptian stonemasons and quarry teams hauling a colossal 2-ton limestone block on a wooden sledge over wet sand lubricated with water, muscles strained under desert sun, photorealistic historical drama, 35mm film"
+    },
+    {
+      "text": "The recently discovered Diary of Merer reveals elite crews ferried white casing stones along artificial canals straight from the Nile.",
+      "visual": "wide establishing shot of an ancient Egyptian wooden transport barge heavily laden with white Tura limestone gliding along an artificial Giza harbor canal connected to the blue Nile, palm trees on banks, pyramids in background, 35mm film"
+    },
+    {
+      "text": "Inside the monument, builders constructed the soaring Grand Gallery, balancing colossal granite beams weighing sixty tons each.",
+      "visual": "dramatic interior shot looking up the steep corbelled stone vault of the Grand Gallery inside the Great Pyramid, illuminated by flickering torchlight held by modern archaeologists, geometric precision of ancient masonry, 35mm film"
+    },
+    {
+      "text": "Each side faces cardinal directions with accuracy surpassing modern architecture, built as an eternal cosmic stairway for Pharaoh Khufu.",
+      "visual": "breathtaking twilight view of the Great Pyramid aligned directly beneath the celestial rotation of the circumpolar stars and Orion's belt, glittering starry Egyptian night sky, golden rim light on pyramid apex, 35mm film"
+    },
+    {
+      "text": "The sole surviving Ancient Wonder of the World still defies explanation. Subscribe to Beyond History for more.",
+      "visual": "cinematic pull back from the golden pyramidion apex of the Great Pyramid into a high aerial view of the Giza plateau at golden sunset, shimmering heat haze over endless Sahara dunes, epic documentary finale",
+      "gap": 0.3
+    }
+  ]
+}

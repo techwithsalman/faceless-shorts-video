@@ -1,0 +1,59 @@
+{
+  "topic": "The Great Fire of London — 4 Days of Pure Hell (1666)",
+  "channel": "@Beyond_History_0",
+  "historical_validation": {
+    "primary_sources": [
+      "Samuel Pepys, Diary (September 2–7, 1666 entry witnessing the fire from the Tower of London and Thames)",
+      "John Evelyn, Diary (descriptions of St Paul's Cathedral melting lead)",
+      "Official Parliamentary Survey of the Ruins (1667)"
+    ],
+    "factual_corrections": [
+      "The fire began shortly after midnight on Sunday, September 2, 1666, at Thomas Farriner's bakery on Pudding Lane.",
+      "While official death counts were recorded as under ten people due to failure to register poor citizens, indirect casualties and exposure deaths numbered in the hundreds; over 13,000 houses and 87 churches were completely destroyed."
+    ]
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "name": "spark_hook",
+      "text": "A single spark in a midnight bakery ignited an inferno so ferocious, it melted the lead roof of Saint Paul's Cathedral.",
+      "visual_prompt": "intense macro shot of an ember spark flying from an oven onto dry wooden shavings inside a dark 17th-century London bakery, erupting into fierce orange flames, dramatic lighting, high contrast cinematic photography, 35mm film",
+      "sound_cues": ["spark_crackle", "sudden_fire_whoosh", "deep_sub_impact"]
+    },
+    {
+      "id": 2,
+      "name": "timber_firestorm",
+      "text": "Fueled by fierce eastern winds, the firestorm tore through London's overcrowded timber-framed streets, turning entire neighborhoods to ash.",
+      "visual_prompt": "terrifying wide shot of timber-and-pitch Tudor buildings engulfed in a raging wall of fire along narrow cobblestone streets, dense black smoke billowing into the night sky, fiery embers showering the ground, photorealistic historical drama, 35mm film",
+      "sound_cues": ["timber_roof_collapse", "raging_firestorm_roar", "distant_alarm_bells"]
+    },
+    {
+      "id": 3,
+      "name": "thames_evacuation",
+      "text": "Panic-stricken citizens crowded the River Thames in rowboats, watching four hundred streets vanish into a glowing wall of fire.",
+      "visual_prompt": "dramatic view from the River Thames crowded with wooden rowboats filled with fleeing Londoners clutching chests and belongings, the dark water reflecting the blazing orange skyline of London on fire, 17th-century costumes, 35mm film",
+      "sound_cues": ["water_lapping_oars", "shouting_crowds_muffled", "crackling_blaze_echo"]
+    },
+    {
+      "id": 4,
+      "name": "st_pauls_melting",
+      "text": "Old Saint Paul's Cathedral collapsed as six acres of lead roof melted into molten streams cascading down the city hills.",
+      "visual_prompt": "spectacular devastating shot of Old Saint Paul's gothic cathedral burning fiercely from within, liquid molten lead streaming like a glowing silver-orange river down the stone steps and cobblestones, thick black smoke, cinematic historical masterpiece",
+      "sound_cues": ["stone_vault_shatter", "liquid_lead_hiss", "heavy_bass_drone"]
+    },
+    {
+      "id": 5,
+      "name": "gunpowder_firebreaks",
+      "text": "Only by detonating gunpowder charges to blow up entire rows of houses was the devastating inferno finally halted.",
+      "visual_prompt": "dramatic shot of royal engineers detonating gunpowder barrels, building exploding in a cloud of dust and masonry to create a firebreak barrier, soldiers holding back the flames against a smoky dawn horizon, 35mm film",
+      "sound_cues": ["gunpowder_explosion_boom", "falling_masonry", "gale_wind_gust"]
+    },
+    {
+      "id": 6,
+      "name": "christopher_wren_legacy",
+      "text": "From London's smoking ashes rose Sir Christopher Wren's stone masterpiece. Subscribe to Beyond History for more.",
+      "visual_prompt": "cinematic pull back from the newly built iconic stone dome of St Paul's Cathedral gleaming in clean morning sunlight above rebuilt brick London, birds soaring in blue sky, inspiring historical recovery, 35mm film",
+      "sound_cues": ["triumphant_orchestral_chords", "morning_bells", "final_sub_drop"]
+    }
+  ]
+}

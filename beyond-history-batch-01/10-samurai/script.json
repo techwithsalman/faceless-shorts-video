@@ -1,0 +1,42 @@
+{
+  "title": "The Samurai: Honour, Steel, and Bushido",
+  "voice": "bm_george",
+  "speed": 1.18,
+  "lead": 0.25,
+  "outro": 0.35,
+  "gap": 0.10,
+  "music": "samurai_spirit",
+  "character": "Master samurai in traditional black and gold lacquered kabuto helmet and armor holding katana",
+  "sources": [
+    "Miyamoto Musashi, The Book of Five Rings (Go Rin No Sho, 1645)",
+    "Yamamoto Tsunetomo, Hagakure",
+    "Heike Monogatari"
+  ],
+  "lines": [
+    {
+      "text": "To a samurai, surrendering meant spiritual death—their razor-sharp katana was revered as the living vessel of their very soul.",
+      "visual": "extreme macro cinematic shot of a master samurai slowly unsheathing a polished tamahagane katana blade from a black lacquered scabbard, exquisite wavy hamon temper line catching cold steel light, high contrast dramatic photography, 35mm film"
+    },
+    {
+      "text": "Master swordsmiths folded iron sand twenty times, forging weapons capable of cleaving armor with terrifying elegance.",
+      "visual": "intense atmospheric shot of a traditional Japanese swordsmith in white robes striking glowing orange steel on an anvil, sparks showering the dark wooden workshop, glowing coals illuminating smoke, photorealistic historical documentary, 35mm film"
+    },
+    {
+      "text": "Bound by Bushido—the Way of the Warrior—they lived by seven sacred virtues: courage, respect, and unflinching loyalty.",
+      "visual": "contemplative medium shot of an armored samurai warrior kneeling in seiza meditation inside a tranquil wooden temple garden, falling cherry blossom petals drifting around his kabuto horned helmet, soft morning sunlight, 35mm film"
+    },
+    {
+      "text": "During the brutal Sengoku civil wars, massive armies clashed with spears, bows, and matchlock muskets to unite Japan.",
+      "visual": "epic wide battlefield shot in feudal Japan, ranks of armored samurai ashigaru marching forward under waving clan banners and mon crests through morning battlefield fog, smoke and war banners fluttering, dramatic cinematic composition, 35mm film"
+    },
+    {
+      "text": "Legendary duelists like Miyamoto Musashi mastered the blade not merely to kill, but to attain supreme inner enlightenment.",
+      "visual": "dramatic silhouette of a solitary master swordsman holding two swords in niten ichi-ryu stance on a windswept hill against a colossal fiery blood-orange sunset, wind whipping through robes, epic cinematic cinema, 35mm film"
+    },
+    {
+      "text": "Though their era ended, the indomitable warrior spirit echoes forever. Subscribe to Beyond History for more.",
+      "visual": "cinematic pull back from an antique antique samurai suit of armor standing in dignified repose inside a tatami hall, warm golden light streaming through shoji screens, dust motes floating gracefully, poignant documentary finale",
+      "gap": 0.3
+    }
+  ]
+}

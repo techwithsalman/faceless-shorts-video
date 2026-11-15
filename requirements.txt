@@ -1,0 +1,25 @@
+# Beyond History / Faceless Shorts Engine Dependencies
+# Requires Python 3.10+ (Python 3.11 recommended)
+# 100% Free, Local, Offline. Zero Paid APIs.
+
+# Image Generation & Diffusion Pipelines
+diffusers>=0.30.0
+transformers>=4.40.0
+accelerate>=0.30.0
+safetensors>=0.4.0
+
+# Speech Synthesis (Kokoro-82M ONNX)
+kokoro-onnx>=0.6.0
+onnxruntime>=1.18.0
+
+# Subtitle Alignment & Audio Processing
+faster-whisper>=1.0.0
+soundfile>=0.12.0
+scipy>=1.11.0
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# PyTorch Note:
+# PyTorch is installed automatically via setup_office_pc.ps1 according to hardware:
+#   For NVIDIA GPU: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#   For CPU-only:   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu

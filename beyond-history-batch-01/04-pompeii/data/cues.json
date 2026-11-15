@@ -1,0 +1,82 @@
+{
+ "duration": 48.916,
+ "cues": [
+  {
+   "t": 0,
+   "type": "cinematic_impact",
+   "gain": 1
+  },
+  {
+   "t": 0.05,
+   "type": "slam",
+   "gain": 0.9
+  },
+  {
+   "t": 0.2,
+   "type": "foley_fire_crackle",
+   "dur": 6.5,
+   "gain": 0.65
+  },
+  {
+   "t": 7.759,
+   "type": "whoosh",
+   "gain": 0.65
+  },
+  {
+   "t": 7.859,
+   "type": "slide",
+   "dur": 4.5,
+   "gain": 0.6
+  },
+  {
+   "t": 13.643,
+   "type": "sub_drop",
+   "gain": 0.85
+  },
+  {
+   "t": 13.693,
+   "type": "slam",
+   "gain": 0.95
+  },
+  {
+   "t": 13.843,
+   "type": "foley_winter_wind",
+   "dur": 7,
+   "gain": 0.7
+  },
+  {
+   "t": 23.451,
+   "type": "bell_toll",
+   "dur": 5.5,
+   "gain": 0.6
+  },
+  {
+   "t": 23.601,
+   "type": "foley_winter_wind",
+   "dur": 6,
+   "gain": 0.4
+  },
+  {
+   "t": 30.498,
+   "type": "thud",
+   "gain": 0.75
+  },
+  {
+   "t": 30.698,
+   "type": "bell_toll",
+   "dur": 6,
+   "gain": 0.5
+  },
+  {
+   "t": 40.61,
+   "type": "triumph_brass",
+   "dur": 5,
+   "gain": 0.8
+  },
+  {
+   "t": 40.91,
+   "type": "sub_drop",
+   "gain": 0.65
+  }
+ ]
+}

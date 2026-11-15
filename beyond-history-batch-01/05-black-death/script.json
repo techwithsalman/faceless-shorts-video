@@ -1,0 +1,42 @@
+{
+  "title": "The Black Death: When Half of Europe Vanished (1347–1351)",
+  "voice": "bm_george",
+  "speed": 1.08,
+  "lead": 0.25,
+  "outro": 0.4,
+  "gap": 0.15,
+  "music": "black_death_requiem",
+  "character": "Medieval European physician wearing hooded wool robes and linen mask",
+  "sources": [
+    "Giovanni Boccaccio, The Decameron (1348)",
+    "Michele da Piazza, Chronica (Messina arrival October 1347)",
+    "Modern paleogenetic sequencing of Yersinia pestis"
+  ],
+  "lines": [
+    {
+      "text": "In October 1347, twelve Genoese ghost galleys drifted into Sicily carrying dead sailors and an invisible nightmare.",
+      "visual": "moody dark medieval harbor of Messina at twilight, fog rolling across water, dark wooden Genoese merchant galleys with ragged sails drifting silently into port, silhouettes of petrified harbor guards holding lanterns on the stone docks, cinematic 35mm film photograph, historical drama"
+    },
+    {
+      "text": "Within weeks, the Black Death swept across Europe, striking with agonizing swellings and high fever.",
+      "visual": "candlelit 14th-century European stone infirmary, sick citizens resting on straw pallets, hooded medieval monks whispering prayers, dramatic chiaroscuro lighting, deep shadows, authentic medieval wool garments, photorealistic historical documentary, 35mm film"
+    },
+    {
+      "text": "Physicians roamed desolate cobblestone alleys in hooded robes and aromatic beaked masks, powerless against the plague.",
+      "visual": "dramatic medium shot of a plague doctor wearing a dark wax-treated coat, wide-brimmed leather hat, and iconic curved beak mask with glass eye-openings, holding a wooden pointer cane in a deserted rainy cobblestone medieval street, photorealistic, 35mm film"
+    },
+    {
+      "text": "Between thirty and sixty percent of Europe's entire population perished, leaving whole villages completely silent.",
+      "visual": "haunting wide shot of an abandoned medieval village at dawn, overgrown paths, empty timber-framed houses with hanging open shutters, church bell tower standing solitary against misty grey sky, mournful cinematic mood"
+    },
+    {
+      "text": "Yet from this catastrophic collapse of feudalism arose higher wages, peasant autonomy, and the dawn of the Renaissance.",
+      "visual": "medieval stone guildhall at golden morning light, skilled master masons and carpenters rebuilding a stone cathedral facade, new iron tools and vibrant Renaissance dawn light breaking through dark clouds, cinematic historical recovery"
+    },
+    {
+      "text": "Humanity's darkest hour reshaped the Western world forever. Subscribe to Beyond History for more.",
+      "visual": "cinematic pull-back over an ancient medieval manuscript illuminated with gold leaf depicting the wheel of fortune, resting on a dark oak desk beside an hourglass with flowing sand, glowing warm candlelight, epic documentary finale",
+      "gap": 0.3
+    }
+  ]
+}

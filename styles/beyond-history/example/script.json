@@ -1,0 +1,28 @@
+{
+  "title": "Marcus Aurelius: The Stoic Emperor",
+  "voice": "bm_george",
+  "speed": 1.02,
+  "lead": 0.3,
+  "outro": 0.8,
+  "gap": 0.2,
+  "music": "tension",
+  "sources": [
+    "Marcus Aurelius, Meditations (written on the Danubian frontier during the Marcomannic Wars, 170-180 AD)",
+    "Historia Augusta: Life of Marcus Aurelius"
+  ],
+  "lines": [
+    {
+      "text": "In the freezing forests of Germania,"
+    },
+    {
+      "text": "Emperor Marcus Aurelius fought twelve brutal years of war."
+    },
+    {
+      "text": "Yet every night, the ruler of Rome wrote to himself:"
+    },
+    {
+      "text": "conquer your own mind.",
+      "gap": 0.3
+    }
+  ]
+}

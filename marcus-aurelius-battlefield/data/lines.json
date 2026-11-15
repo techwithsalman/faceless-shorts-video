@@ -1,0 +1,49 @@
+{
+ "duration": 43.425,
+ "voice": "bm_george",
+ "speed": 1.04,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Most Roman emperors died in luxury, but one walked directly into the frozen jaws of war.",
+   "start": 0.25,
+   "end": 6.34
+  },
+  {
+   "i": 1,
+   "text": "For fourteen brutal years, Marcus Aurelius fought barbarian invasions along the icy Danube.",
+   "start": 6.54,
+   "end": 12.864
+  },
+  {
+   "i": 2,
+   "text": "While plague ravaged Rome, the emperor endured freezing mud and betrayal.",
+   "start": 13.064,
+   "end": 17.788
+  },
+  {
+   "i": 3,
+   "text": "Yet every night, by candlelight in his command tent, he opened a private journal:",
+   "start": 17.988,
+   "end": 22.678
+  },
+  {
+   "i": 4,
+   "text": "You have power over your mind, not outside events. Realize this, and you will find strength.",
+   "start": 23.058,
+   "end": 28.847
+  },
+  {
+   "i": 5,
+   "text": "He didn't fight to conquer foreign nations, but to conquer his own fear.",
+   "start": 29.047,
+   "end": 33.303
+  },
+  {
+   "i": 6,
+   "text": "Marcus Aurelius died on the frontier, leaving history the greatest book of wisdom: Meditations. Subscribe to Beyond History for more.",
+   "start": 33.503,
+   "end": 42.325
+  }
+ ]
+}

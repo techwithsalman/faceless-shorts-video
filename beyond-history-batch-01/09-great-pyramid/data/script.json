@@ -1,0 +1,59 @@
+{
+  "topic": "The Great Pyramid of Giza — Engineering the Impossible (2560 BC)",
+  "channel": "@Beyond_History_0",
+  "historical_validation": {
+    "primary_sources": [
+      "The Diary of Merer (Papyrus Jarf, 2013 discovery of Khufu-era inspector log describing limestone barge transport from Tura)",
+      "Mark Lehner & Zahi Hawass excavations of the Lost City of the Pyramid Builders at Giza",
+      "Petrie, The Pyramids and Temples of Gizeh (1883 astronomical and metrological survey)"
+    ],
+    "factual_corrections": [
+      "Debunking the slave labor myth: Herodotus claimed 100,000 slaves, but archaeology conclusively proves the pyramid was built by well-fed, medically treated, organized Egyptian craftspeople and seasonal farmers residing in the Worker's Village.",
+      "The casing stones were fine white Tura limestone polished to reflect blinding sunlight across Egypt."
+    ]
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "name": "impossible_alignment_hook",
+      "text": "Forty-five centuries ago, ancient Egyptians aligned two million stone blocks to true north with near-zero error—without pulleys, iron, or wheels.",
+      "visual_prompt": "epic low angle shot of the Great Pyramid of Giza rising majestically into golden morning desert sky, gleaming white polished casing stones reflecting brilliant sunlight, cinematic scale, high contrast, photorealistic documentary, 35mm film",
+      "sound_cues": ["desert_wind_whisper", "deep_sub_drone", "ancient_sistrum_shimmer"]
+    },
+    {
+      "id": 2,
+      "name": "worker_quarry_sledges",
+      "text": "Over twenty thousand skilled workers cut massive limestone blocks with copper chisels and dragged them across wet desert sands.",
+      "visual_prompt": "cinematic action shot of ancient Egyptian stonemasons and quarry teams hauling a colossal 2-ton limestone block on a wooden sledge over wet sand lubricated with water, muscles strained under desert sun, photorealistic historical drama, 35mm film",
+      "sound_cues": ["wooden_sledge_creak", "quarry_copper_chisel", "rhythmic_work_chant"]
+    },
+    {
+      "id": 3,
+      "name": "nile_harbor_barges",
+      "text": "The recently discovered Diary of Merer reveals elite crews ferried white casing stones along artificial canals straight from the Nile.",
+      "visual_prompt": "wide establishing shot of an ancient Egyptian wooden transport barge heavily laden with white Tura limestone gliding along an artificial Giza harbor canal connected to the blue Nile, palm trees on banks, pyramids in background, 35mm film",
+      "sound_cues": ["nile_water_flow", "oar_dip_splash", "distant_canal_bells"]
+    },
+    {
+      "id": 4,
+      "name": "internal_grand_gallery",
+      "text": "Inside the monument, builders constructed the soaring Grand Gallery, balancing colossal granite beams weighing sixty tons each.",
+      "visual_prompt": "dramatic interior shot looking up the steep corbelled stone vault of the Grand Gallery inside the Great Pyramid, illuminated by flickering torchlight held by modern archaeologists, geometric precision of ancient masonry, 35mm film",
+      "sound_cues": ["hollow_tomb_echo", "flickering_torch_flame", "stone_weight_groan"]
+    },
+    {
+      "id": 5,
+      "name": "astronomical_precision",
+      "text": "Each side faces cardinal directions with accuracy surpassing modern architecture, built as an eternal cosmic stairway for Pharaoh Khufu.",
+      "visual_prompt": "breathtaking twilight view of the Great Pyramid aligned directly beneath the celestial rotation of the circumpolar stars and Orion's belt, glittering starry Egyptian night sky, golden rim light on pyramid apex, 35mm film",
+      "sound_cues": ["mystical_harp_arpeggio", "cosmic_sub_swell", "night_desert_breeze"]
+    },
+    {
+      "id": 6,
+      "name": "eternal_wonder_legacy",
+      "text": "The sole surviving Ancient Wonder of the World still defies explanation. Subscribe to Beyond History for more.",
+      "visual_prompt": "cinematic pull back from the golden pyramidion apex of the Great Pyramid into a high aerial view of the Giza plateau at golden sunset, shimmering heat haze over endless Sahara dunes, epic documentary finale",
+      "sound_cues": ["triumphant_orchestral_coda", "ancient_horn_fanfare", "final_sub_drop"]
+    }
+  ]
+}

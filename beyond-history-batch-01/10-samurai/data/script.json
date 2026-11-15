@@ -1,0 +1,59 @@
+{
+  "topic": "The Samurai — Honour, Steel, and the Code of Bushido",
+  "channel": "@Beyond_History_0",
+  "historical_validation": {
+    "primary_sources": [
+      "Miyamoto Musashi, The Book of Five Rings (Go Rin No Sho, 1645)",
+      "Yamamoto Tsunetomo, Hagakure (The Book of the Samurai)",
+      "Heike Monogatari (Tale of the Heike, 12th century Kamakura warrior epics)"
+    ],
+    "factual_corrections": [
+      "Early samurai (Kamakura period) were primarily mounted horse archers (yabusame) rather than exclusive swordsmen; the katana became the preeminent symbol and 'soul of the samurai' during the Sengoku and Edo periods.",
+      "Bushido was not an ancient written statute, but an evolving unwritten ethos of loyalty, martial skill, and honor codified during the peaceful Tokugawa shogunate."
+    ]
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "name": "blade_draw_hook",
+      "text": "To a samurai, surrendering meant spiritual death—their razor-sharp katana was revered as the living vessel of their very soul.",
+      "visual_prompt": "extreme macro cinematic shot of a master samurai slowly unsheathing a polished tamahagane katana blade from a black lacquered scabbard, exquisite wavy hamon temper line catching cold steel light, high contrast dramatic photography, 35mm film",
+      "sound_cues": ["katana_draw_metallic_ring", "sharp_blade_whoosh", "deep_taiko_thud"]
+    },
+    {
+      "id": 2,
+      "name": "tamahagane_forge",
+      "text": "Master swordsmiths folded iron sand twenty times, forging weapons capable of cleaving armor with terrifying elegance.",
+      "visual_prompt": "intense atmospheric shot of a traditional Japanese swordsmith in white robes striking glowing orange steel on an anvil, sparks showering the dark wooden workshop, glowing coals illuminating smoke, photorealistic historical documentary, 35mm film",
+      "sound_cues": ["anvil_hammer_strike_rhythm", "glowing_ember_crackle", "water_quench_sizzle"]
+    },
+    {
+      "id": 3,
+      "name": "bushido_meditation",
+      "text": "Bound by Bushido—the Way of the Warrior—they lived by seven sacred virtues: courage, respect, and unflinching loyalty.",
+      "visual_prompt": "contemplative medium shot of an armored samurai warrior kneeling in seiza meditation inside a tranquil wooden temple garden, falling cherry blossom petals drifting around his kabuto horned helmet, soft morning sunlight, 35mm film",
+      "sound_cues": ["bamboo_wind_whisper", "temple_gong_resonance", "shakuhachi_meditation_note"]
+    },
+    {
+      "id": 4,
+      "name": "sengoku_battlefield",
+      "text": "During the brutal Sengoku civil wars, massive armies clashed with spears, bows, and matchlock muskets to unite Japan.",
+      "visual_prompt": "epic wide battlefield shot in feudal Japan, ranks of armored samurai ashigaru marching forward under waving clan banners and mon crests through morning battlefield fog, smoke and war banners fluttering, dramatic cinematic composition, 35mm film",
+      "sound_cues": ["war_taiko_drum_roll", "clattering_armor_march", "distant_conch_horn_blast"]
+    },
+    {
+      "id": 5,
+      "name": "duel_at_sunset",
+      "text": "Legendary duelists like Miyamoto Musashi mastered the blade not merely to kill, but to attain supreme inner enlightenment.",
+      "visual_prompt": "dramatic silhouette of a solitary master swordsman holding two swords in niten ichi-ryu stance on a windswept hill against a colossal fiery blood-orange sunset, wind whipping through robes, epic cinematic cinema, 35mm film",
+      "sound_cues": ["wind_gust_whoosh", "sword_tension_drone", "rapid_heartbeat"]
+    },
+    {
+      "id": 6,
+      "name": "immortal_spirit_legacy",
+      "text": "Though their era ended, the indomitable warrior spirit echoes forever. Subscribe to Beyond History for more.",
+      "visual_prompt": "cinematic pull back from an antique antique samurai suit of armor standing in dignified repose inside a tatami hall, warm golden light streaming through shoji screens, dust motes floating gracefully, poignant documentary finale",
+      "sound_cues": ["triumphant_koto_coda", "peaceful_temple_bell", "final_sub_drop"]
+    }
+  ]
+}

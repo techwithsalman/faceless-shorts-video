@@ -1,0 +1,59 @@
+{
+  "topic": "Pompeii — The Day the Sun Vanished (AD 79)",
+  "channel": "@Beyond_History_0",
+  "historical_validation": {
+    "primary_sources": [
+      "Pliny the Younger, Epistulae VI.16 & VI.20 (letters to Tacitus describing the Plinian eruption column)",
+      "Giuseppe Fiorelli archaeological reports (1863 plaster cast methodology)",
+      "Volcanological analysis of Mount Vesuvius pyroclastic density currents (AD 79)"
+    ],
+    "factual_corrections": [
+      "Citizens in direct pyroclastic surge path died instantly of thermal shock (temperatures exceeding 300°C), rather than slow asphyxiation from ash as previously popularized.",
+      "The eruption column rose over 30 kilometers into the stratosphere, blocking sunlight completely."
+    ]
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "name": "eruption_hook",
+      "text": "In seventy-nine AD, Mount Vesuvius unleashed a fury one hundred thousand times greater than an atomic blast.",
+      "visual_prompt": "terrifying low angle view of Mount Vesuvius exploding into a colossal towering dark ash column reaching into the sky, volcanic lightning crackling inside black smoke, glowing red pumice and lava, Roman villas in foreground, cinematic documentary photography, 35mm film",
+      "sound_cues": ["volcano_explosion", "deep_sub_rumble", "distant_thunder"]
+    },
+    {
+      "id": 2,
+      "name": "falling_pumice",
+      "text": "For hours, Pompeii was buried beneath falling pumice stone, turning mid-day into pitch-black night.",
+      "visual_prompt": "Roman cobblestone street in Pompeii during the eruption, heavy rain of porous white pumice stones accumulating on tiled roofs and pavement, frantic Roman citizens holding pillows over their heads escaping through darkness illuminated only by torchlight, photorealistic historical drama, 35mm film",
+      "sound_cues": ["pumice_falling_rain", "muffled_footsteps", "wooden_roof_creak"]
+    },
+    {
+      "id": 3,
+      "name": "pyroclastic_surge",
+      "text": "Then, at dawn, a superheated pyroclastic avalanche roared down the mountain at hurricane speed, freezing an entire city at five hundred degrees.",
+      "visual_prompt": "a terrifying wall of glowing superheated volcanic ash and incandescent gas avalanche rushing down the slopes of Vesuvius towards ancient Roman town, incinerating everything in its path, high contrast dramatic cinematic lighting, 35mm film",
+      "sound_cues": ["pyroclastic_avalanche_roar", "hurricane_wind_whoosh", "impact_shockwave"]
+    },
+    {
+      "id": 4,
+      "name": "submerged_city",
+      "text": "Under meters of hardened volcanic debris, Pompeii remained silent and forgotten for nearly two thousand years.",
+      "visual_prompt": "wide establishing shot of the silent buried ruins of Pompeii under grey hardened ash layers, broken Roman classical marble columns and crumbling frescoes, morning mist rolling over dormant Vesuvius in background, mournful cinematic archaeological documentary",
+      "sound_cues": ["mournful_wind", "solitary_cello_drone"]
+    },
+    {
+      "id": 5,
+      "name": "plaster_casts",
+      "text": "Centuries later, archaeologists poured plaster into hollow voids in the ash, revealing the harrowing final moments of Roman citizens frozen mid-breath.",
+      "visual_prompt": "haunting detailed macro shot of a plaster cast of a Pompeii victim curled on the ground in self-preservation, authentic plaster texture showing folds of Roman tunic and facial agony, warm soft archaeological spotlight, poignant historical documentary, 35mm film",
+      "sound_cues": ["hollow_chime", "heartbeat_thud", "whispering_wind"]
+    },
+    {
+      "id": 6,
+      "name": "eternal_legacy",
+      "text": "A bustling metropolis vanished in hours, perfectly preserved in eternal stone. Subscribe to Beyond History for more.",
+      "visual_prompt": "dramatic cinematic pull-back across the preserved Roman forum of Pompeii with marble columns pointing toward the distant silhouette of Mount Vesuvius at golden sunset, dust particles glowing in golden sunlight, epic cinematic finale",
+      "sound_cues": ["triumphant_mournful_brass", "wind_fade", "final_sub_drop"]
+    }
+  ]
+}

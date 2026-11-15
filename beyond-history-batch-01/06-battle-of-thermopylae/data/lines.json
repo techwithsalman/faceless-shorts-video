@@ -1,0 +1,43 @@
+{
+ "duration": 49.47,
+ "voice": "bm_george",
+ "speed": 1.11,
+ "lines": [
+  {
+   "i": 0,
+   "text": "When a million Persian warriors demanded Greece surrender her weapons, King Leonidas answered: Molon Labe \u00e2\u20ac\u201d Come and take them.",
+   "start": 0.25,
+   "end": 9.071
+  },
+  {
+   "i": 1,
+   "text": "At the narrow pass of Thermopylae, three hundred elite Spartans locked bronze shields into an impenetrable wall of iron spears.",
+   "start": 9.191,
+   "end": 17.107
+  },
+  {
+   "i": 2,
+   "text": "Wave after wave of Xerxes' elite Immortals charged into the chokepoint, only to be shattered against the disciplined Spartan line.",
+   "start": 17.227,
+   "end": 25.29
+  },
+  {
+   "i": 3,
+   "text": "For two days the Greeks stood unbroken, until a local traitor named Ephialtes revealed a secret mountain path around the pass.",
+   "start": 25.41,
+   "end": 33.115
+  },
+  {
+   "i": 4,
+   "text": "Surrounded on all sides, Leonidas and his men fought to the last broken spear, buying Athens time to prepare victory at sea.",
+   "start": 33.235,
+   "end": 40.928
+  },
+  {
+   "i": 5,
+   "text": "Go tell the Spartans, stranger passing by, that here obedient to their laws we lie. Subscribe to Beyond History for more.",
+   "start": 41.048,
+   "end": 48.82
+  }
+ ]
+}

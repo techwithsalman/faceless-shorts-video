@@ -1,0 +1,29 @@
+{
+  "title": "The Man Who Bought a Bank for $1",
+  "voice": "am_michael",
+  "speed": 1.05,
+  "lead": 0.35,
+  "outro": 1.1,
+  "gap": 0.22,
+  "music": "bounce",
+  "sources": [
+    "BBC On This Day, 26 February 1995: Barings Bank collapses after 1.4 billion dollar rogue trading losses",
+    "The Guardian: How Nick Leeson brought down Britain's oldest merchant bank, founded in 1762",
+    "Bank of England: Dutch financial institution ING takes over Barings Bank for 1 pound token payment"
+  ],
+  "lines": [
+    { "text": "In 1995, a man bought an entire two-hundred-year-old bank", "caps": "In 1995 | a man bought | an entire bank" },
+    { "text": "for exactly one dollar.", "caps": "for exactly | ONE DOLLAR." },
+    { "text": "Barings was Queen Elizabeth's personal bank,", "caps": "Barings was | the Queen's | personal bank," },
+    { "text": "and had funded world empires for centuries.", "caps": "and had funded | world empires | for centuries." },
+    { "text": "Until a twenty-eight-year-old trader in Singapore", "caps": "Until | a 28 year old | trader" },
+    { "text": "secretly gambled on the Japanese stock market,", "caps": "secretly | gambled | on the stock market," },
+    { "text": "and lost over a billion dollars.", "caps": "and lost | OVER A BILLION | dollars." },
+    { "text": "The oldest bank in Britain collapsed overnight.", "caps": "The oldest bank | COLLAPSED | overnight." },
+    { "text": "Panicked regulators scrambled for a buyer,", "caps": "Panicked regulators | scrambled | for a buyer," },
+    { "text": "until a Dutch banker offered to take everything,", "caps": "until a banker | offered | to take everything," },
+    { "text": "for the price of a single chocolate bar.", "caps": "for the price of | a chocolate bar." },
+    { "text": "He walked away owning the royal bank", "caps": "He walked away | owning | the royal bank" },
+    { "text": "for just one single buck.", "caps": "for just | ONE BUCK.", "gap": 0.3 }
+  ]
+}

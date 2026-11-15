@@ -1,0 +1,42 @@
+{
+  "title": "The Terracotta Army: The Secret Underground Empire",
+  "voice": "bm_george",
+  "speed": 1.04,
+  "lead": 0.25,
+  "outro": 0.8,
+  "gap": 0.2,
+  "music": "terracotta_mystery",
+  "character": "First Emperor of China Qin Shi Huang wearing traditional black and red embroidered imperial silk dragon robes and beaded mianguan crown",
+  "sources": [
+    "Sima Qian, Records of the Grand Historian (Shiji, Book 6, The Basic Annals of Qin Shi Huang)",
+    "UNESCO World Heritage Mausoleum of the First Qin Emperor",
+    "Shaanxi Provincial Archaeological Institute (1974-present excavation reports)"
+  ],
+  "lines": [
+    {
+      "text": "In 1974, Chinese farmers digging a well struck something staring back at them beneath the earth.",
+      "visual": "close-up of a farmer shovel striking dry terracotta clay inside an excavation pit, revealing the life-sized terracotta warrior face buried in dry loess soil, dramatic low lighting, 35mm film"
+    },
+    {
+      "text": "They had accidentally uncovered an underground army of eight thousand life-sized warriors, buried over two millennia ago.",
+      "visual": "epic wide reveal shot of Pit One at the Terracotta Army, endless rows of thousands of clay infantry standing in battle formation in long earthen corridors, warm archaeological lighting"
+    },
+    {
+      "text": "Astoundingly, no two faces are identical: every soldier has unique ears, cheekbones, and facial hair.",
+      "visual": "macro close-up panning across two terracotta warrior faces, photorealistic weathered clay texture, individualized hairstyles and intense gaze, shallow depth of field"
+    },
+    {
+      "text": "China's first emperor, Qin Shi Huang, built this secret subterranean empire to conquer death itself.",
+      "visual": "Emperor Qin Shi Huang in imperial black silk robes and beaded mianguan headdress standing in candlelit palace hall, commanding his architects over parchment blueprints"
+    },
+    {
+      "text": "His central burial mound remains unopened, said to contain vast maps of rivers made of flowing liquid mercury.",
+      "visual": "mysterious subterranean tomb chamber with miniature bronze mountains and glowing silvery liquid mercury rivers flowing across stone floor, eerie green-tinted lantern light"
+    },
+    {
+      "text": "He conquered seven kingdoms in life, and an entire spirit world in death. Subscribe to Beyond History for more.",
+      "visual": "dramatic cinematic medium shot of a solitary terracotta general standing in eternal vigil, golden dust motes floating in amber spotlight beam, epic documentary pull-back",
+      "gap": 0.3
+    }
+  ]
+}

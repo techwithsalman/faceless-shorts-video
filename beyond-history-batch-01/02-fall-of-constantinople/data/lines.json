@@ -1,0 +1,43 @@
+{
+ "duration": 48.447,
+ "voice": "bm_george",
+ "speed": 1.04,
+ "lines": [
+  {
+   "i": 0,
+   "text": "For over one thousand years, these colossal stone walls were invincible\u00e2\u20ac\u201duntil one morning in 1453.",
+   "start": 0.25,
+   "end": 9.637
+  },
+  {
+   "i": 1,
+   "text": "Sultan Mehmed the Second unleashed the greatest super-weapon of the Middle Ages: a bronze cannon firing twelve-hundred-pound boulders.",
+   "start": 9.837,
+   "end": 18.733
+  },
+  {
+   "i": 2,
+   "text": "When Roman chains blocked the harbor, seventy Ottoman warships were dragged entirely overland on greased logs.",
+   "start": 18.933,
+   "end": 25.983
+  },
+  {
+   "i": 3,
+   "text": "On May twenty-ninth, thousands of elite Janissaries stormed the fractured Saint Romanus gate.",
+   "start": 26.183,
+   "end": 32.189
+  },
+  {
+   "i": 4,
+   "text": "Refusing to flee, Emperor Constantine the Eleventh tore off his imperial insignia and charged into the breach.",
+   "start": 32.389,
+   "end": 39.659
+  },
+  {
+   "i": 5,
+   "text": "The Roman Empire finally fell where its last emperor stood. Subscribe to Beyond History for more epic battles.",
+   "start": 39.859,
+   "end": 47.347
+  }
+ ]
+}

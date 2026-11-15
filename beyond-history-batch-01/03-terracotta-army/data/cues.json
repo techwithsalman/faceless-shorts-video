@@ -1,0 +1,73 @@
+{
+ "duration": 45.961,
+ "cues": [
+  {
+   "t": 0,
+   "type": "foley_shovel_strike",
+   "gain": 0.95
+  },
+  {
+   "t": 0.08,
+   "type": "sub_drop",
+   "gain": 0.6
+  },
+  {
+   "t": 7.73,
+   "type": "cinematic_impact",
+   "gain": 0.85
+  },
+  {
+   "t": 7.88,
+   "type": "foley_ancient_halls",
+   "dur": 6,
+   "gain": 0.5
+  },
+  {
+   "t": 15.701,
+   "type": "foley_clay_clink",
+   "dur": 3.5,
+   "gain": 0.55
+  },
+  {
+   "t": 15.901,
+   "type": "foley_dust_whisper",
+   "dur": 4.5,
+   "gain": 0.45
+  },
+  {
+   "t": 22.985,
+   "type": "guzheng_pluck",
+   "dur": 4,
+   "gain": 0.65
+  },
+  {
+   "t": 23.135,
+   "type": "foley_palace_fire",
+   "dur": 5.5,
+   "gain": 0.5
+  },
+  {
+   "t": 29.883,
+   "type": "foley_mercury_drip",
+   "dur": 5,
+   "gain": 0.6
+  },
+  {
+   "t": 29.983,
+   "type": "sub_drop",
+   "gain": 0.7
+  },
+  {
+   "t": 37.698,
+   "type": "chinese_bell",
+   "dur": 5.5,
+   "gain": 0.65
+  },
+  {
+   "t": 37.898,
+   "type": "triumph_brass",
+   "dur": 4.5,
+   "gain": 0.7
+  }
+ ]
+}

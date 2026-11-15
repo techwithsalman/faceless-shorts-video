@@ -1,0 +1,45 @@
+{
+ "duration": 12.806,
+ "cues": [
+  {
+   "t": 0.05,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 1.58,
+   "type": "sparkle",
+   "gain": 0.6
+  },
+  {
+   "t": 2.58,
+   "type": "whoosh",
+   "gain": 0.6
+  },
+  {
+   "t": 4.76,
+   "type": "thud",
+   "gain": 0.8
+  },
+  {
+   "t": 6.26,
+   "type": "slam",
+   "gain": 0.7
+  },
+  {
+   "t": 6.808,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 8.56,
+   "type": "sparkle",
+   "gain": 0.7
+  },
+  {
+   "t": 11.18,
+   "type": "ding",
+   "gain": 0.8
+  }
+ ]
+}

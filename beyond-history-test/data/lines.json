@@ -1,0 +1,31 @@
+{
+ "duration": 12.806,
+ "voice": "bm_george",
+ "speed": 1.02,
+ "lines": [
+  {
+   "i": 0,
+   "text": "In the freezing forests of Germania,",
+   "start": 0.3,
+   "end": 2.25
+  },
+  {
+   "i": 1,
+   "text": "Emperor Marcus Aurelius fought twelve brutal years of war.",
+   "start": 2.62,
+   "end": 6.648
+  },
+  {
+   "i": 2,
+   "text": "Yet every night, the ruler of Rome wrote to himself:",
+   "start": 6.848,
+   "end": 9.978
+  },
+  {
+   "i": 3,
+   "text": "conquer your own mind.",
+   "start": 10.348,
+   "end": 11.706
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+{
+ "duration": 44.45,
+ "voice": "bm_george",
+ "speed": 1.04,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Over four hundred thousand ancient books vanished from history, but not the way you were told.",
+   "start": 0.25,
+   "end": 5.849
+  },
+  {
+   "i": 1,
+   "text": "By royal decree, every ship docking in Alexandria was searched, and all scrolls were confiscated to be copied.",
+   "start": 6.049,
+   "end": 12.93
+  },
+  {
+   "i": 2,
+   "text": "Popular legend blames a single catastrophic fire set by Julius Caesar in forty-eight BC.",
+   "start": 13.13,
+   "end": 19.935
+  },
+  {
+   "i": 3,
+   "text": "Yet historical records reveal the truth was far more tragic: centuries of civil war, neglect, and budget cuts.",
+   "start": 20.135,
+   "end": 27.798
+  },
+  {
+   "i": 4,
+   "text": "The greatest library on Earth wasn't destroyed in one afternoon\u00e2\u20ac\u201dit was slowly starved of care and quietly forgotten.",
+   "start": 27.998,
+   "end": 36.131
+  },
+  {
+   "i": 5,
+   "text": "Human knowledge wasn't conquered by fire, but by indifference. Subscribe to Beyond History for more lost stories.",
+   "start": 36.331,
+   "end": 43.35
+  }
+ ]
+}

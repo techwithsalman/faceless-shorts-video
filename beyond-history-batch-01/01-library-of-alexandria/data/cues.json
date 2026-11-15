@@ -1,0 +1,74 @@
+{
+ "duration": 44.45,
+ "cues": [
+  {
+   "t": 0,
+   "type": "cinematic_impact",
+   "gain": 0.95
+  },
+  {
+   "t": 0.08,
+   "type": "foley_subtle_wind",
+   "dur": 5.5,
+   "gain": 0.45
+  },
+  {
+   "t": 6.009,
+   "type": "foley_sea_waves",
+   "dur": 6,
+   "gain": 0.55
+  },
+  {
+   "t": 6.209,
+   "type": "foley_wooden_creak",
+   "dur": 3.5,
+   "gain": 0.5
+  },
+  {
+   "t": 13.09,
+   "type": "cinematic_impact",
+   "gain": 0.9
+  },
+  {
+   "t": 13.19,
+   "type": "foley_fire_inferno",
+   "dur": 6.2,
+   "gain": 0.65
+  },
+  {
+   "t": 20.095,
+   "type": "sub_drop",
+   "gain": 0.6
+  },
+  {
+   "t": 20.195,
+   "type": "foley_dust_whisper",
+   "dur": 5,
+   "gain": 0.45
+  },
+  {
+   "t": 27.958,
+   "type": "foley_quill_scratch",
+   "dur": 5,
+   "gain": 0.6
+  },
+  {
+   "t": 28.158,
+   "type": "foley_fire_crackle",
+   "dur": 6,
+   "gain": 0.45
+  },
+  {
+   "t": 36.291,
+   "type": "triumph_brass",
+   "dur": 4.5,
+   "gain": 0.7
+  },
+  {
+   "t": 36.491,
+   "type": "bell_toll",
+   "dur": 5.5,
+   "gain": 0.6
+  }
+ ]
+}

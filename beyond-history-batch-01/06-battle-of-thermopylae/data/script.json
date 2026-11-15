@@ -1,0 +1,59 @@
+{
+  "topic": "The Battle of Thermopylae — The 300 Spartans and the Hot Gates (480 BC)",
+  "channel": "@Beyond_History_0",
+  "historical_validation": {
+    "primary_sources": [
+      "Herodotus, The Histories, Book VII (Polymnia)",
+      "Diodorus Siculus, Bibliotheca historica, Book XI",
+      "Plutarch, Moralia (Sayings of Spartans)"
+    ],
+    "factual_corrections": [
+      "While 300 Spartiate hoplites led the defense, they fought alongside approximately 700 Thespians, 400 Thebans, and thousands of Helots and Peloponnesian allies. The Thespians famously remained with the Spartans to the death on the final day.",
+      "The 'Hot Gates' (Thermopylae) refers to natural hot sulphur springs at the narrow coastal pass between Mount Kallidromo and the Malian Gulf."
+    ]
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "name": "hot_gates_hook",
+      "text": "When a million Persian warriors demanded Greece surrender her weapons, King Leonidas answered: Molon Labe — Come and take them.",
+      "visual_prompt": "intense extreme close up of King Leonidas in ornate bronze Corinthian helmet with red horsehair crest, fierce battle-hardened gaze, scarred face, holding a heavy circular aspis bronze shield, dramatic Aegean coastal cliffs in background, photorealistic historical epic, 35mm film",
+      "sound_cues": ["bronze_shield_bash", "distant_war_cry", "heavy_bass_impact"]
+    },
+    {
+      "id": 2,
+      "name": "phalanx_wall",
+      "text": "At the narrow pass of Thermopylae, three hundred elite Spartans locked bronze shields into an impenetrable wall of iron spears.",
+      "visual_prompt": "wide cinematic view of the Spartan phalanx formation locked shoulder-to-shoulder across the narrow cliff pass of Thermopylae, long dory spears protruding forward, red cloaks fluttering in coastal wind, sea spray misting the rocks, photorealistic historical drama, 35mm film",
+      "sound_cues": ["locked_shield_clang", "spear_thrust_impact", "crashing_sea_waves"]
+    },
+    {
+      "id": 3,
+      "name": "immortals_clash",
+      "text": "Wave after wave of Xerxes' elite Immortals charged into the chokepoint, only to be shattered against the disciplined Spartan line.",
+      "visual_prompt": "chaotic visceral close-quarters combat at the Hot Gates, Persian Immortals in scale armor and fabric headwraps clashing against bronze-clad Spartan hoplites, dust and sparks flying from spear tips, high motion dynamic camera, 35mm film",
+      "sound_cues": ["sword_clash_sparks", "heavy_shield_slam", "war_drum_crescendo"]
+    },
+    {
+      "id": 4,
+      "name": "treachery_path",
+      "text": "For two days the Greeks stood unbroken, until a local traitor named Ephialtes revealed a secret mountain path around the pass.",
+      "visual_prompt": "shadowy night shot of the traitor Ephialtes guiding Persian torch-bearing scouts through the dense forested mountain trail of Anopaia, flickering torchlight casting sinister long shadows on pine trees, ominous cinematic tension",
+      "sound_cues": ["stealthy_footsteps_leaves", "flickering_torch_crackle", "sinister_viola_tremolo"]
+    },
+    {
+      "id": 5,
+      "name": "final_stand",
+      "text": "Surrounded on all sides, Leonidas and his men fought to the last broken spear, buying Athens time to prepare victory at sea.",
+      "visual_prompt": "epic cinematic golden hour shot of the Spartan last stand atop Kolonos Hill, arrows raining down through the dust-filled air, exhausted wounded warriors standing back-to-back with drawn xiphos swords under a blood-red sky, heroic tragic documentary, 35mm film",
+      "sound_cues": ["arrow_swarm_whistle", "deep_horn_blast", "tragic_orchestral_swell"]
+    },
+    {
+      "id": 6,
+      "name": "immortal_epitaph",
+      "text": "Go tell the Spartans, stranger passing by, that here obedient to their laws we lie. Subscribe to Beyond History for more.",
+      "visual_prompt": "cinematic camera gliding past an ancient weathered stone monument with carved Greek inscription overlooking the quiet modern pass of Thermopylae at dusk, warm sunset light reflecting off olive branches, epic documentary pull-back",
+      "sound_cues": ["mournful_ancient_flute", "wind_fade", "final_sub_drop"]
+    }
+  ]
+}

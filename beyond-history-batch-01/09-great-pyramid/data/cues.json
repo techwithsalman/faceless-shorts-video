@@ -1,0 +1,78 @@
+{
+ "duration": 48.479,
+ "cues": [
+  {
+   "t": 0,
+   "type": "cinematic_impact",
+   "gain": 1
+  },
+  {
+   "t": 0.05,
+   "type": "sub_drop",
+   "gain": 0.85
+  },
+  {
+   "t": 0.2,
+   "type": "foley_winter_wind",
+   "dur": 6,
+   "gain": 0.45
+  },
+  {
+   "t": 9.645,
+   "type": "thud",
+   "gain": 0.8
+  },
+  {
+   "t": 9.745,
+   "type": "slide",
+   "dur": 5,
+   "gain": 0.6
+  },
+  {
+   "t": 16.963,
+   "type": "slide",
+   "dur": 4.5,
+   "gain": 0.5
+  },
+  {
+   "t": 17.113,
+   "type": "bell_toll",
+   "dur": 5.5,
+   "gain": 0.45
+  },
+  {
+   "t": 25.384,
+   "type": "sub_drop",
+   "gain": 0.8
+  },
+  {
+   "t": 25.484,
+   "type": "foley_fire_crackle",
+   "dur": 6,
+   "gain": 0.55
+  },
+  {
+   "t": 32.699,
+   "type": "bell_toll",
+   "dur": 6.5,
+   "gain": 0.6
+  },
+  {
+   "t": 32.899,
+   "type": "foley_winter_wind",
+   "dur": 6,
+   "gain": 0.4
+  },
+  {
+   "t": 41.017,
+   "type": "triumph_brass",
+   "dur": 6,
+   "gain": 0.85
+  },
+  {
+   "t": 41.317,
+   "type": "sub_drop",
+   "gain": 0.7
+  }
+ ]
+}

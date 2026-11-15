@@ -1,0 +1,46 @@
+{
+  "title": "Marcus Aurelius: The Emperor on the Frontlines",
+  "voice": "bm_george",
+  "speed": 1.04,
+  "lead": 0.25,
+  "outro": 0.8,
+  "gap": 0.2,
+  "music": "beyond_history",
+  "character": "weathered 50-year-old Mediterranean man with short dark curly hair and salt-and-pepper beard playing Roman Emperor Marcus Aurelius, living human actor, authentic period bronze armor",
+  "sources": [
+    "Marcus Aurelius, Meditations (written on the Danubian frontier during the Marcomannic Wars, 170-180 AD)",
+    "Cassius Dio, Roman History, Book LXXII",
+    "Historia Augusta, Life of Marcus Aurelius"
+  ],
+  "lines": [
+    {
+      "text": "Most Roman emperors died in luxury, but one walked directly into the frozen jaws of war.",
+      "visual": "cinematic wide shot of Roman legionaries standing guard in falling snow on frozen frontier, campfires burning, dark winter dusk"
+    },
+    {
+      "text": "For fourteen brutal years, Marcus Aurelius fought barbarian invasions along the icy Danube.",
+      "visual": "dramatic battlefield landscape at dusk, burning Roman campfires and wooden barricades in snow, atmospheric smoke and fog"
+    },
+    {
+      "text": "While plague ravaged Rome, the emperor endured freezing mud and betrayal.",
+      "visual": "close-up of weathered 50-year-old Mediterranean man with beard and brown eyes playing Roman Emperor, living human, authentic bronze armor, cold breath mist, dark stoic gaze"
+    },
+    {
+      "text": "Yet every night, by candlelight in his command tent, he opened a private journal:",
+      "visual": "the emperor sitting at an oak desk in candlelit military tent writing with ink quill on papyrus scroll, shadows and warm candlelight"
+    },
+    {
+      "text": "You have power over your mind, not outside events. Realize this, and you will find strength.",
+      "visual": "extreme close-up of emperor stoic eyes and weathered face reflecting trembling candle firelight, 35mm film photograph"
+    },
+    {
+      "text": "He didn't fight to conquer foreign nations, but to conquer his own fear.",
+      "visual": "ancient Roman military camp at night, snow falling on leather tents, legionary sentry silhouette with spear against glowing brazier"
+    },
+    {
+      "text": "Marcus Aurelius died on the frontier, leaving history the greatest book of wisdom: Meditations. Subscribe to Beyond History for more.",
+      "visual": "ornate Roman bronze imperial helmet and open Meditations papyrus scroll on wooden table in golden dawn light, 35mm film masterpiece",
+      "gap": 0.3
+    }
+  ]
+}

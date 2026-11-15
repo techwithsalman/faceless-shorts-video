@@ -1,0 +1,43 @@
+{
+ "duration": 48.479,
+ "voice": "bm_george",
+ "speed": 1.2,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Forty-five centuries ago, ancient Egyptians aligned two million stone blocks to true north with near-zero error\u00e2\u20ac\u201dwithout pulleys, iron, or wheels.",
+   "start": 0.25,
+   "end": 9.585
+  },
+  {
+   "i": 1,
+   "text": "Over twenty thousand skilled workers cut massive limestone blocks with copper chisels and dragged them across wet desert sands.",
+   "start": 9.685,
+   "end": 16.903
+  },
+  {
+   "i": 2,
+   "text": "The recently discovered Diary of Merer reveals elite crews ferried white casing stones along artificial canals straight from the Nile.",
+   "start": 17.003,
+   "end": 25.324
+  },
+  {
+   "i": 3,
+   "text": "Inside the monument, builders constructed the soaring Grand Gallery, balancing colossal granite beams weighing sixty tons each.",
+   "start": 25.424,
+   "end": 32.639
+  },
+  {
+   "i": 4,
+   "text": "Each side faces cardinal directions with accuracy surpassing modern architecture, built as an eternal cosmic stairway for Pharaoh Khufu.",
+   "start": 32.739,
+   "end": 40.957
+  },
+  {
+   "i": 5,
+   "text": "The sole surviving Ancient Wonder of the World still defies explanation. Subscribe to Beyond History for more.",
+   "start": 41.057,
+   "end": 47.829
+  }
+ ]
+}
