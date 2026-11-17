@@ -289,7 +289,6 @@ def run_pipeline(prompt, duration=45, aspect_ratio="9:16", resolution="1080p",
 
     # 3. Stage: Project Scaffolding
     setup_project_scaffold(project_dir, width, height)
-    build_shots_js(project_dir, script_data, width, height)
 
     # 4. Stage: Voice Generation (Kokoro-82M ONNX)
     emit(ipc_mode, "stage", stage="voice", percent=20, message="Synthesizing Kokoro-82M documentary narration...")
