@@ -35,11 +35,13 @@
     "files": [
       "electron/**/*",
       "src-ui/**/*",
-      "scripts/**/*",
-      "styles/**/*",
       "assets/**/*",
-      "requirements.txt",
       "package.json"
+    ],
+    "extraResources": [
+      { "from": "scripts", "to": "backend/scripts" },
+      { "from": "styles", "to": "backend/styles" },
+      { "from": "requirements.txt", "to": "backend/requirements.txt" }
     ]
   }
 }

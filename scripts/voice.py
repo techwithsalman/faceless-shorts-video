@@ -17,8 +17,13 @@ from pathlib import Path
 import numpy as np
 from scipy.io import wavfile
 
-HOME = Path(os.environ.get('FACELESS_HOME', Path.home() / '.faceless-shorts'))
-KDIR = HOME / 'kokoro'
+cand_kdirs = [
+    Path(os.environ.get('P2V_USER_DATA', '')) / 'models' / 'kokoro',
+    Path(os.environ.get('FACELESS_HOME', '')) / 'kokoro',
+    Path.home() / '.faceless-shorts' / 'kokoro',
+    Path(__file__).resolve().parent.parent / 'models' / 'kokoro',
+]
+KDIR = next((p for p in cand_kdirs if (p / 'kokoro-v1.0.onnx').exists()), Path.home() / '.faceless-shorts' / 'kokoro')
 FILES = {
     'kokoro-v1.0.onnx': 'https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx',
     'voices-v1.0.bin': 'https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin',

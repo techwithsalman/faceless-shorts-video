@@ -1,11 +1,12 @@
 /**
- * Prompt2Video AI — Models & Hardware Controller
+ * Prompt2Video AI — Models, Runtime & Hardware Controller
  */
 
 window.ModelsController = {
   async init() {
     this.setupButtons();
     await this.loadHardwareInfo();
+    await this.loadRuntimeStatus();
     await this.loadModelStatus();
   },
 
@@ -14,7 +15,24 @@ window.ModelsController = {
     if (btnRecheck) {
       btnRecheck.addEventListener('click', () => {
         this.loadModelStatus();
+        this.loadRuntimeStatus(true);
         this.loadHardwareInfo();
+      });
+    }
+
+    const btnRecheckRuntime = document.getElementById('btn-recheck-runtime');
+    if (btnRecheckRuntime) {
+      btnRecheckRuntime.addEventListener('click', () => {
+        this.loadRuntimeStatus(true);
+      });
+    }
+
+    const btnProvisionRuntime = document.getElementById('btn-provision-runtime');
+    if (btnProvisionRuntime) {
+      btnProvisionRuntime.addEventListener('click', () => {
+        if (window.WizardController) {
+          window.WizardController.open();
+        }
       });
     }
 
@@ -56,6 +74,53 @@ window.ModelsController = {
     }
   },
 
+  async loadRuntimeStatus(forceRefresh = false) {
+    if (!window.api || !window.api.getRuntimeStatus) return;
+
+    try {
+      const status = await window.api.getRuntimeStatus(forceRefresh);
+      
+      const pathInput = document.getElementById('runtime-python-path');
+      if (pathInput) {
+        pathInput.value = status.pythonPath || 'No Python Runtime Configured';
+      }
+
+      const badge = document.getElementById('runtime-status-badge');
+      const desc = document.getElementById('runtime-status-desc');
+      if (badge && desc) {
+        if (status.ready) {
+          badge.className = 'badge badge-success';
+          badge.textContent = 'Isolated & Ready';
+          desc.textContent = status.isManaged ? 'Application-managed isolated venv' : 'Configured local environment';
+        } else {
+          badge.className = 'badge badge-warning';
+          badge.textContent = 'Setup Required';
+          desc.textContent = status.basePythonFound ? 'Base Python found — runtime needs provisioning' : 'Python 3.10+ needed';
+        }
+      }
+
+      // Dependencies
+      const setDep = (id, ok, textOk, textFail) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.textContent = ok ? textOk : textFail;
+          el.style.color = ok ? 'var(--accent-green)' : 'var(--accent-amber)';
+        }
+      };
+
+      setDep('dep-torch-status', status.ready, 'Verified (CPU/CUDA ready)', 'Not verified');
+      setDep('dep-kokoro-status', status.ready, 'Verified (ONNX ready)', 'Not verified');
+      setDep('dep-whisper-status', status.ready, 'Verified (Faster-Whisper ready)', 'Not verified');
+      setDep('dep-ffmpeg-status', status.ffmpegAvailable, 'Available in System PATH', 'Missing from PATH');
+
+      if (window.App && window.App.updateRuntimeUI) {
+        window.App.updateRuntimeUI(status);
+      }
+    } catch (err) {
+      console.warn('Failed to load runtime status:', err);
+    }
+  },
+
   async loadModelStatus() {
     const container = document.getElementById('models-checklist');
     if (!container) return;
@@ -92,16 +157,6 @@ window.ModelsController = {
           </div>
         `;
       }).join('');
-
-      // Update global header status
-      const globalStatus = document.getElementById('global-status-text');
-      if (globalStatus) {
-        if (status.allReady) {
-          globalStatus.textContent = 'Local AI Engine Ready (Offline)';
-        } else {
-          globalStatus.textContent = 'Models Downloading / Checking';
-        }
-      }
 
     } catch (err) {
       container.innerHTML = `<div style="color: var(--accent-red);">Failed to check models: ${err.message}</div>`;

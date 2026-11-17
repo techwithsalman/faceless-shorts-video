@@ -12,15 +12,18 @@ window.App = {
     resolution: '1080p',
     voice: 'bm_george',
     style: 'cinematic-documentary',
-    outputDir: ''
+    outputDir: '',
+    runtimeReady: false
   },
 
   async init() {
     this.setupTabs();
     this.setupCreateControls();
     await this.loadInitialSettings();
+    await this.checkRuntimeHealth();
     
     // Initialize child controllers if available
+    if (window.WizardController) window.WizardController.init();
     if (window.ModelsController) window.ModelsController.init();
     if (window.LibraryController) window.LibraryController.init();
     if (window.StudioController) window.StudioController.init();
@@ -112,6 +115,90 @@ window.App = {
     if (btnGenerate) {
       btnGenerate.addEventListener('click', () => this.handleGenerate());
     }
+
+    // Banner Setup Button Click
+    const btnBannerSetup = document.getElementById('btn-banner-setup-runtime');
+    if (btnBannerSetup) {
+      btnBannerSetup.addEventListener('click', () => {
+        if (window.WizardController) {
+          window.WizardController.open();
+        }
+      });
+    }
+
+    // Header status click to open wizard if not ready
+    const statusPill = document.getElementById('global-status-pill');
+    if (statusPill) {
+      statusPill.addEventListener('click', () => {
+        if (!this.state.runtimeReady && window.WizardController) {
+          window.WizardController.open();
+        }
+      });
+    }
+  },
+
+  async checkRuntimeHealth(forceRefresh = false) {
+    if (!window.api || !window.api.getRuntimeStatus) return;
+
+    try {
+      const status = await window.api.getRuntimeStatus(forceRefresh);
+      this.updateRuntimeUI(status);
+      return status;
+    } catch (err) {
+      console.warn('Failed to check runtime health:', err);
+      this.updateRuntimeUI({ ready: false, pythonPath: null });
+    }
+  },
+
+  updateRuntimeUI(status) {
+    const isReady = !!(status && status.ready && status.pythonPath);
+    this.state.runtimeReady = isReady;
+
+    const banner = document.getElementById('runtime-warning-banner');
+    const btnGenerate = document.getElementById('btn-generate-video');
+    const btnText = document.getElementById('btn-generate-text');
+    const globalStatusText = document.getElementById('global-status-text');
+    const globalStatusPill = document.getElementById('global-status-pill');
+
+    if (isReady) {
+      if (banner) banner.style.display = 'none';
+      if (btnGenerate) {
+        btnGenerate.removeAttribute('disabled');
+      }
+      if (btnText) {
+        btnText.textContent = 'Generate Video (100% Offline AI)';
+      }
+      if (globalStatusText) {
+        globalStatusText.textContent = 'Local AI Engine Ready (Offline)';
+      }
+      if (globalStatusPill) {
+        globalStatusPill.style.cursor = 'default';
+        const dot = globalStatusPill.querySelector('.status-dot');
+        if (dot) {
+          dot.style.background = 'var(--accent-green)';
+          dot.style.boxShadow = '0 0 10px rgba(16, 185, 129, 0.6)';
+        }
+      }
+    } else {
+      if (banner) banner.style.display = 'block';
+      if (btnGenerate) {
+        btnGenerate.setAttribute('disabled', 'disabled');
+      }
+      if (btnText) {
+        btnText.textContent = '⚠️ Setup Python Runtime to Generate Video';
+      }
+      if (globalStatusText) {
+        globalStatusText.textContent = 'Python Setup Required';
+      }
+      if (globalStatusPill) {
+        globalStatusPill.style.cursor = 'pointer';
+        const dot = globalStatusPill.querySelector('.status-dot');
+        if (dot) {
+          dot.style.background = 'var(--accent-amber)';
+          dot.style.boxShadow = '0 0 10px rgba(245, 158, 11, 0.6)';
+        }
+      }
+    }
   },
 
   async loadInitialSettings() {
@@ -136,6 +223,15 @@ window.App = {
   },
 
   async handleGenerate() {
+    if (!this.state.runtimeReady) {
+      if (window.WizardController) {
+        window.WizardController.open();
+      } else {
+        alert('Please complete the Python Runtime Setup before generating videos.');
+      }
+      return;
+    }
+
     const promptInput = document.getElementById('input-prompt');
     const prompt = promptInput ? promptInput.value.trim() : '';
 

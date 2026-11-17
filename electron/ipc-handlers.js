@@ -3,39 +3,30 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const { spawn, exec } = require('child_process');
+const {
+  isPackaged,
+  getBackendDir,
+  getScriptPath,
+  getUserDataDir,
+  getRuntimeDir,
+  getRuntimePythonExe,
+  getWorkspaceDir,
+  getRendersDir,
+  getModelCacheDir,
+  getEnrichedPath
+} = require('./path-resolver');
+const {
+  findBasePython,
+  resolveActivePython,
+  getRuntimeStatus,
+  provisionRuntime,
+  testFFmpeg
+} = require('./runtime-manager');
 
 let activeChildProcess = null;
 
-function findPythonExe() {
-  const candidates = [
-    path.join(process.env.USERPROFILE || '', '.faceless-shorts', 'venv', 'Scripts', 'python.exe'),
-    path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Python', 'Python311', 'python.exe'),
-    path.join(process.env.USERPROFILE || '', 'AppData', 'Local', 'Programs', 'Python', 'Python311', 'python.exe'),
-    'python.exe',
-    'python'
-  ];
-
-  for (const p of candidates) {
-    if (p.includes('\\') || p.includes('/')) {
-      if (fs.existsSync(p)) return p;
-    } else {
-      return p;
-    }
-  }
-  return 'python';
-}
-
-function findFFmpegExe() {
-  // Check if ffmpeg is accessible
-  return 'ffmpeg';
-}
-
 function registerIpcHandlers(ipcMain, mainWindow) {
-  const projectRoot = path.resolve(__dirname, '..');
-  const userDataDir = path.join(process.env.APPDATA || process.env.USERPROFILE || '', 'Prompt2VideoAI');
-  if (!fs.existsSync(userDataDir)) {
-    try { fs.mkdirSync(userDataDir, { recursive: true }); } catch (e) {}
-  }
+  const userDataDir = getUserDataDir();
   const settingsFile = path.join(userDataDir, 'settings.json');
 
   // 1. Hardware Info
@@ -87,15 +78,24 @@ function registerIpcHandlers(ipcMain, mainWindow) {
     };
   });
 
-  // 2. Model Status
-  ipcMain.handle('models:get-status', async () => {
-    const modelsDir = path.join(projectRoot, 'models');
-    const kokoroDir = path.join(modelsDir, 'kokoro');
-    const userKokoro = path.join(process.env.USERPROFILE || '', '.faceless-shorts', 'kokoro', 'kokoro-v1.0.onnx');
-    const kokoroOnnx = path.join(kokoroDir, 'kokoro-v0_19.onnx');
+  // 2. Python Runtime Status & Provisioning
+  ipcMain.handle('runtime:get-status', async (event, forceRefresh) => {
+    return await getRuntimeStatus(forceRefresh);
+  });
 
-    const cacheD = 'D:\\faceless-shorts-ai\\cache';
-    const cacheHubD = 'D:\\faceless-shorts-ai\\cache\\hub';
+  ipcMain.handle('runtime:provision', async () => {
+    return await provisionRuntime((progress) => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('runtime:progress', progress);
+      }
+    });
+  });
+
+  // 3. Model & Runtime Status
+  ipcMain.handle('models:get-status', async () => {
+    const runtimeStatus = await getRuntimeStatus();
+    const cacheD = getModelCacheDir();
+    const cacheHubD = path.join(cacheD, 'hub');
     const cacheUser = path.join(process.env.USERPROFILE || '', '.cache', 'huggingface', 'hub');
 
     const checkDirExists = (pattern) => {
@@ -111,23 +111,31 @@ function registerIpcHandlers(ipcMain, mainWindow) {
       return false;
     };
 
-    const hasKokoro = fs.existsSync(userKokoro) || fs.existsSync(kokoroOnnx);
+    const userKokoro = path.join(process.env.USERPROFILE || '', '.faceless-shorts', 'kokoro', 'kokoro-v1.0.onnx');
+    const appKokoro = path.join(userDataDir, 'models', 'kokoro', 'kokoro-v1.0.onnx');
+    const localKokoro = path.join(getBackendDir(), 'models', 'kokoro', 'kokoro-v1.0.onnx');
+    const hasKokoro = fs.existsSync(userKokoro) || fs.existsSync(appKokoro) || fs.existsSync(localKokoro);
+
     const hasSdTurbo = checkDirExists('sd-turbo');
     const hasDepthAnything = checkDirExists('depth-anything');
     const hasWhisper = checkDirExists('whisper') || fs.existsSync(path.join(cacheHubD, 'models--Systran--faster-whisper-small.en'));
     const hasQwen = checkDirExists('qwen2.5-0.5b') || checkDirExists('qwen');
 
-    const pythonPath = findPythonExe();
-    const hasPython = fs.existsSync(pythonPath);
+    const allModelsReady = hasKokoro && hasSdTurbo && hasDepthAnything && hasWhisper;
 
     return {
-      python: { installed: hasPython, path: pythonPath },
+      runtime: runtimeStatus,
+      python: {
+        installed: runtimeStatus.ready,
+        path: runtimeStatus.pythonPath,
+        isManaged: runtimeStatus.isManaged
+      },
       kokoro: {
         name: 'Kokoro-82M TTS',
         installed: hasKokoro,
         type: 'Voice Synthesis (ONNX)',
         size: '~320 MB',
-        path: kokoroOnnx
+        path: userKokoro
       },
       sdTurbo: {
         name: 'SD-Turbo',
@@ -157,20 +165,20 @@ function registerIpcHandlers(ipcMain, mainWindow) {
         size: '~600 MB',
         location: cacheD
       },
-      allReady: hasKokoro && hasSdTurbo && hasDepthAnything && hasWhisper
+      allReady: allModelsReady && runtimeStatus.ready
     };
   });
 
-  // 3. Settings
+  // 4. Settings
   ipcMain.handle('settings:get', async () => {
     const defaults = {
-      outputDir: path.join(projectRoot, 'renders'),
+      outputDir: getRendersDir(),
       defaultDuration: 30,
       defaultAspectRatio: '9:16',
       defaultResolution: '1080p',
       defaultVoice: 'bm_george',
       defaultStyle: 'cinematic-documentary',
-      cacheDir: fs.existsSync('D:\\faceless-shorts-ai\\cache') ? 'D:\\faceless-shorts-ai\\cache' : path.join(projectRoot, 'cache')
+      cacheDir: getModelCacheDir()
     };
 
     if (fs.existsSync(settingsFile)) {
@@ -193,11 +201,11 @@ function registerIpcHandlers(ipcMain, mainWindow) {
     }
   });
 
-  // 4. Folder selection dialog
+  // 5. Folder selection dialog
   ipcMain.handle('dialog:select-directory', async (event, defaultPath) => {
     const result = await dialog.showOpenDialog(mainWindow, {
       title: 'Select Output Directory',
-      defaultPath: defaultPath || projectRoot,
+      defaultPath: defaultPath || getRendersDir(),
       properties: ['openDirectory', 'createDirectory']
     });
     if (!result.canceled && result.filePaths.length > 0) {
@@ -206,21 +214,32 @@ function registerIpcHandlers(ipcMain, mainWindow) {
     return null;
   });
 
-  // 5. Video Generation
+  // 6. Video Generation
   ipcMain.handle('video:generate', async (event, options) => {
     if (activeChildProcess) {
       return { success: false, error: 'A video generation task is already running.' };
     }
 
-    const pythonExe = findPythonExe();
-    const scriptPath = path.join(projectRoot, 'scripts', 'prompt2video.py');
+    const runtimeStatus = await getRuntimeStatus();
+    if (!runtimeStatus.ready || !runtimeStatus.pythonPath) {
+      return {
+        success: false,
+        error: 'Local AI Python Runtime is not configured. Please open Settings -> Python Runtime Setup to initialize.'
+      };
+    }
+
+    const pythonExe = runtimeStatus.pythonPath;
+    const scriptPath = getScriptPath('prompt2video.py');
+    const backendDir = getBackendDir();
+    const userData = getUserDataDir();
+    const rendersDir = options.outputDir || getRendersDir();
+    const modelCache = getModelCacheDir();
 
     const duration = options.duration || 30;
     const aspectRatio = options.aspectRatio || '9:16';
     const resolution = options.resolution || '1080p';
     const voice = options.voice || 'bm_george';
     const style = options.style || 'cinematic-documentary';
-    const outputDir = options.outputDir || path.join(projectRoot, 'renders');
 
     const args = [
       scriptPath,
@@ -230,13 +249,9 @@ function registerIpcHandlers(ipcMain, mainWindow) {
       '--resolution', resolution,
       '--voice', voice,
       '--style', style,
-      '--output-dir', outputDir,
+      '--output', rendersDir,
       '--ipc-json'
     ];
-
-    if (options.title) {
-      args.push('--title', options.title);
-    }
 
     return new Promise((resolve) => {
       let finalResult = null;
@@ -244,13 +259,19 @@ function registerIpcHandlers(ipcMain, mainWindow) {
 
       const env = {
         ...process.env,
+        PATH: getEnrichedPath(),
         PYTHONUNBUFFERED: '1',
         PYTHONIOENCODING: 'utf-8',
-        HF_HOME: 'D:\\faceless-shorts-ai\\cache'
+        P2V_PYTHON_EXE: pythonExe,
+        P2V_BACKEND_DIR: backendDir,
+        P2V_USER_DATA: userData,
+        HF_HOME: modelCache,
+        TORCH_HOME: path.join(modelCache, 'torch'),
+        TRANSFORMERS_CACHE: modelCache
       };
 
       activeChildProcess = spawn(pythonExe, args, {
-        cwd: projectRoot,
+        cwd: userData,
         env,
         windowsHide: true
       });
@@ -260,27 +281,34 @@ function registerIpcHandlers(ipcMain, mainWindow) {
         const lines = text.split(/\r?\n/);
         for (const line of lines) {
           if (!line.trim()) continue;
-          if (line.startsWith('__P2V_EVENT__:')) {
+          if (line.includes('__P2V_EVENT__')) {
             try {
-              const eventData = JSON.parse(line.substring('__P2V_EVENT__:'.length));
-              mainWindow.webContents.send('video:progress', eventData);
-              if (eventData.type === 'complete') {
+              const rawJson = line.substring(line.indexOf('__P2V_EVENT__') + '__P2V_EVENT__'.length).replace(/^:/, '');
+              const eventData = JSON.parse(rawJson);
+              if (mainWindow && !mainWindow.isDestroyed()) {
+                mainWindow.webContents.send('video:progress', eventData);
+              }
+              if (eventData.type === 'complete' || eventData.event === 'done') {
                 finalResult = eventData;
-              } else if (eventData.type === 'error') {
+              } else if (eventData.type === 'error' || eventData.event === 'error') {
                 lastErrorMessage = eventData.message || 'Generation error occurred.';
               }
             } catch (err) {
               console.error('Failed to parse IPC event:', err);
             }
           } else {
-            mainWindow.webContents.send('video:log', line);
+            if (mainWindow && !mainWindow.isDestroyed()) {
+              mainWindow.webContents.send('video:log', line);
+            }
           }
         }
       });
 
       activeChildProcess.stderr.on('data', (chunk) => {
         const text = chunk.toString('utf-8');
-        mainWindow.webContents.send('video:log', text);
+        if (mainWindow && !mainWindow.isDestroyed()) {
+          mainWindow.webContents.send('video:log', text);
+        }
       });
 
       activeChildProcess.on('close', (code) => {
@@ -304,7 +332,7 @@ function registerIpcHandlers(ipcMain, mainWindow) {
     });
   });
 
-  // 6. Cancel Generation
+  // 7. Cancel Generation
   ipcMain.handle('video:cancel', async () => {
     if (!activeChildProcess) return false;
     const pid = activeChildProcess.pid;
@@ -322,9 +350,9 @@ function registerIpcHandlers(ipcMain, mainWindow) {
     }
   });
 
-  // 7. Video Library
+  // 8. Video Library
   ipcMain.handle('library:get-videos', async (event, customDir) => {
-    const rendersDir = customDir || path.join(projectRoot, 'renders');
+    const rendersDir = customDir || getRendersDir();
     if (!fs.existsSync(rendersDir)) return [];
 
     const items = [];
@@ -346,6 +374,7 @@ function registerIpcHandlers(ipcMain, mainWindow) {
             const possibleThumbnails = [
               path.join(parentDir, 'contact_sheet.jpg'),
               path.join(parentDir, 'contact_sheet.png'),
+              path.join(parentDir, `${path.basename(entry.name, '.mp4')}-contact.jpg`),
               path.join(parentDir, 'scene_01.png'),
               path.join(parentDir, 'scene_01.jpg')
             ];
@@ -374,7 +403,7 @@ function registerIpcHandlers(ipcMain, mainWindow) {
     return items;
   });
 
-  // 8. Open file / folder
+  // 9. Open file / folder
   ipcMain.handle('library:open-folder', async (event, filePath) => {
     if (filePath && fs.existsSync(filePath)) {
       shell.showItemInFolder(filePath);

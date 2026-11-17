@@ -22,10 +22,27 @@ import sys
 import time
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
+# Dynamic Backend and Style resolution
+if os.environ.get("P2V_BACKEND_DIR") and Path(os.environ["P2V_BACKEND_DIR"]).exists():
+    ROOT_DIR = Path(os.environ["P2V_BACKEND_DIR"])
+else:
+    ROOT_DIR = Path(__file__).resolve().parent.parent
+
 SCRIPTS_DIR = ROOT_DIR / "scripts"
 STYLES_DIR = ROOT_DIR / "styles" / "beyond-history"
 EXAMPLE_DIR = STYLES_DIR / "example"
+
+# Dynamic User Data & Workspace Directory
+if os.environ.get("P2V_USER_DATA") and Path(os.environ["P2V_USER_DATA"]).exists():
+    USER_DATA_DIR = Path(os.environ["P2V_USER_DATA"])
+else:
+    local_app_data = os.environ.get("LOCALAPPDATA") or str(Path.home() / "AppData" / "Local")
+    USER_DATA_DIR = Path(local_app_data) / "Prompt2VideoAI"
+
+DEFAULT_WORKSPACE = USER_DATA_DIR / "workspace"
+DEFAULT_RENDERS = USER_DATA_DIR / "renders"
+DEFAULT_WORKSPACE.mkdir(parents=True, exist_ok=True)
+DEFAULT_RENDERS.mkdir(parents=True, exist_ok=True)
 
 # Cache Configuration
 if os.environ.get("HF_HOME"):
@@ -35,24 +52,29 @@ elif Path("D:/faceless-shorts-ai/cache").exists():
 elif Path("D:/").exists():
     CACHE_DIR = Path("D:/faceless-shorts-ai/cache")
 else:
-    CACHE_DIR = Path.home() / ".faceless-shorts" / "cache"
+    CACHE_DIR = USER_DATA_DIR / "cache"
 
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 os.environ["HF_HOME"] = str(CACHE_DIR)
 os.environ["TORCH_HOME"] = str(CACHE_DIR / "torch")
 os.environ["TRANSFORMERS_CACHE"] = str(CACHE_DIR)
 
-# Locate Python venv
-VENV_PYTHON = Path.home() / ".faceless-shorts" / "venv" / "Scripts" / "python.exe"
-if not VENV_PYTHON.exists():
+# Locate Python executable for child scripts
+if os.environ.get("P2V_PYTHON_EXE") and Path(os.environ["P2V_PYTHON_EXE"]).exists():
+    VENV_PYTHON = Path(os.environ["P2V_PYTHON_EXE"])
+elif (USER_DATA_DIR / "runtime" / "Scripts" / "python.exe").exists():
+    VENV_PYTHON = USER_DATA_DIR / "runtime" / "Scripts" / "python.exe"
+elif (Path.home() / ".faceless-shorts" / "venv" / "Scripts" / "python.exe").exists():
+    VENV_PYTHON = Path.home() / ".faceless-shorts" / "venv" / "Scripts" / "python.exe"
+else:
     VENV_PYTHON = Path(sys.executable)
 
 
 def emit(ipc_mode, event_type, **kwargs):
     """Emits structured JSON event if IPC mode enabled, else prints formatted text."""
-    payload = {"event": event_type, **kwargs}
+    payload = {"event": event_type, "type": event_type, **kwargs}
     if ipc_mode:
-        print(f"__P2V_EVENT__{json.dumps(payload)}", flush=True)
+        print(f"__P2V_EVENT__:{json.dumps(payload)}", flush=True)
     else:
         msg = kwargs.get("message", "")
         pct = kwargs.get("percent", "")
@@ -232,11 +254,11 @@ def run_pipeline(prompt, duration=45, aspect_ratio="9:16", resolution="1080p",
     # 1. Prepare Paths
     short_slug = sanitize_filename(prompt)
     if not output_dir:
-        output_dir = ROOT_DIR / "renders" / short_slug
+        output_dir = DEFAULT_RENDERS / short_slug
     else:
         output_dir = Path(output_dir)
     
-    project_dir = ROOT_DIR / "workspace" / short_slug
+    project_dir = DEFAULT_WORKSPACE / short_slug
     project_dir.mkdir(parents=True, exist_ok=True)
     
     width, height = get_dimensions(aspect_ratio, resolution)

@@ -616,3 +616,36 @@
   color: var(--accent-amber);
   border: 1px solid rgba(245, 158, 11, 0.3);
 }
+
+/* Alert Banners & Disabled Buttons */
+.alert-banner {
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+.alert-banner.warning {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+.btn-warning {
+  background: #d97706;
+  color: #fff;
+  border: 1px solid #b45309;
+}
+
+.btn-warning:hover {
+  background: #b45309;
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: grayscale(40%);
+}

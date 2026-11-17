@@ -4,6 +4,15 @@ contextBridge.exposeInMainWorld('api', {
   // System & Hardware
   getHardwareInfo: () => ipcRenderer.invoke('system:get-hardware'),
   
+  // Python Runtime & Health
+  getRuntimeStatus: (forceRefresh) => ipcRenderer.invoke('runtime:get-status', forceRefresh),
+  provisionRuntime: () => ipcRenderer.invoke('runtime:provision'),
+  onRuntimeProgress: (callback) => {
+    const handler = (event, data) => callback(data);
+    ipcRenderer.on('runtime:progress', handler);
+    return () => ipcRenderer.removeListener('runtime:progress', handler);
+  },
+
   // AI Models
   getModelStatus: () => ipcRenderer.invoke('models:get-status'),
   verifyModels: () => ipcRenderer.invoke('models:verify'),

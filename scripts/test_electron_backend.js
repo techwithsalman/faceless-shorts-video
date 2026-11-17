@@ -1,76 +1,73 @@
+/**
+ * Test script to verify Electron backend resolution and runtime readiness
+ */
 const path = require('path');
-const os = require('os');
 const fs = require('fs');
+const { spawnSync } = require('child_process');
 
-async function testBackend() {
-  console.log('=== Prompt2Video AI Backend Self-Test ===');
+const pathResolver = require('../electron/path-resolver');
+const runtimeManager = require('../electron/runtime-manager');
 
-  const projectRoot = path.resolve(__dirname, '..');
+async function runTests() {
+  console.log('====================================================');
+  console.log(' PROMPT2VIDEO AI — BACKEND & RUNTIME VERIFICATION');
+  console.log('====================================================\n');
 
-  // Test 1: Electron Binary
-  const electronExe = path.join(projectRoot, 'node_modules', 'electron', 'dist', 'electron.exe');
-  console.log('1. Electron Binary:', fs.existsSync(electronExe) ? `PASS (${electronExe})` : 'FAIL');
+  // 1. Path Resolver Checks
+  console.log('1. Checking Path Resolver:');
+  console.log('   - isPackaged():', pathResolver.isPackaged());
+  console.log('   - getBackendDir():', pathResolver.getBackendDir());
+  console.log('   - getScriptPath("prompt2video.py"):', pathResolver.getScriptPath('prompt2video.py'));
+  console.log('   - getUserDataDir():', pathResolver.getUserDataDir());
+  console.log('   - getRuntimeDir():', pathResolver.getRuntimeDir());
+  console.log('   - getRuntimePythonExe():', pathResolver.getRuntimePythonExe());
+  console.log('   - getModelCacheDir():', pathResolver.getModelCacheDir());
+  console.log('   - Script exists:', fs.existsSync(pathResolver.getScriptPath('prompt2video.py')));
+  console.log('   - Runtime Python exists:', fs.existsSync(pathResolver.getRuntimePythonExe()));
 
-  // Test 2: Project files
-  const requiredFiles = [
-    'electron/main.js',
-    'electron/preload.js',
-    'electron/ipc-handlers.js',
-    'src-ui/index.html',
-    'src-ui/css/style.css',
-    'src-ui/css/components.css',
-    'src-ui/js/app.js',
-    'src-ui/js/studio.js',
-    'src-ui/js/library.js',
-    'src-ui/js/models.js',
-    'assets/icon.png',
-    'assets/icon.ico'
-  ];
+  // 2. Runtime Manager Checks
+  console.log('\n2. Checking Runtime Manager:');
+  const basePy = await runtimeManager.findBasePython();
+  console.log('   - Base Python found:', basePy);
 
-  let missing = 0;
-  for (const f of requiredFiles) {
-    const full = path.join(projectRoot, f);
-    if (!fs.existsSync(full)) {
-      console.log(`  FAIL: Missing ${f}`);
-      missing++;
+  const ffmpegOk = await runtimeManager.testFFmpeg();
+  console.log('   - FFmpeg available:', ffmpegOk);
+
+  const activePy = await runtimeManager.resolveActivePython();
+  console.log('   - Active Python resolved:', activePy);
+
+  const status = await runtimeManager.getRuntimeStatus();
+  console.log('   - Full Runtime Status:', JSON.stringify(status, null, 2));
+
+  // 3. Smoke Test Python Execution
+  console.log('\n3. Smoke Testing prompt2video.py with Active Python:');
+  if (status.ready && status.pythonPath) {
+    const scriptPath = pathResolver.getScriptPath('prompt2video.py');
+    const res = spawnSync(status.pythonPath, [scriptPath, '--help'], {
+      env: {
+        ...process.env,
+        PATH: pathResolver.getEnrichedPath(),
+        P2V_PYTHON_EXE: status.pythonPath,
+        P2V_BACKEND_DIR: pathResolver.getBackendDir(),
+        P2V_USER_DATA: pathResolver.getUserDataDir()
+      },
+      encoding: 'utf-8'
+    });
+
+    console.log('   - Exit code:', res.status);
+    console.log('   - Output preview:\n', res.stdout.substring(0, 300));
+    if (res.status === 0) {
+      console.log('\n>>> SUCCESS: prompt2video.py executed cleanly with isolated runtime! <<<');
+    } else {
+      console.error('\n>>> ERROR: prompt2video.py failed:\n', res.stderr);
+      process.exit(1);
     }
+  } else {
+    console.warn('   - Runtime not ready yet. Ready status:', status.ready);
   }
-  if (missing === 0) {
-    console.log('2. Required App Files: PASS (All 12 files verified)');
-  }
-
-  // Test 3: Python Venv
-  const pythonPath = path.join(process.env.USERPROFILE || '', '.faceless-shorts', 'venv', 'Scripts', 'python.exe');
-  console.log('3. Python Venv:', fs.existsSync(pythonPath) ? `PASS (${pythonPath})` : 'FAIL');
-
-  // Test 4: Models Status
-  const userKokoro = path.join(process.env.USERPROFILE || '', '.faceless-shorts', 'kokoro', 'kokoro-v1.0.onnx');
-  const projectKokoro = path.join(projectRoot, 'models', 'kokoro', 'kokoro-v0_19.onnx');
-  const hasKokoro = fs.existsSync(userKokoro) || fs.existsSync(projectKokoro);
-  console.log('4. Kokoro-82M ONNX:', hasKokoro ? `PASS (${userKokoro})` : 'FAIL');
-
-  const cacheD = 'D:\\faceless-shorts-ai\\cache';
-  const cacheHubD = 'D:\\faceless-shorts-ai\\cache\\hub';
-  const checkDir = (dir, pattern) => {
-    if (!fs.existsSync(dir)) return false;
-    try {
-      return fs.readdirSync(dir).some(f => f.toLowerCase().includes(pattern.toLowerCase()));
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const hasSd = checkDir(cacheD, 'sd-turbo');
-  const hasDepth = checkDir(cacheD, 'depth-anything');
-  const hasWhisper = checkDir(cacheD, 'whisper') || checkDir(cacheHubD, 'whisper');
-  const hasQwen = checkDir(cacheD, 'qwen');
-
-  console.log('5. SD-Turbo Weights:', hasSd ? 'PASS' : 'FAIL');
-  console.log('6. Depth-Anything V2 Weights:', hasDepth ? 'PASS' : 'FAIL');
-  console.log('7. Faster-Whisper Model:', hasWhisper ? 'PASS' : 'FAIL');
-  console.log('8. Qwen Local Model Cache:', hasQwen ? 'PASS' : 'FAIL');
-
-  console.log('=== Backend Verification Complete: ALL CHECKS PASSED! ===');
 }
 
-testBackend().catch(console.error);
+runTests().catch(err => {
+  console.error('Fatal test error:', err);
+  process.exit(1);
+});

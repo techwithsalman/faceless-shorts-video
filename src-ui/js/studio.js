@@ -120,58 +120,84 @@ window.StudioController = {
   },
 
   handleProgressEvent(event) {
-    if (!event || !event.type) return;
+    if (!event) return;
+    const type = event.type || event.event;
+    if (!type) return;
 
-    switch (event.type) {
-      case 'start':
-        this.activeRunId = event.run_id;
-        this.activeOutputDir = event.output_dir;
-        this.appendLogLine(`[Engine] Run initialized: ${event.run_id}`, 'log-info');
+    if (event.percent !== undefined && event.percent !== null) {
+      const msg = event.message || '';
+      this.updateProgress(event.percent, msg);
+      if (msg) this.appendLogLine(`[${event.percent}%] ${msg}`, 'log-info');
+    }
+
+    switch (type) {
+      case 'init':
+        this.activeOutputDir = event.output;
+        this.setActiveStage(1);
         break;
 
       case 'stage':
-        this.setActiveStage(event.stage_num);
-        this.updateProgress(event.stage_num * 15, event.title);
-        this.appendLogLine(`[Stage ${event.stage_num}/6] ${event.title}`, 'log-info');
+        if (event.stage === 'script') this.setActiveStage(1);
+        else if (event.stage === 'voice') this.setActiveStage(2);
+        else if (event.stage === 'subtitles') this.setActiveStage(3);
+        else if (event.stage === 'visuals') this.setActiveStage(4);
+        else if (event.stage === 'depth') this.setActiveStage(5);
+        else if (event.stage === 'audio_mix' || event.stage === 'render') this.setActiveStage(6);
+        else if (event.stage_num) this.setActiveStage(event.stage_num);
         break;
 
       case 'script_ready':
-        document.getElementById('studio-title').textContent = event.title;
-        this.renderInitialScenes(event.script.scenes || []);
-        this.updateProgress(18, `Script ready: ${event.scenes_count} scenes planned`);
+        this.setActiveStage(2);
+        if (event.title) document.getElementById('studio-title').textContent = event.title;
+        const scenes = (event.script && event.script.scenes) || event.scenes || [];
+        this.renderInitialScenes(scenes);
         break;
 
       case 'voice_ready':
-        this.updateProgress(28, `Narration voiceover generated (${Math.round(event.duration)}s)`);
+      case 'voice_done':
+        this.setActiveStage(3);
         break;
 
       case 'subtitles_ready':
-        this.updateProgress(35, `Subtitles aligned (${event.words_count} words synchronized)`);
+      case 'subtitles_done':
+        this.setActiveStage(4);
+        break;
+
+      case 'visuals_done':
+        this.setActiveStage(5);
+        break;
+
+      case 'depth_done':
+        this.setActiveStage(6);
         break;
 
       case 'scene_image':
         this.updateSceneImage(event.scene_index, event.image_path);
-        const imgProgress = 35 + Math.round((event.scene_index / (event.total_scenes || 5)) * 30);
-        this.updateProgress(imgProgress, `Visual generated: Scene ${event.scene_index}/${event.total_scenes}`);
         break;
 
       case 'scene_depth':
         this.updateSceneDepth(event.scene_index, event.depth_path);
-        const depthProgress = 65 + Math.round((event.scene_index / (event.total_scenes || 5)) * 15);
-        this.updateProgress(depthProgress, `2.5D depth calculated: Scene ${event.scene_index}`);
         break;
 
-      case 'render_progress':
-        const renderPct = 80 + Math.round((event.percent || 0) * 0.2);
-        this.updateProgress(renderPct, `Rendering video frames: ${event.percent}% (Frame ${event.frame}/${event.total_frames})`);
-        break;
-
+      case 'done':
       case 'complete':
         this.updateProgress(100, 'Video generated successfully!');
+        if (event.videoPath) {
+          this.appendLogLine(`[Success] Video generated: ${event.videoPath}`, 'log-success');
+          document.getElementById('studio-subtitle').textContent = `Video finished! Saved at ${event.videoPath}`;
+        }
+        for (let i = 1; i <= 6; i++) {
+          const step = document.getElementById(`stage-${i}`);
+          if (step) {
+            step.classList.remove('active');
+            step.classList.add('completed');
+          }
+        }
         break;
 
       case 'error':
         this.appendLogLine(`[Error] ${event.message}`, 'log-error');
+        document.getElementById('studio-subtitle').textContent = `Error: ${event.message}`;
         break;
     }
   },

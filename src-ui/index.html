@@ -168,13 +168,22 @@
         </div>
       </div>
 
-      <!-- Generate Master Button -->
+      <!-- Generate Master Button & Runtime Gate -->
       <div style="margin-top: 28px;">
+        <div id="runtime-warning-banner" class="alert-banner warning" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <div>
+              <strong>⚠️ Local AI Python Runtime Required:</strong> An isolated Python environment with PyTorch, Kokoro, Whisper, and SD-Turbo is needed before generating videos.
+            </div>
+            <button class="btn btn-warning btn-small" id="btn-banner-setup-runtime" style="white-space: nowrap;">Setup Runtime Now</button>
+          </div>
+        </div>
+
         <button class="btn btn-primary btn-large" id="btn-generate-video">
           <svg style="width: 24px; height: 24px; fill: currentColor;" viewBox="0 0 24 24">
             <polygon points="5 3 19 12 5 21 5 3"/>
           </svg>
-          Generate Video (100% Offline AI)
+          <span id="btn-generate-text">Generate Video (100% Offline AI)</span>
         </button>
       </div>
     </section>
@@ -337,6 +346,49 @@
             </button>
           </div>
         </div>
+        <!-- Python AI Runtime Status Card -->
+        <div class="card" style="grid-column: 1 / -1;">
+          <div class="section-header" style="margin-bottom: 16px;">
+            <h3>Isolated Python AI Runtime</h3>
+            <p>Self-contained execution environment at <code>%LOCALAPPDATA%\Prompt2VideoAI\runtime</code>.</p>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div class="form-group">
+                <label class="form-label">Active Python Interpreter</label>
+                <input type="text" id="runtime-python-path" class="input-text" readonly value="Checking runtime...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Runtime Engine Status</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span class="badge" id="runtime-status-badge">Checking...</span>
+                  <span id="runtime-status-desc" style="font-size: 0.85rem; color: var(--text-secondary);"></span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-label">Core System Dependencies</label>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">
+                  <div>• PyTorch & Diffusers: <strong id="dep-torch-status">Checking...</strong></div>
+                  <div>• Kokoro-82M Voice Synthesis: <strong id="dep-kokoro-status">Checking...</strong></div>
+                  <div>• Faster-Whisper Subtitle Alignment: <strong id="dep-whisper-status">Checking...</strong></div>
+                  <div>• System FFmpeg Audio/Video Engine: <strong id="dep-ffmpeg-status">Checking...</strong></div>
+                </div>
+              </div>
+              <div style="margin-top: 10px; display: flex; gap: 10px;">
+                <button class="btn btn-secondary btn-small" id="btn-recheck-runtime">
+                  Re-Check Runtime
+                </button>
+                <button class="btn btn-primary btn-small" id="btn-provision-runtime">
+                  Setup / Repair Runtime
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -355,6 +407,47 @@
       <div style="padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-surface);">
         <span id="modal-video-info" style="font-size: 0.8rem; color: var(--text-secondary);"></span>
         <button class="btn btn-primary btn-small" id="btn-modal-open-folder">Show in Explorer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Runtime Setup Wizard Modal -->
+  <div class="modal-backdrop" id="wizard-modal">
+    <div class="modal-dialog" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="wizard-modal-title">⚙️ Local AI Python Runtime Setup</h3>
+        <button class="modal-close" id="btn-close-wizard">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">
+          Prompt2Video AI runs 100% locally and requires an isolated Python environment with PyTorch, Kokoro ONNX, Faster-Whisper, and SD-Turbo.
+        </p>
+
+        <div class="card" style="background: var(--bg-primary); margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-weight: 600;" id="wizard-status-label">Runtime Status: Checking...</span>
+            <span id="wizard-status-percent" style="color: var(--accent-cyan);">0%</span>
+          </div>
+          <div class="progress-container" style="height: 10px; margin-bottom: 12px;">
+            <div class="progress-bar-fill" id="wizard-progress-bar" style="width: 0%;"></div>
+          </div>
+          <div id="wizard-step-message" style="font-size: 0.85rem; color: var(--text-muted); font-family: monospace;">
+            Click "Initialize Runtime" to configure the offline AI environment.
+          </div>
+        </div>
+
+        <div id="wizard-details-box" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <div>• Isolated Runtime: <code id="wizard-runtime-path">%LOCALAPPDATA%\Prompt2VideoAI\runtime</code></div>
+          <div>• Base Python: <span id="wizard-base-python">Detecting...</span></div>
+          <div>• FFmpeg Engine: <span id="wizard-ffmpeg-status">Checking...</span></div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <button class="btn btn-secondary" id="btn-cancel-wizard">Close</button>
+          <button class="btn btn-primary" id="btn-start-provision">
+            Initialize Python Runtime
+          </button>
+        </div>
       </div>
     </div>
   </div>
