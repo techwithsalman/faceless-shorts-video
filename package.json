@@ -1,0 +1,45 @@
+{
+  "name": "prompt2video-ai",
+  "version": "1.0.0",
+  "description": "Your Prompt. Your Video. Powered by Local AI.",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win nsis --x64"
+  },
+  "author": "Prompt2Video AI",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.prompt2video.ai",
+    "productName": "Prompt2Video AI",
+    "win": {
+      "target": ["nsis"],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Prompt2Video AI",
+      "artifactName": "Prompt2Video-AI-Setup.${ext}"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "src-ui/**/*",
+      "scripts/**/*",
+      "styles/**/*",
+      "assets/**/*",
+      "requirements.txt",
+      "package.json"
+    ]
+  }
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt2Video AI — Your Prompt. Your Video. Powered by Local AI.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Prompt2Video AI</h1>
+        <p>Offline Local AI Shorts Studio</p>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="create">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Create Video
+      </button>
+      <button class="nav-tab" data-tab="studio">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        Production Studio
+      </button>
+      <button class="nav-tab" data-tab="library">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Video Library
+      </button>
+      <button class="nav-tab" data-tab="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        AI Models & Settings
+      </button>
+    </nav>
+
+    <!-- Header Status Indicator -->
+    <div class="header-actions">
+      <div class="status-pill" id="global-status-pill">
+        <span class="status-dot pulsing"></span>
+        <span id="global-status-text">Local AI Engine Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Main Content Area -->
+  <main class="app-main">
+
+    <!-- ==================== TAB 1: CREATE VIDEO ==================== -->
+    <section class="tab-pane active" id="tab-create">
+      <div class="section-header">
+        <h2>Create New AI Video</h2>
+        <p>Enter any topic or concept. Prompt2Video AI writes the script, voices it, generates visuals, creates 2.5D depth, and renders your finished MP4.</p>
+      </div>
+
+      <div class="grid-2">
+        <!-- Left Column: Primary Inputs -->
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label">
+              Video Topic / Prompt
+              <span class="hint">Be descriptive or simple</span>
+            </label>
+            <textarea id="input-prompt" class="textarea-input" placeholder="e.g., Why the Titanic really sank — the secret coal fire and brittle steel before hitting the iceberg..."></textarea>
+            
+            <!-- Quick Template Prompts -->
+            <div class="prompt-templates">
+              <span class="template-pill" data-prompt="Why the Titanic really sank — the secret coal fire before the iceberg">🚢 Titanic Mystery</span>
+              <span class="template-pill" data-prompt="The lost Library of Alexandria and what knowledge was destroyed forever">🏛️ Library of Alexandria</span>
+              <span class="template-pill" data-prompt="The Code of Bushido: Why samurai fought without fear of death">⚔️ Samurai Honor</span>
+              <span class="template-pill" data-prompt="How humanity will build the first city on Mars inside lava tubes">🚀 Mars Colony</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Video Title (Optional)
+              <span class="hint">Auto-generated if left empty</span>
+            </label>
+            <input type="text" id="input-title" class="input-text" placeholder="e.g., The Secret of the Titanic">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Visual Style</label>
+            <select id="input-style" class="select-input">
+              <option value="cinematic-documentary">Cinematic Documentary (Photorealistic, atmospheric lighting, 35mm film)</option>
+              <option value="hyper-realistic">Hyper-Realistic Historical (Detailed textures, natural sunlight)</option>
+              <option value="dark-moody">Dark Moody Drama (High contrast, dramatic shadows, volumetric fog)</option>
+              <option value="vintage-film">Vintage 19th Century (Authentic archive aesthetic, desaturated tones)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Right Column: Format & Production Options -->
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label">Aspect Ratio & Platform</label>
+            <div class="ratio-selector-grid">
+              <div class="ratio-card active" data-ratio="9:16">
+                <div class="ratio-icon ratio-9-16"></div>
+                <div class="ratio-title">9:16 Vertical</div>
+                <div class="ratio-desc">Shorts, Reels, TikTok (1080×1920)</div>
+              </div>
+              <div class="ratio-card" data-ratio="16:9">
+                <div class="ratio-icon ratio-16-9"></div>
+                <div class="ratio-title">16:9 Landscape</div>
+                <div class="ratio-desc">YouTube, TV (1920×1080)</div>
+              </div>
+              <div class="ratio-card" data-ratio="1-1">
+                <div class="ratio-icon ratio-1-1"></div>
+                <div class="ratio-title">1:1 Square</div>
+                <div class="ratio-desc">Feed, Social (1080×1080)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Target Duration</label>
+            <div class="pill-selector" id="duration-selector">
+              <div class="pill-option" data-duration="15">15s (Short)</div>
+              <div class="pill-option active" data-duration="30">30s (Standard)</div>
+              <div class="pill-option" data-duration="45">45s (Story)</div>
+              <div class="pill-option" data-duration="60">60s (Deep Dive)</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Resolution</label>
+              <div class="pill-selector" id="resolution-selector">
+                <div class="pill-option active" data-res="1080p">1080p (Full HD)</div>
+                <div class="pill-option" data-res="720p">720p (Fast)</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">AI Voice (Kokoro)</label>
+              <select id="input-voice" class="select-input">
+                <option value="bm_george">George — UK Documentary (Male)</option>
+                <option value="am_michael">Michael — US Steady Explainer (Male)</option>
+                <option value="am_fenrir">Fenrir — US Deep & Resonant (Male)</option>
+                <option value="af_heart">Heart — US Warm & Expressive (Female)</option>
+                <option value="af_bella">Bella — US Bright & Clear (Female)</option>
+                <option value="bf_emma">Emma — UK Calm & Thoughtful (Female)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Save Video To
+              <span class="hint" id="output-folder-display">renders/</span>
+            </label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="input-output-dir" class="input-text" readonly value="">
+              <button class="btn btn-secondary" id="btn-browse-folder" style="white-space: nowrap;">Change</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generate Master Button -->
+      <div style="margin-top: 28px;">
+        <button class="btn btn-primary btn-large" id="btn-generate-video">
+          <svg style="width: 24px; height: 24px; fill: currentColor;" viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Generate Video (100% Offline AI)
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: PRODUCTION STUDIO ==================== -->
+    <section class="tab-pane" id="tab-studio">
+      <div class="studio-hero">
+        <div class="studio-status-header">
+          <div class="studio-title-block">
+            <h3 id="studio-title">Waiting for Generation...</h3>
+            <p id="studio-subtitle">Configure your video topic in the Create tab and click Generate Video.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-secondary btn-small" id="btn-open-active-folder" style="display: none;">
+              Open Folder
+            </button>
+            <button class="btn btn-danger btn-small" id="btn-cancel-generation" style="display: none;">
+              Cancel Task
+            </button>
+          </div>
+        </div>
+
+        <!-- 6-Stage Timeline -->
+        <div class="timeline-stages">
+          <div class="stage-step" id="stage-1">
+            <div class="stage-num">STAGE 1</div>
+            <div class="stage-name">📝 Script Planning</div>
+          </div>
+          <div class="stage-step" id="stage-2">
+            <div class="stage-num">STAGE 2</div>
+            <div class="stage-name">🎙️ Neural Voice</div>
+          </div>
+          <div class="stage-step" id="stage-3">
+            <div class="stage-num">STAGE 3</div>
+            <div class="stage-name">⏱️ Word Subtitles</div>
+          </div>
+          <div class="stage-step" id="stage-4">
+            <div class="stage-num">STAGE 4</div>
+            <div class="stage-name">🎨 SD-Turbo Visuals</div>
+          </div>
+          <div class="stage-step" id="stage-5">
+            <div class="stage-num">STAGE 5</div>
+            <div class="stage-name">📐 2.5D Depth Maps</div>
+          </div>
+          <div class="stage-step" id="stage-6">
+            <div class="stage-num">STAGE 6</div>
+            <div class="stage-name">🎬 Final Video Mix</div>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div class="progress-bar-fill" id="studio-progress-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="studio-progress-label">Ready</span>
+          <span id="studio-progress-percent">0%</span>
+        </div>
+      </div>
+
+      <!-- Scene Real-Time Preview Cards -->
+      <div class="section-header" style="margin-top: 28px; margin-bottom: 12px;">
+        <h3>Story Scenes & Visuals</h3>
+        <p>Live generated scenes, narration, photorealistic visuals and depth parallax.</p>
+      </div>
+
+      <div class="scenes-grid" id="studio-scenes-grid">
+        <!-- Rendered dynamically via studio.js -->
+        <div class="scene-card" style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+          No generation active. Start a video creation task to see live scene generation.
+        </div>
+      </div>
+
+      <!-- Real-time Console Log Stream -->
+      <div class="console-box" id="studio-console-log">
+        <div class="log-line log-info">[Engine] Prompt2Video AI initialized. Ready for user prompt.</div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: VIDEO LIBRARY ==================== -->
+    <section class="tab-pane" id="tab-library">
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
+        <div>
+          <h2>Video Library</h2>
+          <p>Browse, preview, and export your completed local AI videos.</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary btn-small" id="btn-library-refresh">
+            <svg style="width: 14px; height: 14px; fill: currentColor;" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            Refresh
+          </button>
+          <button class="btn btn-secondary btn-small" id="btn-library-open-folder">
+            Open Renders Folder
+          </button>
+        </div>
+      </div>
+
+      <div class="library-grid" id="library-container">
+        <!-- Rendered dynamically via library.js -->
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: AI MODELS & SETTINGS ==================== -->
+    <section class="tab-pane" id="tab-settings">
+      <div class="section-header">
+        <h2>AI Models & System Settings</h2>
+        <p>Inspect local offline neural models, hardware specs, and configure defaults.</p>
+      </div>
+
+      <div class="grid-2">
+        <!-- Hardware & System Specs -->
+        <div class="card">
+          <div class="section-header" style="margin-bottom: 16px;">
+            <h3>Hardware Detection</h3>
+            <p>Your local hardware is fully audited for offline CPU/GPU inference.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Processor (CPU)</label>
+            <input type="text" id="hw-cpu" class="input-text" readonly value="Scanning...">
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">System Memory (RAM)</label>
+              <input type="text" id="hw-ram" class="input-text" readonly value="Scanning...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Graphics (GPU)</label>
+              <input type="text" id="hw-gpu" class="input-text" readonly value="Scanning...">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Storage Drives</label>
+            <div id="hw-drives-list" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+              Scanning storage...
+            </div>
+          </div>
+        </div>
+
+        <!-- Local AI Model Health Status -->
+        <div class="card">
+          <div class="section-header" style="margin-bottom: 16px;">
+            <h3>Local AI Model Suite</h3>
+            <p>100% offline open-weight neural models. No APIs, subscriptions, or clouds.</p>
+          </div>
+
+          <div id="models-checklist">
+            <!-- Dynamically populated via models.js -->
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Checking local model files...</div>
+          </div>
+
+          <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <button class="btn btn-secondary btn-small" id="btn-recheck-models">
+              Re-Scan Models
+            </button>
+            <button class="btn btn-secondary btn-small" id="btn-open-wizard">
+              Setup Wizard
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Video Player Modal -->
+  <div class="modal-backdrop" id="player-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-video-title">Video Player</h3>
+        <button class="modal-close" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 0; background: #000; display: flex; justify-content: center; align-items: center;">
+        <video id="modal-video-element" controls style="max-height: 70vh; width: 100%; outline: none;" autoplay></video>
+      </div>
+      <div style="padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-surface);">
+        <span id="modal-video-info" style="font-size: 0.8rem; color: var(--text-secondary);"></span>
+        <button class="btn btn-primary btn-small" id="btn-modal-open-folder">Show in Explorer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/studio.js"></script>
+  <script src="js/library.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/wizard.js"></script>
+</body>
+</html>

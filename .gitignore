@@ -91,6 +91,8 @@ secrets.json
 *.log
 *.tmp
 scratch/
+workspace/
+p2v-settings.json
 test_opt_terracotta.jpg
 test_sd_turbo.jpg
 
