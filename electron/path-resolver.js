@@ -107,18 +107,52 @@ function getModelCacheDir() {
 }
 
 /**
+ * Returns the bin directory for local tools such as ffmpeg.
+ */
+function getBinDir() {
+  const dir = path.join(getUserDataDir(), 'bin');
+  if (!fs.existsSync(dir)) {
+    try { fs.mkdirSync(dir, { recursive: true }); } catch (e) {}
+  }
+  return dir;
+}
+
+/**
  * Enriches the system PATH to include common FFmpeg and Git locations if missing.
  */
 function getEnrichedPath() {
   let curPath = process.env.PATH || '';
+  const localAppData = process.env.LOCALAPPDATA || '';
+  const wingetPkg = path.join(localAppData, 'Microsoft', 'WinGet', 'Packages');
+  
   const candidates = [
-    // Gyan.dev FFmpeg winget installations
-    path.join(process.env.LOCALAPPDATA || '', 'Microsoft', 'WinGet', 'Packages', 'Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe', 'ffmpeg-9.0.1-essentials_build', 'bin'),
-    path.join(process.env.LOCALAPPDATA || '', 'Microsoft', 'WinGet', 'Packages', 'Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe', 'ffmpeg-9.0.1-full_build', 'bin'),
-    'C:\\ProgramData\\chocolatey\\bin',
+    getBinDir(),
     path.join(getRuntimeDir(), 'Scripts'),
-    path.join(getRuntimeDir())
+    path.join(getRuntimeDir()),
+    // Gyan.dev FFmpeg winget installations
+    path.join(wingetPkg, 'Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe', 'ffmpeg-9.0.1-essentials_build', 'bin'),
+    path.join(wingetPkg, 'Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe', 'ffmpeg-9.0.1-full_build', 'bin'),
+    'C:\\ProgramData\\chocolatey\\bin'
   ];
+
+  // Dynamically find any WinGet FFmpeg installation if directory version differs
+  if (fs.existsSync(wingetPkg)) {
+    try {
+      const dirs = fs.readdirSync(wingetPkg);
+      for (const d of dirs) {
+        if (d.toLowerCase().includes('ffmpeg')) {
+          const sub = path.join(wingetPkg, d);
+          const inner = fs.readdirSync(sub);
+          for (const inDir of inner) {
+            const binP = path.join(sub, inDir, 'bin');
+            if (fs.existsSync(path.join(binP, 'ffmpeg.exe'))) {
+              candidates.push(binP);
+            }
+          }
+        }
+      }
+    } catch (e) {}
+  }
 
   for (const c of candidates) {
     if (fs.existsSync(c) && !curPath.toLowerCase().includes(c.toLowerCase())) {
@@ -133,6 +167,7 @@ module.exports = {
   getBackendDir,
   getScriptPath,
   getUserDataDir,
+  getBinDir,
   getRuntimeDir,
   getRuntimePythonExe,
   getWorkspaceDir,

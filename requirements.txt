@@ -18,8 +18,8 @@ soundfile>=0.12.0
 scipy>=1.11.0
 numpy>=1.24.0
 Pillow>=10.0.0
+imageio-ffmpeg>=0.5.1
 
-# PyTorch Note:
-# PyTorch is installed automatically via setup_office_pc.ps1 according to hardware:
-#   For NVIDIA GPU: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
-#   For CPU-only:   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# Neural Computing Core
+torch>=2.2.0
+torchvision>=0.17.0

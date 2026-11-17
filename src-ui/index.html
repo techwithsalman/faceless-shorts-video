@@ -436,10 +436,21 @@
           </div>
         </div>
 
-        <div id="wizard-details-box" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+        <div id="wizard-details-box" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
           <div>• Isolated Runtime: <code id="wizard-runtime-path">%LOCALAPPDATA%\Prompt2VideoAI\runtime</code></div>
           <div>• Base Python: <span id="wizard-base-python">Detecting...</span></div>
           <div>• FFmpeg Engine: <span id="wizard-ffmpeg-status">Checking...</span></div>
+        </div>
+
+        <div id="wizard-live-checklist" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.82rem; margin-bottom: 20px;">
+          <div id="chk-base-py" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> Base Python 3.10+</div>
+          <div id="chk-venv" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> Isolated Venv</div>
+          <div id="chk-ffmpeg" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> FFmpeg Media Engine</div>
+          <div id="chk-torch" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> PyTorch (CUDA/CPU)</div>
+          <div id="chk-kokoro" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> Kokoro Voice (ONNX)</div>
+          <div id="chk-whisper" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> Faster-Whisper</div>
+          <div id="chk-transformers" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> Transformers</div>
+          <div id="chk-diffusers" style="color: var(--text-muted);"><span class="chk-icon">⚪</span> Diffusers (SD-Turbo)</div>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 12px;">

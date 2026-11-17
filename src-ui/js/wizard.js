@@ -5,6 +5,7 @@
 window.WizardController = {
   isProvisioning: false,
   unsubscribeProgress: null,
+  highestPercent: 0,
 
   init() {
     this.setupListeners();
@@ -59,6 +60,28 @@ window.WizardController = {
     }
   },
 
+  setCheckItem(id, status, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const icon = el.querySelector('.chk-icon');
+    if (status === 'ok') {
+      if (icon) icon.textContent = '🟢';
+      el.style.color = 'var(--accent-green)';
+    } else if (status === 'active') {
+      if (icon) icon.textContent = '⏳';
+      el.style.color = 'var(--accent-cyan)';
+    } else if (status === 'fail') {
+      if (icon) icon.textContent = '❌';
+      el.style.color = 'var(--accent-red)';
+    } else {
+      if (icon) icon.textContent = '⚪';
+      el.style.color = 'var(--text-muted)';
+    }
+    if (text) {
+      el.childNodes[1].textContent = ` ${text}`;
+    }
+  },
+
   async refreshDetails() {
     if (!window.api || !window.api.getRuntimeStatus) return;
 
@@ -80,7 +103,7 @@ window.WizardController = {
 
       const ffmpegEl = document.getElementById('wizard-ffmpeg-status');
       if (ffmpegEl) {
-        ffmpegEl.textContent = status.ffmpegAvailable ? 'Ready (in PATH)' : 'Missing from PATH';
+        ffmpegEl.textContent = status.ffmpegAvailable ? 'Ready (in PATH)' : 'Configuring...';
         ffmpegEl.style.color = status.ffmpegAvailable ? 'var(--accent-green)' : 'var(--accent-amber)';
       }
 
@@ -91,17 +114,37 @@ window.WizardController = {
       const btnStart = document.getElementById('btn-start-provision');
 
       if (status.ready) {
+        this.highestPercent = 100;
         if (statusLabel) statusLabel.textContent = 'Runtime Status: Verified & Ready';
-        if (stepMsg) stepMsg.textContent = 'All local neural dependencies (PyTorch, Kokoro, Whisper, SD-Turbo) are active.';
+        if (stepMsg) stepMsg.textContent = 'All local neural dependencies (PyTorch, Kokoro, Whisper, Diffusers, FFmpeg) are verified.';
         if (progressBar) progressBar.style.width = '100%';
         if (percentEl) percentEl.textContent = '100%';
         if (btnStart) btnStart.textContent = 'Re-Verify Runtime';
+
+        this.setCheckItem('chk-base-py', 'ok', 'Base Python 3.10+');
+        this.setCheckItem('chk-venv', 'ok', 'Isolated Venv');
+        this.setCheckItem('chk-ffmpeg', 'ok', 'FFmpeg Media Engine');
+        this.setCheckItem('chk-torch', 'ok', 'PyTorch (CUDA/CPU)');
+        this.setCheckItem('chk-kokoro', 'ok', 'Kokoro Voice (ONNX)');
+        this.setCheckItem('chk-whisper', 'ok', 'Faster-Whisper');
+        this.setCheckItem('chk-transformers', 'ok', 'Transformers');
+        this.setCheckItem('chk-diffusers', 'ok', 'Diffusers (SD-Turbo)');
       } else {
+        this.highestPercent = 0;
         if (statusLabel) statusLabel.textContent = 'Runtime Status: Setup Required';
         if (stepMsg) stepMsg.textContent = 'Click "Initialize Python Runtime" to provision the offline AI engine.';
         if (progressBar) progressBar.style.width = '0%';
         if (percentEl) percentEl.textContent = '0%';
         if (btnStart) btnStart.textContent = 'Initialize Python Runtime';
+
+        this.setCheckItem('chk-base-py', status.basePythonFound ? 'ok' : 'wait');
+        this.setCheckItem('chk-venv', 'wait');
+        this.setCheckItem('chk-ffmpeg', status.ffmpegAvailable ? 'ok' : 'wait');
+        this.setCheckItem('chk-torch', 'wait');
+        this.setCheckItem('chk-kokoro', 'wait');
+        this.setCheckItem('chk-whisper', 'wait');
+        this.setCheckItem('chk-transformers', 'wait');
+        this.setCheckItem('chk-diffusers', 'wait');
       }
     } catch (err) {
       console.warn('Failed to refresh wizard details:', err);
@@ -111,6 +154,7 @@ window.WizardController = {
   async startProvisioning() {
     if (this.isProvisioning) return;
     this.isProvisioning = true;
+    this.highestPercent = 0;
 
     const btnStart = document.getElementById('btn-start-provision');
     const btnCancel = document.getElementById('btn-cancel-wizard');
@@ -126,9 +170,11 @@ window.WizardController = {
     }
     if (statusLabel) {
       statusLabel.textContent = 'Provisioning in progress...';
+      statusLabel.style.color = 'var(--text-primary)';
     }
     if (stepMsg) {
       stepMsg.textContent = 'Starting isolated environment setup...';
+      stepMsg.style.color = 'var(--text-muted)';
     }
 
     try {
@@ -143,6 +189,15 @@ window.WizardController = {
         statusLabel.textContent = 'Runtime Setup Complete!';
         statusLabel.style.color = 'var(--accent-green)';
       }
+
+      this.setCheckItem('chk-base-py', 'ok');
+      this.setCheckItem('chk-venv', 'ok');
+      this.setCheckItem('chk-ffmpeg', 'ok');
+      this.setCheckItem('chk-torch', 'ok');
+      this.setCheckItem('chk-kokoro', 'ok');
+      this.setCheckItem('chk-whisper', 'ok');
+      this.setCheckItem('chk-transformers', 'ok');
+      this.setCheckItem('chk-diffusers', 'ok');
 
       // Refresh global app state & models
       if (window.App && window.App.checkRuntimeHealth) {
@@ -183,17 +238,19 @@ window.WizardController = {
   },
 
   updateProgress(data) {
-    const percent = data.percent || 0;
+    if (!data) return;
+    const incomingPct = data.percent !== undefined ? data.percent : 0;
+    this.highestPercent = Math.max(this.highestPercent, incomingPct);
     const msg = data.message || '';
 
     const progressBar = document.getElementById('wizard-progress-bar');
     if (progressBar) {
-      progressBar.style.width = `${percent}%`;
+      progressBar.style.width = `${this.highestPercent}%`;
     }
 
     const percentEl = document.getElementById('wizard-status-percent');
     if (percentEl) {
-      percentEl.textContent = `${percent}%`;
+      percentEl.textContent = `${this.highestPercent}%`;
     }
 
     const stepMsg = document.getElementById('wizard-step-message');
@@ -201,5 +258,28 @@ window.WizardController = {
       stepMsg.textContent = msg;
       stepMsg.style.color = 'var(--text-muted)';
     }
+
+    // Map stages to checklist items
+    const s = data.stage;
+    if (s === 'search') this.setCheckItem('chk-base-py', 'active');
+    else if (s === 'venv') {
+      this.setCheckItem('chk-base-py', 'ok');
+      this.setCheckItem('chk-venv', 'active');
+    }
+    else if (s === 'linking' || s === 'ffmpeg') {
+      this.setCheckItem('chk-venv', 'ok');
+      this.setCheckItem('chk-ffmpeg', 'active');
+    }
+    else if (s === 'torch') this.setCheckItem('chk-torch', 'active');
+    else if (s === 'torch_ok') this.setCheckItem('chk-torch', 'ok');
+    else if (s === 'kokoro') this.setCheckItem('chk-kokoro', 'active');
+    else if (s === 'kokoro_ok') this.setCheckItem('chk-kokoro', 'ok');
+    else if (s === 'whisper') this.setCheckItem('chk-whisper', 'active');
+    else if (s === 'whisper_ok') this.setCheckItem('chk-whisper', 'ok');
+    else if (s === 'transformers') this.setCheckItem('chk-transformers', 'active');
+    else if (s === 'transformers_ok') this.setCheckItem('chk-transformers', 'ok');
+    else if (s === 'diffusers') this.setCheckItem('chk-diffusers', 'active');
+    else if (s === 'diffusers_ok') this.setCheckItem('chk-diffusers', 'ok');
+    else if (s === 'ffmpeg_ok') this.setCheckItem('chk-ffmpeg', 'ok');
   }
 };
