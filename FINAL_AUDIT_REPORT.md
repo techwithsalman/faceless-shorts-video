@@ -4,8 +4,9 @@
 **Project Path:** `C:\Users\HP\Desktop\faceless-shorts-video`  
 **Hardware Profile:** Intel Core i7-7700 (8 threads), 32 GB RAM, NVIDIA GeForce GTX 1060 6GB (CUDA 12.1)  
 **Distribution Binaries:**
-- `desktop-app/dist/AI Long Video Clipper-Setup.exe` (87,403,803 bytes / 83.35 MB)
-- `desktop-app/dist/AI Long Video Clipper-Portable.exe` (79,921,737 bytes / 76.22 MB)
+- `desktop-app/dist/AI Long Video Clipper-Setup.exe` (87,405,648 bytes / 83.36 MB)
+- `desktop-app/dist/AI Long Video Clipper-Portable.exe` (79,922,521 bytes / 76.22 MB)
+- Preserved previous builds in `desktop-app/dist/backup-pre-audio-fix/` and `desktop-app/dist/previous-build/`
 
 ---
 
@@ -104,6 +105,25 @@ All 10 required production capabilities were tested with live execution on real 
   - Terminated active server process mid-job and restarted.
   - `load_persistent_state()` read `job_state.json`, recognized previous state, reset cleanly to `state: idle` with detail `"Ready for Batch-007 — 0%"`.
   - Prevented infinite "running" lock, restored historical logs and library video paths.
+
+### 11. Audio Volume Analysis, Silent Detection & Bundled Desktop Execution
+- **Status:** **PASS (VERIFIED)**
+- **Test Evidence:**
+  - **Silent Audio Forensics (`Facebook 01.mp4`):**
+    - Audio stream: AAC 48kHz stereo, duration 638.89s (10m 38s), recorded via OBS Studio.
+    - Volumedetect: Mean volume `-51.9 dB`, Max volume `-9.8 dB`. 99.74% of frames below `-40 dB`. Peaks were mechanical mouse clicks (5.9ms to 23.7ms).
+    - Engine detected silent/muted recording, reported transparent warning (`Audio track is silent or muted (mean: -51.9 dB, max: -9.8 dB). Check microphone settings in recording software.`), and generated 0 clips without fabricating fake transcripts or clips.
+  - **Active Speech Recovery & Verification (`Facebook 02.mp4`):**
+    - Volumedetect: Mean volume `-22.6 dB` (active spoken audio).
+    - Faster-Whisper transcribed vocal narration, detected natural sentence pauses, and rendered vertical short `1080x1920` MP4 with synchronized subtitles and gold word highlighting.
+  - **Dynamic Audio Boost Fallback:**
+    - Integrated `dynaudnorm` low-volume recovery pass for quiet speech (`-45 dB` to `-35 dB`).
+  - **Windows CUDA DLL Search Registration:**
+    - Explicitly registered `torch/lib` on Windows via `os.add_dll_directory` to prevent `cublas64_12.dll` runtime loading errors.
+  - **Bundled Electron Application Verification:**
+    - Verified `dist/win-unpacked/resources/scripts/clipper_engine.py` contains the updated volume analysis and silent detection logic.
+    - Verified the packaged Electron desktop application launches `resources/scripts/clipper_server.py` directly.
+    - Tested CPU fallback with `WhisperModel(..., device="cpu", compute_type="int8")`.
 
 ---
 

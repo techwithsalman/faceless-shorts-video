@@ -18,10 +18,17 @@ from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs, unquote
 from typing import Tuple, Optional, List, Dict, Any
 
-# Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Add project root and script directory to path
+script_dir = Path(__file__).parent.resolve()
+if str(script_dir) not in sys.path:
+    sys.path.insert(0, str(script_dir))
+if str(script_dir.parent) not in sys.path:
+    sys.path.insert(0, str(script_dir.parent))
 
-from scripts.clipper_engine import VideoClipperEngine
+try:
+    from scripts.clipper_engine import VideoClipperEngine
+except ImportError:
+    from clipper_engine import VideoClipperEngine
 
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 

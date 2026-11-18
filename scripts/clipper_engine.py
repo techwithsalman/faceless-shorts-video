@@ -10,9 +10,13 @@ import re
 import math
 import time
 import shutil
+import logging
 import subprocess
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple, Callable
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = logging.getLogger("clipper_engine")
 
 # Ensure FFmpeg is in PATH on Windows
 for candidate in [
@@ -21,6 +25,21 @@ for candidate in [
 ]:
     if candidate.exists() and str(candidate) not in os.environ.get("PATH", ""):
         os.environ["PATH"] = str(candidate) + os.pathsep + os.environ.get("PATH", "")
+
+# Register PyTorch / CUDA DLL directories on Windows for CTranslate2 / Faster-Whisper
+if sys.platform == "win32":
+    for torch_candidate in [
+        Path(sys.prefix) / "Lib" / "site-packages" / "torch" / "lib",
+        Path(r"C:\Users\HP\.faceless-shorts\venv\Lib\site-packages\torch\lib"),
+        Path.home() / ".faceless-shorts" / "venv" / "Lib" / "site-packages" / "torch" / "lib",
+    ]:
+        if torch_candidate.is_dir():
+            try:
+                os.add_dll_directory(str(torch_candidate))
+                if str(torch_candidate) not in os.environ.get("PATH", ""):
+                    os.environ["PATH"] = str(torch_candidate) + os.pathsep + os.environ.get("PATH", "")
+            except Exception:
+                pass
 
 
 def escape_ffmpeg_path(path_str: str) -> str:
@@ -63,6 +82,7 @@ class VideoClipperEngine:
         self.cancel_requested = False
         self.pause_requested = False
         self.whisper_model = None
+        self.logger = logger
 
         # Determine cache dir
         if cache_dir:
@@ -156,6 +176,33 @@ class VideoClipperEngine:
             "channels": int(audio_stream.get("channels", 2)) if audio_stream else None,
         }
 
+    def get_audio_volume_stats(self, wav_path: str) -> Dict[str, float]:
+        """Analyzes audio volume levels using FFmpeg volumedetect filter."""
+        cmd = [
+            "ffmpeg", "-v", "info", "-i", str(wav_path),
+            "-af", "volumedetect", "-f", "null", "-"
+        ]
+        try:
+            res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+            mean_vol = None
+            max_vol = None
+            for line in res.stderr.splitlines():
+                if "mean_volume:" in line:
+                    m = re.search(r"mean_volume:\s*(-?[\d.]+)\s*dB", line)
+                    if m:
+                        mean_vol = float(m.group(1))
+                elif "max_volume:" in line:
+                    m = re.search(r"max_volume:\s*(-?[\d.]+)\s*dB", line)
+                    if m:
+                        max_vol = float(m.group(1))
+            return {
+                "mean_volume_db": mean_vol if mean_vol is not None else -99.0,
+                "max_volume_db": max_vol if max_vol is not None else -99.0
+            }
+        except Exception as e:
+            self.logger.warning(f"volumedetect failed on {wav_path}: {e}")
+            return {"mean_volume_db": -99.0, "max_volume_db": -99.0}
+
     def extract_audio(self, video_path: str, output_wav: str) -> str:
         """Extracts 16kHz mono 16-bit PCM WAV for Faster-Whisper."""
         Path(output_wav).parent.mkdir(parents=True, exist_ok=True)
@@ -207,54 +254,110 @@ class VideoClipperEngine:
         return self.whisper_model
 
     def transcribe_audio(self, wav_path: str) -> Dict[str, Any]:
-        """Transcribes audio with word-level timestamps."""
+        """Transcribes audio with word-level timestamps and low-volume boost recovery."""
         model = self.load_whisper()
+        audio_levels = self.get_audio_volume_stats(wav_path)
+        mean_vol = audio_levels["mean_volume_db"]
+        max_vol = audio_levels["max_volume_db"]
 
-        # Run transcribe with word timestamps and voice activity detection
-        segments_gen, info = model.transcribe(
-            str(wav_path),
-            word_timestamps=True,
-            vad_filter=True,
-            vad_parameters=dict(min_silence_duration_ms=250)
-        )
+        try:
+            # Run transcribe with word timestamps and voice activity detection
+            segments_gen, info = model.transcribe(
+                str(wav_path),
+                word_timestamps=True,
+                vad_filter=True,
+                vad_parameters=dict(min_silence_duration_ms=250)
+            )
 
-        segments = []
-        all_words = []
-        full_text_list = []
+            segments = []
+            all_words = []
+            full_text_list = []
 
-        for seg in segments_gen:
-            self.check_pause_and_cancel()
-            seg_words = []
-            if seg.words:
-                for w in seg.words:
-                    word_clean = w.word.strip()
-                    if word_clean:
-                        w_dict = {
-                            "word": word_clean,
-                            "start": round(w.start, 3),
-                            "end": round(w.end, 3),
-                            "probability": round(w.probability, 3)
-                        }
-                        seg_words.append(w_dict)
-                        all_words.append(w_dict)
+            for seg in segments_gen:
+                self.check_pause_and_cancel()
+                seg_words = []
+                if seg.words:
+                    for w in seg.words:
+                        word_clean = w.word.strip()
+                        if word_clean:
+                            w_dict = {
+                                "word": word_clean,
+                                "start": round(w.start, 3),
+                                "end": round(w.end, 3),
+                                "probability": round(w.probability, 3)
+                            }
+                            seg_words.append(w_dict)
+                            all_words.append(w_dict)
 
-            seg_dict = {
-                "id": seg.id,
-                "start": round(seg.start, 3),
-                "end": round(seg.end, 3),
-                "text": seg.text.strip(),
-                "words": seg_words
+                seg_dict = {
+                    "id": seg.id,
+                    "start": round(seg.start, 3),
+                    "end": round(seg.end, 3),
+                    "text": seg.text.strip(),
+                    "words": seg_words
+                }
+                segments.append(seg_dict)
+                full_text_list.append(seg.text.strip())
+
+            # If no words detected and audio has audible variation, try dynamic normalization boost
+            if not all_words and mean_vol > -48.0 and max_vol > -25.0:
+                norm_wav = str(Path(wav_path).with_name("audio_16k_boosted.wav"))
+                try:
+                    cmd = [
+                        "ffmpeg", "-v", "error", "-y", "-i", str(wav_path),
+                        "-af", "dynaudnorm=f=150:g=15",
+                        "-c:a", "pcm_s16le", norm_wav
+                    ]
+                    subprocess.run(cmd, check=True)
+                    boost_gen, boost_info = model.transcribe(
+                        norm_wav,
+                        word_timestamps=True,
+                        vad_filter=True,
+                        vad_parameters=dict(min_silence_duration_ms=150, threshold=0.35)
+                    )
+                    boost_words = []
+                    boost_segs = []
+                    boost_text = []
+                    for b_seg in boost_gen:
+                        if b_seg.words:
+                            for bw in b_seg.words:
+                                bw_clean = bw.word.strip()
+                                if bw_clean:
+                                    bw_dict = {
+                                        "word": bw_clean,
+                                        "start": round(bw.start, 3),
+                                        "end": round(bw.end, 3),
+                                        "probability": round(bw.probability, 3)
+                                    }
+                                    boost_words.append(bw_dict)
+                        boost_segs.append({
+                            "id": b_seg.id,
+                            "start": round(b_seg.start, 3),
+                            "end": round(b_seg.end, 3),
+                            "text": b_seg.text.strip(),
+                            "words": [w for w in boost_words if w["start"] >= b_seg.start and w["end"] <= b_seg.end]
+                        })
+                        boost_text.append(b_seg.text.strip())
+                    if boost_words:
+                        self.logger.info(f"Audio volume normalization recovered {len(boost_words)} spoken words")
+                        segments = boost_segs
+                        all_words = boost_words
+                        full_text_list = boost_text
+                except Exception as boost_err:
+                    self.logger.warning(f"Audio boost fallback attempt failed: {boost_err}")
+
+            return {
+                "language": info.language,
+                "duration": round(info.duration, 2),
+                "full_text": " ".join(full_text_list),
+                "segments": segments,
+                "words": all_words,
+                "audio_levels": audio_levels,
+                "is_silent": mean_vol < -48.0 and max_vol < -15.0
             }
-            segments.append(seg_dict)
-            full_text_list.append(seg.text.strip())
-
-        return {
-            "language": info.language,
-            "duration": round(info.duration, 2),
-            "full_text": " ".join(full_text_list),
-            "segments": segments,
-            "words": all_words
-        }
+        except Exception as e:
+            self.logger.error(f"Whisper transcription failed on {wav_path}: {e}")
+            raise
 
     def detect_speech_pauses(self, words: List[Dict], audio_duration: float, wav_path: str) -> List[float]:
         """Finds clean cut points (timestamps) occurring at natural speech pauses."""
@@ -830,14 +933,29 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             f"Faster-Whisper AI transcription ({self.device.upper()}): {meta['filename']}"
         )
         self.check_pause_and_cancel()
-        transcript_data = self.transcribe_audio(wav_path)
-        words = transcript_data["words"]
-        segments = transcript_data["segments"]
+        try:
+            transcript_data = self.transcribe_audio(wav_path)
+        except Exception as e:
+            err_msg = f"Transcription engine failure for {meta['filename']}: {e}"
+            self.logger.error(err_msg)
+            self.update_progress("error", base_pct + step_weight * 0.9, err_msg)
+            raise RuntimeError(err_msg)
+
+        words = transcript_data.get("words", [])
+        segments = transcript_data.get("segments", [])
 
         if not words:
+            audio_levels = transcript_data.get("audio_levels", {})
+            mean_v = audio_levels.get("mean_volume_db", -99.0)
+            max_v = audio_levels.get("max_volume_db", -99.0)
+            if transcript_data.get("is_silent") or mean_v < -48.0:
+                diag = f"Audio track is silent or muted (mean: {mean_v:.1f} dB, max: {max_v:.1f} dB). Check microphone settings in recording software."
+            else:
+                diag = f"No vocal speech activity detected in audio stream (mean: {mean_v:.1f} dB)."
+            self.logger.warning(f"{meta['filename']}: {diag}")
             self.update_progress(
                 "warning", base_pct + step_weight * 0.9,
-                f"No spoken words detected in {meta['filename']}."
+                f"No spoken words in {meta['filename']} - {diag}"
             )
             return []
 

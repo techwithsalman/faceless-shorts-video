@@ -31,18 +31,26 @@ function findPythonExecutable() {
 }
 
 function findServerScript() {
-  const candidates = [
-    path.join(__dirname, '..', 'scripts', 'clipper_server.py'),
-    path.join(process.resourcesPath, 'scripts', 'clipper_server.py'),
-    path.join(__dirname, 'scripts', 'clipper_server.py')
-  ];
+  const candidates = app.isPackaged
+    ? [
+        path.join(process.resourcesPath, 'scripts', 'clipper_server.py'),
+        path.join(__dirname, 'scripts', 'clipper_server.py'),
+        path.join(__dirname, '..', 'scripts', 'clipper_server.py')
+      ]
+    : [
+        path.join(__dirname, '..', 'scripts', 'clipper_server.py'),
+        path.join(process.resourcesPath, 'scripts', 'clipper_server.py'),
+        path.join(__dirname, 'scripts', 'clipper_server.py')
+      ];
 
   for (const c of candidates) {
     if (fs.existsSync(c)) {
       return c;
     }
   }
-  return path.join(__dirname, '..', 'scripts', 'clipper_server.py');
+  return app.isPackaged
+    ? path.join(process.resourcesPath, 'scripts', 'clipper_server.py')
+    : path.join(__dirname, '..', 'scripts', 'clipper_server.py');
 }
 
 function checkBackendHealth(port, callback) {

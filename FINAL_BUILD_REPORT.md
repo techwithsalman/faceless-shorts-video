@@ -10,20 +10,24 @@
 
 ## 1. Distribution Binaries
 
-Both the **NSIS Production Installer** and the **Standalone Portable Executable** have been built, verified, and archived:
+Both the **NSIS Production Installer** and the **Standalone Portable Executable** have been rebuilt with the updated silent-audio detection and CUDA registration engine, verified, and archived:
 
 ### A. Current Production Binaries (`desktop-app/dist/`)
 
-| File Name | Distribution Target | Exact File Size | SHA256 Checksum | Header |
-| :--- | :--- | :--- | :--- | :---: |
-| **`AI Long Video Clipper-Setup.exe`** | NSIS Production Installer | **87,404,352 bytes** (83.36 MB) | `caa912ccba301f02cf89b2786f76d48f9d8ec4071fd08dc3f1a52def8e877d86` | Valid PE |
-| **`AI Long Video Clipper-Portable.exe`** | Standalone Single EXE | **79,917,112 bytes** (76.21 MB) | `abaf267b7d441ade9c7fa5af65e6d8e6e8fb96f2124df1b6372b09ca1aeea8a9` | Valid PE |
+| File Name | Distribution Target | Exact File Size | SHA256 Checksum | Header | Status |
+| :--- | :--- | :--- | :--- | :---: | :---: |
+| **`AI Long Video Clipper-Setup.exe`** | NSIS Production Installer | **87,405,648 bytes** (83.36 MB) | `A51ED7C16C6918BA7EB8DE2E2C9952E95FDA08CAA43F69765EE7EFAC605795CE` | Valid PE | **PASS (VERIFIED)** |
+| **`AI Long Video Clipper-Portable.exe`** | Standalone Single EXE | **79,922,521 bytes** (76.22 MB) | `10003259C4A9B21B1A2F82E8EDA9D4894194135DFED24941418D9BA4095C53FE` | Valid PE | **PASS (VERIFIED)** |
 
-### B. Preserved Previous Builds (`desktop-app/dist/previous-build/`)
+### B. Preserved Previous Builds & Backups
 
-As requested by the user, all previous builds have been preserved:
-- `AI Long Video Clipper-Setup.exe` (87,403,803 bytes / 83.35 MB)
-- `AI Long Video Clipper-Portable.exe` (79,921,737 bytes / 76.22 MB)
+As required, all previous builds have been preserved:
+- **`desktop-app/dist/backup-pre-audio-fix/`**:
+  - `AI Long Video Clipper-Setup.exe` (87,404,352 bytes / 83.36 MB)
+  - `AI Long Video Clipper-Portable.exe` (79,917,112 bytes / 76.21 MB)
+- **`desktop-app/dist/previous-build/`**:
+  - `AI Long Video Clipper-Setup.exe` (87,403,803 bytes / 83.35 MB)
+  - `AI Long Video Clipper-Portable.exe` (79,921,737 bytes / 76.22 MB)
 
 ---
 
