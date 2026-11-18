@@ -1725,9 +1725,11 @@ class ClipperHTTPHandler(BaseHTTPRequestHandler):
             for b in sorted(OUTPUT_ROOT.glob("Batch-*")):
                 if b.is_dir():
                     rep = b / "batch-report.md"
+                    clips = list(b.glob("*.mp4")) + list((b / "vertical-shorts").glob("*.mp4"))
                     batches.append({
                         "name": b.name,
                         "path": str(b),
+                        "clip_count": len(clips),
                         "has_report": rep.exists()
                     })
             self.send_json(200, {"batches": batches})

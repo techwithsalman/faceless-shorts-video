@@ -237,7 +237,7 @@ async function openHistoryModal() {
       item.className = 'history-item';
       item.innerHTML = `
         <div>
-          <div class="history-item-title">${b.name}</div>
+          <div class="history-item-title">${b.name} <span style="font-size:0.75rem; color:var(--gold); font-weight:normal;">(${b.clip_count !== undefined ? b.clip_count + ' clips' : ''})</span></div>
           <div class="history-item-sub">Path: <code>${b.path}</code></div>
         </div>
         <button class="btn btn-secondary" style="font-size:0.8rem; padding:0.45rem 1rem;" onclick="openSpecificFolder('${encodeURIComponent(b.path)}')">
