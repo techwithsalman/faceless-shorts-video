@@ -4,7 +4,7 @@
 The **AI Long Video Clipper Studio** features a modern dark luxury interface designed for high-throughput video editing:
 - **Header:** Displays live hardware status (`NVIDIA GTX 1060 CUDA Active` or `CPU Fallback`), active backend port, and shortcut buttons (**System Diagnostics**, **Batch History**, and **Output Folder**).
 - **Video Staging (Left Column):** Upload dropzone supporting multiple file selection, drag-and-drop, individual video cards with live file size and duration preview, and a **Library Browser** to reuse previously uploaded source videos.
-- **Production Pipeline (Right Column):** Duration breakdown controls (30s, 45s, 60s), aspect ratio selector, subtitle styling preview, one-click execution button, real-time stage progress bar, and streaming system logs.
+- **Production Pipeline (Right Column):** Duration breakdown controls (30s, 45s, 60s), aspect ratio selector, subtitle styling preview, one-click execution button, real-time stage progress bar, pause/resume/cancel controls, and streaming system logs.
 - **Batch Output Gallery:** Displays generated video clips for immediate playback, right-click file operations, and one-click opening in Windows File Explorer.
 
 ---
@@ -26,17 +26,19 @@ Specify how many clips of each duration you want to generate:
 
 ### Step 3: Choose Framing and Subtitles
 - **Framing Mode:**
-  - `Vertical (9:16)` — Center-crop optimized for Shorts, Reels, TikTok (1080x1920).
+  - `Vertical (9:16)` — Center-crop optimized for Shorts, Reels, TikTok (1080x1920) with blurred background fill.
   - `Horizontal (16:9)` — Widescreen original framing (1920x1080).
   - `Square (1:1)` — Square social post format (1080x1080).
 - **Subtitles:** Automatically generated with word-level speech synchronization, yellow/gold dynamic highlighting on currently spoken words, high-contrast black outline, and vertical positioning configured above UI navigation buttons.
 
-### Step 4: Start Processing
+### Step 4: Start Processing & Real-Time Controls
 1. Click **Start AI Long Video Clipper**.
 2. The UI switches to active processing state:
    - Overall progress bar tracks percentage completion across all videos.
    - Stage indicators display: *Extracting Audio* ➔ *Transcribing Speech* ➔ *Analyzing Key Moments* ➔ *Rendering 1080x1920 Clips*.
    - Live logs display timecode cuts, selected moment scores, and encoding details.
+3. **Pause & Resume:** Click **Pause** at any point to pause GPU/CPU compute; click **Resume** to continue.
+4. **Cancel:** Click **Cancel** to abort processing safely without corrupting completed clips.
 
 ### Step 5: Review & Export Clips
 1. When all clips finish rendering, the **Batch Completed Successfully** banner appears.
@@ -45,8 +47,9 @@ Specify how many clips of each duration you want to generate:
 
 ---
 
-## 3. Safe Multi-Batch Management
+## 3. Storage & Multi-Batch Management
 The AI Long Video Clipper is built with strict non-destructive storage guarantees:
-- **Start New Batch:** Click the gold **Start New Batch** button after a batch completes. This resets the UI state, generates a fresh Job ID, and increments the batch directory (e.g. `Batch-006`).
-- **Data Protection:** Previous batch folders (`Batch-001` through `Batch-005`), completed clips, and uploaded source videos are **never deleted or overwritten**.
+- **Start New Batch:** Click the gold **Start New Batch** button after a batch completes. This resets the UI state, generates a fresh Job ID, and increments the batch directory (e.g. `Batch-007`).
+- **Data Protection:** Previous batch folders (`Batch-001` through `Batch-006`), completed clips, and uploaded source videos are **never deleted or overwritten**.
 - **Batch History:** Click the **Batch History** button in the header at any time to review past batches, clip counts, duration breakdowns, and open any historical batch folder directly in Windows Explorer.
+- **Customizable Storage Locations:** Use the **Setup & Diagnostics Modal** to change either the **Model Cache Storage Location** or the **Output Video Storage Location** at any time.

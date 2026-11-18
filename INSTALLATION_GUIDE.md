@@ -4,8 +4,8 @@
 This guide describes how to install and run **AI Long Video Clipper** on any Windows 10/11 64-bit computer, including fresh/clean systems without pre-installed developer tools.
 
 Two distribution packages are provided in the `desktop-app/dist/` directory:
-1. **`AI Long Video Clipper-Setup.exe`** — Full Windows installer with standard installation wizard, Start Menu shortcuts, Desktop shortcut, and uninstaller support.
-2. **`AI Long Video Clipper-Portable.exe`** — Standalone portable executable requiring no administrator privileges or file installation.
+1. **`AI Long Video Clipper-Setup.exe`** (83.36 MB) — Full Windows installer with standard installation wizard, Start Menu shortcuts, Desktop shortcut, and uninstaller support.
+2. **`AI Long Video Clipper-Portable.exe`** (76.21 MB) — Standalone portable executable requiring no administrator privileges or file installation.
 
 ---
 
@@ -22,7 +22,10 @@ If the machine already has Python 3.10+, FFmpeg, and Faster-Whisper configured (
 ---
 
 ## 3. Installation on a Fresh / Clean Windows PC (Zero Developer Tools)
-If installing on a clean PC without Python, FFmpeg, or CUDA:
+> [!IMPORTANT]
+> A fresh Windows 10/11 x64 PC has **no Python runtime, no PyTorch, and no FFmpeg**.  
+> The 83.36 MB installer provides the complete Electron host application, custom luxury interface, window management, and Python orchestrator scripts.  
+> PyTorch with CUDA 12.1 (~2.7 GB) and Faster-Whisper neural network weights (~480 MB) are **intentionally not bundled** inside the installer to avoid creating an unmanageable ~4.7 GB binary.
 
 ### Method A: Automated One-Click Bootstrapper (Recommended)
 1. Copy or clone the project folder to the destination computer.
@@ -40,13 +43,26 @@ If you launch `AI Long Video Clipper` directly on a machine where components are
 1. The app detects missing items and opens the **First-Run Setup & Diagnostics Wizard**.
 2. **Faster-Whisper Model:** If the model weights are missing, click **Download Model (~480 MB)**. The app downloads the official weights into `%USERPROFILE%\.faceless-shorts\cache`.
 3. **Hardware Acceleration:**
-   - If an NVIDIA GPU with CUDA is detected, hardware acceleration is engaged automatically.
+   - If an NVIDIA GPU with CUDA is detected, hardware acceleration is engaged automatically (`device="cuda"`).
    - If no NVIDIA card is present, the app gracefully engages **CPU Fallback Mode** (`compute_type="int8"` and `libx264` fast encoding), operating without crashes.
 4. **Diagnostic Verification:** Click **⚡ Test Engine** to run an automated check verifying FFmpeg execution, Faster-Whisper model loading, and speech inference.
 
 ---
 
-## 4. Uninstallation
+## 4. User-Selectable Storage & Output Folders
+Users can customize storage locations directly from the **Setup & Diagnostics Modal**:
+- **Model Cache Storage Location:** Click **Change Folder** next to Model Cache to relocate Whisper model weights to any internal or external drive with ample free space.
+- **Output Video Storage Location:** Click **Change Folder** next to Output Video Storage to save rendered clips to custom project directories.
+
+---
+
+## 5. Portable Edition Usage & Output Safety
+- Double-click `AI Long Video Clipper-Portable.exe` to run immediately without installation.
+- **Output Safety Guarantee:** The portable edition automatically outputs rendered clips to `AI-Video-Clips/` directly adjacent to the portable `.exe` (via `PORTABLE_EXECUTABLE_DIR`). Generated videos are **never lost** when the portable sandbox closes.
+
+---
+
+## 6. Uninstallation
 To remove the application:
 1. Open Windows **Settings** > **Apps** > **Installed apps**.
 2. Search for **AI Long Video Clipper**.
