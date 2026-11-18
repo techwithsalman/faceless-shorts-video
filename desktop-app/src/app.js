@@ -117,8 +117,13 @@ async function loadSystemDiagnostics() {
     // Python
     document.getElementById('diag-python').innerText = `Python ${data.python.version} (${data.python.path})`;
 
-    // Cache dir
-    document.getElementById('cache-path-input').value = data.cache_dir || '';
+    // Cache dir & Output dir
+    if (document.getElementById('cache-path-input')) {
+      document.getElementById('cache-path-input').value = data.cache_dir || '';
+    }
+    if (document.getElementById('output-path-input')) {
+      document.getElementById('output-path-input').value = data.output_dir || '';
+    }
 
   } catch (err) {
     console.warn('Could not load system diagnostics:', err);
@@ -143,7 +148,37 @@ async function chooseCacheFolder() {
     const dir = await window.electronAPI.selectDirectory();
     if (dir) {
       document.getElementById('cache-path-input').value = dir;
-      appendLog('Updated cache directory: ' + dir);
+      try {
+        await fetch(`${BACKEND_URL}/api/set_cache_dir`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: dir })
+        });
+        appendLog('Updated cache directory: ' + dir);
+        loadSystemDiagnostics();
+      } catch (e) {
+        appendLog('Failed to save cache directory: ' + e);
+      }
+    }
+  }
+}
+
+async function chooseOutputFolder() {
+  if (window.electronAPI && window.electronAPI.selectDirectory) {
+    const dir = await window.electronAPI.selectDirectory();
+    if (dir) {
+      document.getElementById('output-path-input').value = dir;
+      try {
+        await fetch(`${BACKEND_URL}/api/set_output_dir`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: dir })
+        });
+        appendLog('Updated output directory: ' + dir);
+        fetchUploadedVideos();
+      } catch (e) {
+        appendLog('Failed to save output directory: ' + e);
+      }
     }
   }
 }

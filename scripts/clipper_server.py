@@ -24,9 +24,17 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from scripts.clipper_engine import VideoClipperEngine
 
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
-UPLOAD_DIR = PROJECT_ROOT / "AI-Video-Clips" / "uploads"
+
+GLOBAL_CACHE_DIR = Path.home() / ".faceless-shorts" / "cache"
+GLOBAL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+if os.environ.get("CLIPPER_OUTPUT_DIR"):
+    OUTPUT_ROOT = Path(os.environ["CLIPPER_OUTPUT_DIR"]).resolve()
+else:
+    OUTPUT_ROOT = PROJECT_ROOT / "AI-Video-Clips"
+
+UPLOAD_DIR = OUTPUT_ROOT / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-OUTPUT_ROOT = PROJECT_ROOT / "AI-Video-Clips"
 OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
 JOB_STATE_FILE = OUTPUT_ROOT / "job_state.json"
 JOB_HISTORY_FILE = OUTPUT_ROOT / "job_history.json"
@@ -272,7 +280,7 @@ class ClipperJobManager:
             self._save_state_locked()
 
         self.engine = VideoClipperEngine(
-            cache_dir=str(Path.home() / ".faceless-shorts" / "cache"),
+            cache_dir=str(GLOBAL_CACHE_DIR),
             device="auto",
             progress_callback=self.progress_callback
         )
@@ -1763,8 +1771,7 @@ class ClipperHTTPHandler(BaseHTTPRequestHandler):
 
             model_info = {"installed": False, "path": "", "name": "faster-whisper-small.en"}
             snapshot_rel = Path("hub/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f")
-            cache_dir = Path.home() / ".faceless-shorts" / "cache"
-            cand_paths = [cache_dir / snapshot_rel, Path("C:/Users/HP/.faceless-shorts/cache") / snapshot_rel]
+            cand_paths = [GLOBAL_CACHE_DIR / snapshot_rel, Path("C:/Users/HP/.faceless-shorts/cache") / snapshot_rel]
             for cp in cand_paths:
                 if cp.exists():
                     model_info = {"installed": True, "path": str(cp), "name": "faster-whisper-small.en"}
@@ -1781,7 +1788,7 @@ class ClipperHTTPHandler(BaseHTTPRequestHandler):
                 "model": model_info,
                 "ffmpeg": {"installed": bool(ffmpeg_p), "path": ffmpeg_p or "", "ffprobe": bool(ffprobe_p)},
                 "python": {"version": sys.version.split()[0], "path": sys.executable},
-                "cache_dir": str(cache_dir),
+                "cache_dir": str(GLOBAL_CACHE_DIR),
                 "output_dir": str(OUTPUT_ROOT)
             })
             return
@@ -1888,6 +1895,7 @@ class ClipperHTTPHandler(BaseHTTPRequestHandler):
         return target_filename, dest_path
 
     def do_POST(self):
+        global GLOBAL_CACHE_DIR, OUTPUT_ROOT, UPLOAD_DIR, JOB_STATE_FILE, JOB_HISTORY_FILE
         parsed = urlparse(self.path)
         path = parsed.path
 
@@ -2070,9 +2078,42 @@ class ClipperHTTPHandler(BaseHTTPRequestHandler):
         elif path in ("/api/download_model", "/download_model"):
             try:
                 from faster_whisper import download_model
-                cache_dir = str(Path.home() / ".faceless-shorts" / "cache")
-                p = download_model("small.en", output_dir=cache_dir)
+                p = download_model("small.en", output_dir=str(GLOBAL_CACHE_DIR))
                 self.send_json(200, {"status": "success", "model_path": str(p)})
+            except Exception as e:
+                self.send_json(500, {"error": str(e)})
+            return
+
+        elif path in ("/api/set_cache_dir", "/set_cache_dir"):
+            try:
+                data = safe_load_json(body) if body else {}
+                new_path = data.get("path")
+                if new_path:
+                    p = Path(new_path).resolve()
+                    p.mkdir(parents=True, exist_ok=True)
+                    GLOBAL_CACHE_DIR = p
+                    self.send_json(200, {"status": "success", "cache_dir": str(GLOBAL_CACHE_DIR)})
+                else:
+                    self.send_json(400, {"error": "Missing path parameter"})
+            except Exception as e:
+                self.send_json(500, {"error": str(e)})
+            return
+
+        elif path in ("/api/set_output_dir", "/set_output_dir"):
+            try:
+                data = safe_load_json(body) if body else {}
+                new_path = data.get("path")
+                if new_path:
+                    p = Path(new_path).resolve()
+                    p.mkdir(parents=True, exist_ok=True)
+                    OUTPUT_ROOT = p
+                    UPLOAD_DIR = OUTPUT_ROOT / "uploads"
+                    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+                    JOB_STATE_FILE = OUTPUT_ROOT / "job_state.json"
+                    JOB_HISTORY_FILE = OUTPUT_ROOT / "job_history.json"
+                    self.send_json(200, {"status": "success", "output_dir": str(OUTPUT_ROOT)})
+                else:
+                    self.send_json(400, {"error": "Missing path parameter"})
             except Exception as e:
                 self.send_json(500, {"error": str(e)})
             return

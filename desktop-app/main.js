@@ -12,16 +12,18 @@ const BACKEND_PORT = 8765;
 function findPythonExecutable() {
   const candidates = [
     'C:\\Users\\HP\\.faceless-shorts\\venv\\Scripts\\python.exe',
+    path.join(os.homedir(), '.faceless-shorts', 'venv', 'Scripts', 'python.exe'),
     path.join(process.resourcesPath, 'python', 'python.exe'),
     path.join(process.resourcesPath, 'venv', 'Scripts', 'python.exe'),
+    path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Python', 'Python311', 'python.exe'),
+    path.join(process.env.ProgramFiles || '', 'Python311', 'python.exe'),
     path.join(__dirname, '..', '..', '.faceless-shorts', 'venv', 'Scripts', 'python.exe'),
-    path.join(os.homedir(), '.faceless-shorts', 'venv', 'Scripts', 'python.exe'),
     'python.exe',
     'python'
   ];
 
   for (const c of candidates) {
-    if (fs.existsSync(c)) {
+    if (c && fs.existsSync(c)) {
       return c;
     }
   }
@@ -67,17 +69,19 @@ function startPythonBackend() {
 
     const pythonExe = findPythonExecutable();
     const serverScript = findServerScript();
-    const projectRoot = path.resolve(__dirname, '..');
+    const projectRoot = app.isPackaged ? process.resourcesPath : path.resolve(__dirname, '..');
 
     console.log(`[MAIN] Launching Python backend: ${pythonExe} ${serverScript} ${BACKEND_PORT}`);
+
+    const envVars = { ...process.env, PYTHONUNBUFFERED: '1' };
+    if (process.env.PORTABLE_EXECUTABLE_DIR && !envVars.CLIPPER_OUTPUT_DIR) {
+      envVars.CLIPPER_OUTPUT_DIR = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'AI-Video-Clips');
+    }
 
     try {
       pythonProcess = spawn(pythonExe, [serverScript, String(BACKEND_PORT)], {
         cwd: projectRoot,
-        env: {
-          ...process.env,
-          PYTHONUNBUFFERED: '1'
-        },
+        env: envVars,
         windowsHide: true
       });
 
@@ -173,7 +177,11 @@ ipcMain.handle('select-directory', async () => {
 ipcMain.handle('open-folder', async (event, folderPath) => {
   try {
     if (!folderPath) {
-      folderPath = path.join(__dirname, '..', 'AI-Video-Clips');
+      if (process.env.PORTABLE_EXECUTABLE_DIR) {
+        folderPath = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'AI-Video-Clips');
+      } else {
+        folderPath = path.join(__dirname, '..', 'AI-Video-Clips');
+      }
     }
     if (fs.existsSync(folderPath)) {
       await shell.openPath(folderPath);
