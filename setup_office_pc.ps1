@@ -1,5 +1,5 @@
 # ==============================================================================
-# Beyond History / Faceless Shorts Engine — Office PC Setup & Hardware Validator
+# Beyond History / Faceless Shorts Engine - Office PC Setup & Hardware Validator
 # 100% Free, Local, Offline. Zero Paid APIs.
 # ==============================================================================
 
@@ -12,7 +12,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 Write-Host "===========================================================" -ForegroundColor Cyan
-Write-Host "  Beyond History Shorts Engine — Office PC Setup & Validator" -ForegroundColor Cyan
+Write-Host "  Beyond History Shorts Engine - Office PC Setup and Validator" -ForegroundColor Cyan
 Write-Host "===========================================================" -ForegroundColor Cyan
 
 # 1. Hardware Detection
@@ -35,26 +35,63 @@ foreach ($g in $gpus) {
 }
 
 if ($hasNvidia -and -not $ForceCpu) {
-    Write-Host "  >> NVIDIA GPU detected! Configuring CUDA acceleration (cu121)." -ForegroundColor Green
+    Write-Host "  NVIDIA GPU detected! Configuring CUDA acceleration (cu121)." -ForegroundColor Green
 } else {
-    Write-Host "  >> Standard CPU profile selected. Will use AVX2/FMA3 attention slicing." -ForegroundColor Yellow
+    Write-Host "  Standard CPU profile selected. Will use AVX2/FMA3 attention slicing." -ForegroundColor Yellow
 }
 
 # 2. Check Core Tools (Python, Node.js, FFmpeg)
 Write-Host "`n[2/5] Auditing Core System Tools..." -ForegroundColor Yellow
 
-# Python 3.10+
-$pyCmd = Get-Command python -ErrorAction SilentlyContinue
-if (-not $pyCmd) { $pyCmd = Get-Command py -ErrorAction SilentlyContinue }
+# Refresh PATH from User and Machine environment
+$env:Path = [Environment]::GetEnvironmentVariable("Path", "User") + ";" + [Environment]::GetEnvironmentVariable("Path", "Machine")
 
-if (-not $pyCmd) {
-    Write-Host "  Python is not found in PATH." -ForegroundColor Red
+# Python 3.10+
+$pyWorking = $false
+$pyCmd = $null
+$pyCandidate = Get-Command python -ErrorAction SilentlyContinue
+if ($pyCandidate) {
+    try {
+        $testVer = & $pyCandidate.Source --version 2>&1
+        if ($LASTEXITCODE -eq 0 -and $testVer -match "Python 3\.(1[0-9]|[2-9][0-9])") {
+            $pyCmd = $pyCandidate
+            $pyWorking = $true
+        }
+    } catch {}
+}
+
+if (-not $pyWorking) {
+    $fallbackPaths = @(
+        "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe",
+        "$env:ProgramFiles\Python311\python.exe"
+    )
+    foreach ($p in $fallbackPaths) {
+        if (Test-Path $p) {
+            $pyCmd = [PSCustomObject]@{ Source = $p }
+            $pyWorking = $true
+            break
+        }
+    }
+}
+
+if (-not $pyWorking) {
+    $pyCmd = Get-Command py -ErrorAction SilentlyContinue
+    if ($pyCmd) { $pyWorking = $true }
+}
+
+if (-not $pyWorking) {
+    Write-Host "  Python 3.11+ is not found in PATH." -ForegroundColor Red
     Write-Host "  Installing Python 3.11 via WinGet..." -ForegroundColor Yellow
-    winget install Python.Python.3.11 --accept-source-agreements --accept-package-agreements
+    winget install Python.Python.3.11 --scope user --override "/quiet InstallAllUsers=0 PrependPath=1 Include_launcher=0" --accept-source-agreements --accept-package-agreements
     $pyCmd = Get-Command python -ErrorAction SilentlyContinue
     if (-not $pyCmd) {
-        Write-Error "Please restart your terminal after installing Python 3.11."
-        exit 1
+        $pyFallback = "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe"
+        if (Test-Path $pyFallback) {
+            $pyCmd = [PSCustomObject]@{ Source = $pyFallback }
+        } else {
+            Write-Error "Please restart your terminal after installing Python 3.11."
+            exit 1
+        }
     }
 }
 $pyVer = & $pyCmd.Source --version 2>&1
@@ -78,10 +115,16 @@ Write-Host "  Node.js: Found ($($nodeCmd.Source) - $nodeVer)" -ForegroundColor G
 # FFmpeg
 $ffmpegCmd = Get-Command ffmpeg -ErrorAction SilentlyContinue
 if (-not $ffmpegCmd) {
-    $wingetFfmpeg = "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.1-essentials_build\bin"
-    if (Test-Path $wingetFfmpeg) {
-        $env:Path = "$wingetFfmpeg;" + $env:Path
-        $ffmpegCmd = Get-Command ffmpeg -ErrorAction SilentlyContinue
+    $wingetFfmpegCandidates = @(
+        "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.2-full_build\bin",
+        "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.1-essentials_build\bin"
+    )
+    foreach ($cand in $wingetFfmpegCandidates) {
+        if (Test-Path $cand) {
+            $env:Path = "$cand;" + $env:Path
+            $ffmpegCmd = Get-Command ffmpeg -ErrorAction SilentlyContinue
+            if ($ffmpegCmd) { break }
+        }
     }
 }
 if (-not $ffmpegCmd) {
@@ -109,7 +152,7 @@ if (-not (Test-Path $CacheDir)) {
 $cacheDrive = (Get-Item $CacheDir).PSDrive.Name
 $driveFreeGB = [math]::Round((Get-PSDrive $cacheDrive).Free / 1GB, 1)
 Write-Host "  Target Cache: $CacheDir" -ForegroundColor Green
-Write-Host "  Drive $cacheDrive: Free Space: $driveFreeGB GB"
+Write-Host "  Drive $($cacheDrive): Free Space: $driveFreeGB GB"
 
 $env:HF_HOME = $CacheDir
 $env:TORCH_HOME = "$CacheDir\torch"
@@ -163,4 +206,4 @@ Write-Host "`n===========================================================" -Fore
 Write-Host "  SUCCESS! Office PC is fully configured and ready." -ForegroundColor Green
 Write-Host "===========================================================" -ForegroundColor Green
 Write-Host "  To produce a Beyond History documentary:" -ForegroundColor Cyan
-Write-Host "    & '$venvPy' scripts/produce_history.py --project <path>`n" -ForegroundColor Cyan
+Write-Host "    $venvPy scripts/produce_history.py --project [project-path]`n" -ForegroundColor Cyan

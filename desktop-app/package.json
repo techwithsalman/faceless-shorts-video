@@ -1,0 +1,71 @@
+{
+  "name": "ai-long-video-clipper",
+  "productName": "AI Long Video Clipper",
+  "version": "1.0.0",
+  "description": "Professional AI Long Video Clipper Studio for Windows",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "dist": "electron-builder --win nsis portable",
+    "pack": "electron-builder --dir"
+  },
+  "keywords": [
+    "ai",
+    "video-clipper",
+    "shorts",
+    "vertical-video",
+    "faster-whisper",
+    "ffmpeg",
+    "cuda"
+  ],
+  "author": "Beyond History AI Studios",
+  "license": "Proprietary",
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.beyondhistory.ailongvideoclipper",
+    "productName": "AI Long Video Clipper",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "AI Long Video Clipper",
+      "uninstallDisplayName": "AI Long Video Clipper",
+      "runAfterFinish": true
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable.${ext}"
+    },
+    "extraResources": [
+      {
+        "from": "../scripts",
+        "to": "scripts",
+        "filter": ["*.py"]
+      }
+    ],
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "assets/**/*",
+      "!dist/**/*",
+      "!node_modules/**/*.map"
+    ]
+  }
+}

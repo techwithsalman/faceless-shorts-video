@@ -2,9 +2,9 @@
 # Requires Python 3.10+ (Python 3.11 recommended)
 # 100% Free, Local, Offline. Zero Paid APIs.
 
-# Image Generation & Diffusion Pipelines
-diffusers>=0.30.0
-transformers>=4.40.0
+# Image Generation & Diffusion Pipelines (compatible with PyTorch 2.5.1 cu121)
+diffusers>=0.30.0,<0.33.0
+transformers>=4.40.0,<5.0.0
 accelerate>=0.30.0
 safetensors>=0.4.0
 

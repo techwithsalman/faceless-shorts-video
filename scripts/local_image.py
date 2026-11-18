@@ -182,7 +182,13 @@ def main():
     args = ap.parse_args()
 
     if args.project:
-        generate_project_scenes(args.project, model=args.model, char_prompt=args.character)
+        generate_project_scenes(
+            args.project,
+            model=args.model,
+            char_prompt=args.character,
+            width=args.width,
+            height=args.height,
+        )
     elif args.prompt:
         generate_image(
             prompt=args.prompt,

@@ -27,15 +27,19 @@ def get_depth_pipeline():
     if _DEPTH_PIPE is not None:
         return _DEPTH_PIPE
 
+    import torch
     from transformers import pipeline
-    print(f"Loading Depth-Anything pipeline (cache: {CACHE_DIR})...", flush=True)
+    device = 0 if torch.cuda.is_available() else -1
+    device_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
+    print(f"Loading Depth-Anything pipeline on {device_name} (cache: {CACHE_DIR})...", flush=True)
     t0 = time.time()
     pipe = pipeline(
         task="depth-estimation",
         model="LiheYoung/depth-anything-small-hf",
+        device=device,
         model_kwargs={"cache_dir": str(CACHE_DIR)}
     )
-    print(f"Depth pipeline ready in {time.time() - t0:.2f} s", flush=True)
+    print(f"Depth pipeline ready in {time.time() - t0:.2f} s on {device_name}", flush=True)
     _DEPTH_PIPE = pipe
     return pipe
 
