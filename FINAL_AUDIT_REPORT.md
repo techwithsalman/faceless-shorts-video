@@ -4,9 +4,9 @@
 **Project Path:** `C:\Users\HP\Desktop\faceless-shorts-video`  
 **Hardware Profile:** Intel Core i7-7700 (8 threads), 32 GB RAM, NVIDIA GeForce GTX 1060 6GB (CUDA 12.1)  
 **Distribution Binaries:**
-- `desktop-app/dist/AI Long Video Clipper-Setup.exe` (87,405,648 bytes / 83.36 MB)
-- `desktop-app/dist/AI Long Video Clipper-Portable.exe` (79,922,521 bytes / 76.22 MB)
-- Preserved previous builds in `desktop-app/dist/backup-pre-audio-fix/` and `desktop-app/dist/previous-build/`
+- `desktop-app/dist/AI Long Video Clipper-Setup.exe` (87,413,494 bytes / 83.36 MB)
+- `desktop-app/dist/AI Long Video Clipper-Portable.exe` (79,927,068 bytes / 76.22 MB)
+- Preserved previous builds in `desktop-app/dist/backup-audio-fix-pre-bootstrap/`, `desktop-app/dist/backup-pre-audio-fix/` and `desktop-app/dist/previous-build/`
 
 ---
 
@@ -137,9 +137,11 @@ All existing project files were audited to confirm zero data loss:
 
 ---
 
-## 4. Unresolved Issues & Limitations
+## 4. First-Run Bootstrap & VM Audit Status
 
-1. **Clean-PC Prerequisite (Documented):**  
-   The standalone installer (`AI Long Video Clipper-Setup.exe`) is 83.35 MB and intentionally does not bundle the ~4.5 GB PyTorch CUDA and FFmpeg packages. A fresh machine with zero developer tools must run `setup_clean_pc.bat` once to configure the local AI runtime.
-2. **First-Run Model Download:**  
+1. **Automated First-Run Bootstrapper Integrated:**  
+   The Electron application now includes an in-app first-run bootstrap trigger. When launched on a PC without Python, it detects the missing runtime, displays a native configuration dialog, and automatically runs the bundled PowerShell bootstrapper (`resources/scripts/setup_clean_pc.ps1`) to provision Python 3.11, PyTorch (CUDA or CPU fallback), Faster-Whisper, and Gyan FFmpeg without requiring Git or preinstalled developer tools.
+2. **Clean-Machine VM Testing:**  
+   **NOT VERIFIED (Clean VM / Hypervisor Unavailable)** — Isolated testing inside a fresh, pristine Windows 10/11 virtual machine could not be performed due to the lack of an installed or enabled hypervisor (Hyper-V, VirtualBox, VMware, or Windows Sandbox) on the host system. Dynamic path resolution, missing runtime detection, and PowerShell script execution were verified via simulated unit and integration tests.
+3. **First-Run Model Download:**  
    The initial download of the Faster-Whisper `small.en` weights (~480 MB) requires an active internet connection. Once downloaded, all video generation runs 100% offline with zero cloud costs.

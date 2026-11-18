@@ -40,6 +40,8 @@ async function pollBackendReady() {
       const res = await fetch(`${BACKEND_URL}/api/status`);
       if (res.ok) {
         appendLog('Connected to AI engine successfully.');
+        const banner = document.getElementById('backend-offline-banner');
+        if (banner) banner.style.display = 'none';
         return;
       }
     } catch (e) {
@@ -48,6 +50,29 @@ async function pollBackendReady() {
     attempts++;
     await new Promise(r => setTimeout(r, 600));
   }
+
+  appendLog('⚠️ AI Engine is not responding. First-time setup may be required on this PC.');
+  const banner = document.getElementById('backend-offline-banner');
+  if (banner) banner.style.display = 'flex';
+}
+
+function triggerEnvironmentSetup() {
+  if (window.electronAPI && window.electronAPI.runEnvironmentSetup) {
+    appendLog('Launching automated environment setup bootstrapper...');
+    window.electronAPI.runEnvironmentSetup();
+  } else {
+    alert('Please run scripts/setup_clean_pc.bat to configure the environment.');
+  }
+}
+
+async function retryBackendConnection() {
+  appendLog('Retrying connection to backend...');
+  const banner = document.getElementById('backend-offline-banner');
+  if (banner) banner.style.display = 'none';
+  await pollBackendReady();
+  await loadSystemDiagnostics();
+  fetchUploadedVideos();
+  updateStatus();
 }
 
 // ----------------- DIAGNOSTICS & SETUP WIZARD -----------------

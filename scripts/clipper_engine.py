@@ -19,19 +19,31 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger("clipper_engine")
 
 # Ensure FFmpeg is in PATH on Windows
-for candidate in [
-    Path(os.environ.get("LOCALAPPDATA", "")) / "Microsoft" / "WinGet" / "Packages" / "Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe" / "ffmpeg-9.0.1-essentials_build" / "bin",
-    Path(os.environ.get("LOCALAPPDATA", "")) / "Microsoft" / "WinGet" / "Packages" / "Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe" / "ffmpeg-9.0.1-full_build" / "bin",
-]:
-    if candidate.exists() and str(candidate) not in os.environ.get("PATH", ""):
-        os.environ["PATH"] = str(candidate) + os.pathsep + os.environ.get("PATH", "")
+if sys.platform == "win32":
+    ffmpeg_search_bases = [
+        Path.home() / ".faceless-shorts" / "ffmpeg",
+        Path(os.environ.get("LOCALAPPDATA", "")) / "Microsoft" / "WinGet" / "Packages",
+        Path(os.environ.get("ProgramFiles", "")) / "ffmpeg",
+        Path(os.environ.get("ProgramFiles(x86)", "")) / "ffmpeg",
+        Path("C:/ffmpeg"),
+    ]
+    for base in ffmpeg_search_bases:
+        if base.exists():
+            try:
+                for exe in base.glob("**/ffmpeg.exe"):
+                    bin_dir = str(exe.parent)
+                    if bin_dir not in os.environ.get("PATH", ""):
+                        os.environ["PATH"] = bin_dir + os.pathsep + os.environ.get("PATH", "")
+                        break
+            except Exception:
+                pass
 
 # Register PyTorch / CUDA DLL directories on Windows for CTranslate2 / Faster-Whisper
 if sys.platform == "win32":
     for torch_candidate in [
         Path(sys.prefix) / "Lib" / "site-packages" / "torch" / "lib",
-        Path(r"C:\Users\HP\.faceless-shorts\venv\Lib\site-packages\torch\lib"),
         Path.home() / ".faceless-shorts" / "venv" / "Lib" / "site-packages" / "torch" / "lib",
+        Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "Python" / "Python311" / "Lib" / "site-packages" / "torch" / "lib",
     ]:
         if torch_candidate.is_dir():
             try:
@@ -226,7 +238,7 @@ class VideoClipperEngine:
         snapshot_rel = Path("hub/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f")
         candidate_paths = [
             self.cache_dir / snapshot_rel,
-            Path("C:/Users/HP/.faceless-shorts/cache") / snapshot_rel,
+            Path.home() / ".faceless-shorts" / "cache" / snapshot_rel,
             Path(os.environ.get("HF_HOME", "")) / snapshot_rel,
             Path.home() / ".cache" / "huggingface" / snapshot_rel
         ]

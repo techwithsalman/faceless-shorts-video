@@ -11,15 +11,16 @@ const BACKEND_PORT = 8765;
 
 function findPythonExecutable() {
   const candidates = [
-    'C:\\Users\\HP\\.faceless-shorts\\venv\\Scripts\\python.exe',
     path.join(os.homedir(), '.faceless-shorts', 'venv', 'Scripts', 'python.exe'),
     path.join(process.resourcesPath, 'python', 'python.exe'),
     path.join(process.resourcesPath, 'venv', 'Scripts', 'python.exe'),
     path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Python', 'Python311', 'python.exe'),
+    path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Python', 'Python310', 'python.exe'),
+    path.join(process.env.LOCALAPPDATA || '', 'Programs', 'Python', 'Python312', 'python.exe'),
     path.join(process.env.ProgramFiles || '', 'Python311', 'python.exe'),
-    path.join(__dirname, '..', '..', '.faceless-shorts', 'venv', 'Scripts', 'python.exe'),
-    'python.exe',
-    'python'
+    path.join(process.env.ProgramFiles || '', 'Python310', 'python.exe'),
+    path.join(process.env.ProgramFiles || '', 'Python312', 'python.exe'),
+    path.join(__dirname, '..', '..', '.faceless-shorts', 'venv', 'Scripts', 'python.exe')
   ];
 
   for (const c of candidates) {
@@ -27,7 +28,75 @@ function findPythonExecutable() {
       return c;
     }
   }
-  return 'python';
+
+  // Check if python is in PATH
+  try {
+    const { execSync } = require('child_process');
+    const out = execSync('python --version', { stdio: 'pipe' }).toString();
+    if (out && out.toLowerCase().includes('python')) {
+      return 'python';
+    }
+  } catch (e) {
+    // python not in PATH
+  }
+
+  return null;
+}
+
+function findSetupScript() {
+  const candidates = app.isPackaged
+    ? [
+        path.join(process.resourcesPath, 'scripts', 'setup_clean_pc.ps1'),
+        path.join(__dirname, 'scripts', 'setup_clean_pc.ps1'),
+        path.join(__dirname, '..', 'scripts', 'setup_clean_pc.ps1')
+      ]
+    : [
+        path.join(__dirname, '..', 'scripts', 'setup_clean_pc.ps1'),
+        path.join(process.resourcesPath, 'scripts', 'setup_clean_pc.ps1'),
+        path.join(__dirname, 'scripts', 'setup_clean_pc.ps1')
+      ];
+
+  for (const c of candidates) {
+    if (fs.existsSync(c)) {
+      return c;
+    }
+  }
+  return path.join(process.resourcesPath, 'scripts', 'setup_clean_pc.ps1');
+}
+
+function runEnvironmentSetup(onSuccess) {
+  const setupScript = findSetupScript();
+  console.log(`[MAIN] Launching environment setup bootstrapper: ${setupScript}`);
+
+  const setupProc = spawn('powershell.exe', [
+    '-NoProfile',
+    '-ExecutionPolicy', 'Bypass',
+    '-File', setupScript
+  ], {
+    windowsHide: false
+  });
+
+  setupProc.on('exit', (code) => {
+    console.log(`[MAIN] Environment setup exited with code ${code}`);
+    if (code === 0) {
+      if (onSuccess) onSuccess();
+      setTimeout(() => {
+        startPythonBackend();
+        if (mainWindow) {
+          mainWindow.reload();
+        }
+      }, 1000);
+    } else {
+      if (mainWindow) {
+        dialog.showMessageBox(mainWindow, {
+          type: 'warning',
+          title: 'Setup Incomplete',
+          message: 'Local Environment Setup Incomplete',
+          detail: `The automated setup exited with code ${code}.\n\nPlease ensure your PC is connected to the internet to download required AI packages, or run scripts/setup_clean_pc.bat manually.`
+        });
+      }
+    }
+  });
 }
 
 function findServerScript() {
@@ -76,6 +145,26 @@ function startPythonBackend() {
     }
 
     const pythonExe = findPythonExecutable();
+    if (!pythonExe) {
+      console.log('[MAIN] No compatible Python runtime detected. Prompting first-run setup...');
+      setTimeout(() => {
+        const choice = dialog.showMessageBoxSync(mainWindow || null, {
+          type: 'info',
+          buttons: ['Configure AI Environment (Recommended)', 'Later'],
+          defaultId: 0,
+          cancelId: 1,
+          title: 'First-Run Setup — AI Long Video Clipper',
+          message: 'Local AI Runtime Configuration Required',
+          detail: 'AI Long Video Clipper operates 100% locally with zero cloud API fees.\n\nTo run on this PC, a one-time automated setup will configure the local AI runtime (Python, Faster-Whisper, and PyTorch).\n\nClick "Configure AI Environment" to start.'
+        });
+
+        if (choice === 0) {
+          runEnvironmentSetup();
+        }
+      }, 800);
+      return;
+    }
+
     const serverScript = findServerScript();
     const projectRoot = app.isPackaged ? process.resourcesPath : path.resolve(__dirname, '..');
 
@@ -223,6 +312,11 @@ ipcMain.handle('maximize-window', () => {
     mainWindow.maximize();
   }
 });
+ipcMain.handle('run-environment-setup', async () => {
+  runEnvironmentSetup();
+  return { success: true };
+});
+
 ipcMain.handle('close-window', () => mainWindow && mainWindow.close());
 
 app.whenReady().then(() => {

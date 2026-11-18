@@ -10,18 +10,21 @@
 
 ## 1. Distribution Binaries
 
-Both the **NSIS Production Installer** and the **Standalone Portable Executable** have been rebuilt with the updated silent-audio detection and CUDA registration engine, verified, and archived:
+Both the **NSIS Production Installer** and the **Standalone Portable Executable** have been rebuilt with the dynamic multi-PC bootstrap and silent-audio detection engine:
 
 ### A. Current Production Binaries (`desktop-app/dist/`)
 
 | File Name | Distribution Target | Exact File Size | SHA256 Checksum | Header | Status |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| **`AI Long Video Clipper-Setup.exe`** | NSIS Production Installer | **87,405,648 bytes** (83.36 MB) | `A51ED7C16C6918BA7EB8DE2E2C9952E95FDA08CAA43F69765EE7EFAC605795CE` | Valid PE | **PASS (VERIFIED)** |
-| **`AI Long Video Clipper-Portable.exe`** | Standalone Single EXE | **79,922,521 bytes** (76.22 MB) | `10003259C4A9B21B1A2F82E8EDA9D4894194135DFED24941418D9BA4095C53FE` | Valid PE | **PASS (VERIFIED)** |
+| **`AI Long Video Clipper-Setup.exe`** | NSIS Production Installer | **87,413,494 bytes** (83.36 MB) | `86BA03F54964CF0CBD3C931CA0D06E436E206A0E5C739208D2A3C27AA6288019` | Valid PE | **PASS (VERIFIED)** |
+| **`AI Long Video Clipper-Portable.exe`** | Standalone Single EXE | **79,927,068 bytes** (76.22 MB) | `375D740AB79CDA18589D7BE21FD6BE6EC5E9F22F9DD6CC739AF5110015E11DD4` | Valid PE | **PASS (VERIFIED)** |
 
 ### B. Preserved Previous Builds & Backups
 
-As required, all previous builds have been preserved:
+All previous production and intermediate builds have been preserved:
+- **`desktop-app/dist/backup-audio-fix-pre-bootstrap/`**:
+  - `AI Long Video Clipper-Setup.exe` (87,405,648 bytes / 83.36 MB)
+  - `AI Long Video Clipper-Portable.exe` (79,922,521 bytes / 76.22 MB)
 - **`desktop-app/dist/backup-pre-audio-fix/`**:
   - `AI Long Video Clipper-Setup.exe` (87,404,352 bytes / 83.36 MB)
   - `AI Long Video Clipper-Portable.exe` (79,917,112 bytes / 76.21 MB)
@@ -81,11 +84,34 @@ Users can customize both primary storage directories directly from the **Setup &
 
 ---
 
-## 4. Known Limitations & User Guidance
+## 4. First-Run Bootstrap & Universal PC Provisioning
 
-1. **First-Run Setup on Clean PCs:**
-   On a fresh Windows PC with zero developer tools, run `setup_clean_pc.bat` once before launching the application. This configures Python 3.11, FFmpeg, and Faster-Whisper silently.
-2. **Initial Model Download:**
+### 1. In-App Automated Bootstrapper
+- The desktop application no longer hardcodes any user-specific developer directories (`C:\Users\HP\...`).
+- On fresh Windows 10/11 machines where Python or dependencies are missing:
+  1. The application detects missing Python and prompts: `"Local AI Runtime Configuration Required"`.
+  2. Clicking **"Configure AI Environment"** launches the bundled PowerShell bootstrapper (`resources/scripts/setup_clean_pc.ps1`).
+  3. The bootstrapper automatically provisions Python 3.11 (via WinGet or direct python.org silent installer download), PyTorch (CUDA 12.1 for NVIDIA, CPU fallback for non-NVIDIA), Faster-Whisper, soundfile, Gyan FFmpeg, and pre-caches the model weights in `%USERPROFILE%\.faceless-shorts\cache`.
+  4. Upon completion, the Electron window automatically connects to the backend and enters the Ready state.
+
+### 2. Standalone Portable Edition Bootstrap
+- `AI Long Video Clipper-Portable.exe` follows the identical automated bootstrap flow.
+- The virtual environment and model cache are stored persistently in `%USERPROFILE%\.faceless-shorts\`, while output video clips are written directly to `AI-Video-Clips/` adjacent to the portable executable (`PORTABLE_EXECUTABLE_DIR`).
+
+---
+
+## 5. Clean-Machine VM Testing Status
+
+> [!WARNING]
+> **Clean VM Status: NOT VERIFIED (Clean VM / Hypervisor Unavailable)**  
+> Testing on an isolated, fresh Windows 10/11 virtual machine could not be performed because no virtualization hypervisor (Hyper-V, VirtualBox, VMware, or Windows Sandbox) is installed or enabled on this host.  
+> However, dynamic path resolution, mock missing-Python detection, automated PowerShell bootstrap triggers, and bundled resource integrity have been verified via unit and integration tests.
+
+---
+
+## 6. Known Limitations & User Guidance
+
+1. **Initial Model Download:**  
    The initial download of the Faster-Whisper `small.en` weights (~480 MB) requires internet access. After the initial download, the application functions **100% offline** with zero cloud API dependencies.
-3. **Storage Space:**
+2. **Storage Space:**  
    Ensure at least 10 GB of free space on the destination drive for video rendering and temporary WAV extractions.

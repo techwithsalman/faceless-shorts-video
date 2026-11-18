@@ -54,12 +54,46 @@ if (Test-Path $venvPython) {
         $winget = (Get-Command winget -ErrorAction SilentlyContinue)
         if ($winget) {
             Write-Host "      Installing Python 3.11 silently via winget..." -ForegroundColor Cyan
-            & winget install -e --id Python.Python.3.11 --silent --accept-source-agreements --accept-package-agreements
-            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-            & python -m venv $targetVenv
+            try {
+                & winget install -e --id Python.Python.3.11 --silent --accept-source-agreements --accept-package-agreements
+            } catch {
+                Write-Warning "winget install encountered an issue: $_"
+            }
+        }
+        
+        # Check standard installation locations
+        $stdPaths = @(
+            "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe",
+            "$env:ProgramFiles\Python311\python.exe"
+        )
+        $installedPython = $null
+        foreach ($sp in $stdPaths) {
+            if (Test-Path $sp) {
+                $installedPython = $sp
+                break
+            }
+        }
+        
+        if (-not $installedPython) {
+            Write-Host "      Downloading official Python 3.11.9 installer from python.org..." -ForegroundColor Cyan
+            $installerPath = "$env:TEMP\python-3.11.9-amd64.exe"
+            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+            Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe" -OutFile $installerPath -UseBasicParsing
+            Write-Host "      Running silent Python 3.11 installation..." -ForegroundColor Cyan
+            Start-Process -FilePath $installerPath -ArgumentList "/quiet InstallAllUsers=0 PrependPath=1 Include_test=0" -Wait
+            Start-Sleep -Seconds 3
+            if (Test-Path "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe") {
+                $installedPython = "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe"
+            }
+        }
+        
+        if ($installedPython) {
+            Write-Host "      Creating dedicated virtual environment at $targetVenv..." -ForegroundColor Yellow
+            New-Item -ItemType Directory -Path "$HOME\.faceless-shorts" -Force | Out-Null
+            & $installedPython -m venv $targetVenv
             $pythonExe = $venvPython
         } else {
-            Write-Warning "winget not found. Please download Python 3.11 from https://www.python.org/downloads/ and check 'Add to PATH'."
+            Write-Error "Failed to install Python 3.11 automatically. Please download from https://www.python.org/downloads/ and check 'Add to PATH'."
             exit 1
         }
     }
@@ -94,9 +128,49 @@ if ($ffmpegCmd) {
     $winget = (Get-Command winget -ErrorAction SilentlyContinue)
     if ($winget) {
         Write-Host "      Installing Gyan FFmpeg Essentials via winget..." -ForegroundColor Cyan
-        & winget install -e --id Gyan.FFmpeg --silent --accept-source-agreements --accept-package-agreements
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-        Write-Host "      FFmpeg installed successfully." -ForegroundColor Green
+        try {
+            & winget install -e --id Gyan.FFmpeg --silent --accept-source-agreements --accept-package-agreements
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+        } catch {
+            Write-Warning "winget install failed: $_"
+        }
+    }
+    
+    $ffmpegCmd = (Get-Command ffmpeg -ErrorAction SilentlyContinue)
+    if (-not $ffmpegCmd) {
+        # Check if WinGet packages contain ffmpeg
+        $wingetPkgs = "$env:LOCALAPPDATA\Microsoft\WinGet\Packages"
+        if (Test-Path $wingetPkgs) {
+            $ffBins = Get-ChildItem -Path $wingetPkgs -Recurse -Filter "ffmpeg.exe" -ErrorAction SilentlyContinue
+            if ($ffBins) {
+                $ffBinDir = Split-Path $ffBins[0].FullName
+                $env:Path = "$ffBinDir;$env:Path"
+                $ffmpegCmd = $ffBins[0].FullName
+            }
+        }
+    }
+
+    if (-not $ffmpegCmd) {
+        Write-Host "      Downloading portable FFmpeg essentials from gyan.dev..." -ForegroundColor Cyan
+        $ffZip = "$env:TEMP\ffmpeg-release-essentials.zip"
+        $ffExtract = "$HOME\.faceless-shorts\ffmpeg"
+        New-Item -ItemType Directory -Path $ffExtract -Force | Out-Null
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Invoke-WebRequest -Uri "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip" -OutFile $ffZip -UseBasicParsing
+        Write-Host "      Extracting FFmpeg to $ffExtract..." -ForegroundColor Cyan
+        Expand-Archive -Path $ffZip -DestinationPath $ffExtract -Force
+        $foundExe = Get-ChildItem -Path $ffExtract -Recurse -Filter "ffmpeg.exe" -ErrorAction SilentlyContinue
+        if ($foundExe) {
+            $binFolder = Split-Path $foundExe[0].FullName
+            $env:Path = "$binFolder;$env:Path"
+            [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$binFolder", "User")
+            $ffmpegCmd = $foundExe[0].FullName
+            Write-Host "      FFmpeg installed to $binFolder." -ForegroundColor Green
+        }
+    }
+
+    if ($ffmpegCmd) {
+        Write-Host "      FFmpeg configured successfully." -ForegroundColor Green
     } else {
         Write-Warning "FFmpeg not detected. Please install FFmpeg from https://ffmpeg.org or winget."
     }

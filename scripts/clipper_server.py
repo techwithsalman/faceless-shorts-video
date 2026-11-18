@@ -1778,7 +1778,11 @@ class ClipperHTTPHandler(BaseHTTPRequestHandler):
 
             model_info = {"installed": False, "path": "", "name": "faster-whisper-small.en"}
             snapshot_rel = Path("hub/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f")
-            cand_paths = [GLOBAL_CACHE_DIR / snapshot_rel, Path("C:/Users/HP/.faceless-shorts/cache") / snapshot_rel]
+            cand_paths = [
+                GLOBAL_CACHE_DIR / snapshot_rel,
+                Path.home() / ".faceless-shorts" / "cache" / snapshot_rel,
+                Path.home() / ".cache" / "huggingface" / snapshot_rel
+            ]
             for cp in cand_paths:
                 if cp.exists():
                     model_info = {"installed": True, "path": str(cp), "name": "faster-whisper-small.en"}

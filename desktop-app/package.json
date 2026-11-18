@@ -56,7 +56,7 @@
       {
         "from": "../scripts",
         "to": "scripts",
-        "filter": ["*.py"]
+        "filter": ["*.py", "*.ps1", "*.bat"]
       }
     ],
     "files": [
